@@ -11,7 +11,7 @@
 namespace FerdiuEngine
 {
 
-class FERDIU_ENGINE_EXPORT RigidBody : Component
+class FERDIU_ENGINE_EXPORT RigidBody : public Component
 {
 public:
 

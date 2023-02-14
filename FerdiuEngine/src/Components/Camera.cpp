@@ -62,8 +62,24 @@ glm::mat4 *Camera::getModelMatrix()
 void Camera::clear()
 {
     glClearColor(this->clearColor[0], this->clearColor[1], this->clearColor[2], 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-Camera* Camera::current = nullptr;
+void Camera::setClearColor(glm::vec3 color)
+{
+    this->clearColor[0] = color[0];
+    this->clearColor[1] = color[1];
+    this->clearColor[2] = color[2];
+
+    if (Camera::getCurrent() == this)
+        glClearColor(this->clearColor[0], this->clearColor[1], this->clearColor[2], 1.0);
+}
+
+glm::vec3 Camera::getClearColor()
+{
+    return this->clearColor;
+}
+
+Camera* Camera::current = new Camera(-5, 5, -5, 5, 5, 1000);
 
 }

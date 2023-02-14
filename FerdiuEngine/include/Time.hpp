@@ -37,6 +37,9 @@ public:
     // set time scale
     FERDIU_ENGINE_EXPORT static void scale(float value);
 
+    // set update routine
+    FERDIU_ENGINE_EXPORT static void setUpdateRoutine(void (*updateRoutine)(void));
+
     // delete unwanted operators
     FERDIU_ENGINE_EXPORT Time(Time const&)            = delete;
     FERDIU_ENGINE_EXPORT void operator=(Time const&)  = delete;
@@ -49,6 +52,8 @@ private:
     float _fixedDeltaTime = 0.0f;
 
     float _scale = 1.0f;
+
+    void (*updateRoutine)(void);
 
     // private constructor (Singleton!)
     Time();

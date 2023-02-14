@@ -9,7 +9,7 @@
 namespace FerdiuEngine
 {
 
-class FERDIU_ENGINE_EXPORT Collider : Component
+class FERDIU_ENGINE_EXPORT Collider : public Component
 {
 public:
     FERDIU_ENGINE_EXPORT Collider();

@@ -10,13 +10,14 @@
 
 #include "../Texture.hpp"
 #include "../Material.hpp"
+#include "Component.hpp"
 
 #include "../FerdiuEngine_export.h"
 
 namespace FerdiuEngine
 {
 
-class FERDIU_ENGINE_EXPORT Renderer
+class FERDIU_ENGINE_EXPORT Renderer : public Component
 {
 public:
     FERDIU_ENGINE_EXPORT Renderer(Material material);

@@ -9,7 +9,7 @@ namespace FerdiuEngine
 //---------------------- public -----------------------------------
 Component::Component()
 {
-     uuid_generate(this->uuid);
+    uuid_generate(this->uuid);
 }
 
 bool Component::isEnabled()
@@ -28,6 +28,7 @@ void Component::disable()
 void Component::setOwner(GameObject *go)
 {
     this->go = go;
+    awake();
 }
 void Component::setGameObject(GameObject *go)
 {
@@ -40,6 +41,11 @@ GameObject *Component::getOwner()
 GameObject *Component::getGameObject()
 {
     return getOwner();
+}
+
+bool Component::awaken()
+{
+    return this->_awaken;
 }
 
 bool operator==(const Component& lhs, const Component& rhs) {

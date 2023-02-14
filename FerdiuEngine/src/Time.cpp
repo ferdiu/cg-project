@@ -1,8 +1,10 @@
 
-#include "../include/Time.hpp"
+#include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
+
+#include "../include/Time.hpp"
 
 namespace FerdiuEngine
 {
@@ -27,6 +29,9 @@ void Time::updateFixedDeltaTime(int n) {
     float currentTime = (float) glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
     Time::instance()._fixedDeltaTime = currentTime - Time::instance()._fixed_lastTime;
     Time::instance()._fixed_lastTime = currentTime;
+
+    if (Time::instance().updateRoutine != nullptr)
+        Time::instance().updateRoutine();
 
     glutTimerFunc(FIXED_DELTA_TIME_MILLISEC, updateFixedDeltaTime, 0);
 }
@@ -64,6 +69,11 @@ float Time::scale()
 void Time::scale(float value)
 {
     Time::instance()._scale = value;
+}
+
+void Time::setUpdateRoutine(void (*updateRoutine)(void))
+{
+    Time::instance().updateRoutine = updateRoutine;
 }
 
 Time* Time::_instance = nullptr;

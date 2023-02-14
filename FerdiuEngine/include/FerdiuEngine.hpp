@@ -60,6 +60,7 @@ public:
 
 private:
     static void Update();
+    static void FixedUpdate();
 };
 
 }

@@ -12,7 +12,7 @@
 namespace FerdiuEngine
 {
 
-class FERDIU_ENGINE_EXPORT Camera : Component
+class FERDIU_ENGINE_EXPORT Camera : public Component
 {
 public:
     enum FERDIU_ENGINE_EXPORT Mode { PERSPECTIVE, ORTHOGRAPHIC };
@@ -35,6 +35,8 @@ public:
     FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
 
     FERDIU_ENGINE_EXPORT void clear();
+    FERDIU_ENGINE_EXPORT void setClearColor(glm::vec3 color);
+    FERDIU_ENGINE_EXPORT glm::vec3 getClearColor();
 
 private:
     FERDIU_ENGINE_EXPORT static Camera *current;

@@ -1,6 +1,7 @@
 
 #include "../include/Time.hpp"
 #include "../include/FerdiuEngine.hpp"
+#include "GameObject.hpp"
 
 namespace FerdiuEngine
 {
@@ -23,7 +24,24 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     );
     glutCreateWindow(PROJECT_NAME);
 
+    // INITIALIZE TIME
+    Time::setUpdateRoutine(FixedUpdate);
     glutDisplayFunc(Engine::Update);
+
+    // INITIALIZE DEFAULT SCENE
+    Scene::setCurrent(new Scene("DefaultScene"));
+
+    // INITIALIZE DEFAULT CAMERA
+    GameObject *cameraObject = new GameObject("MainCamera");
+    cameraObject->addComponent(Camera::getCurrent());
+    cameraObject->instantiate(Scene::getCurrent()->root());
+
+    // TODO: too hardcoded
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEnable(GL_CULL_FACE);
 
     if ((glErr = glGetError()) != 0)
     {
@@ -45,8 +63,6 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
         std::cerr << "error: setup failed with error code " << glErr << std::endl;
         exit(1);
     }
-
-    (void) Time::instance();
 
     glutMainLoop();
 }
@@ -83,7 +99,45 @@ void Engine::OnMouseMove(void (*mousePassive)(int x, int y))
 
 void Engine::Update()
 {
-    // TODO:
+#ifdef DEBUG
+    int glErr;
+#endif
+
+    Camera::getCurrent()->clear();
+
+    // TODO: probably do something with Camera::current
+
+    Scene::getCurrent()->update();
+
+    Scene::getCurrent()->draw();
+
+    // TODO: remove this
+    glutPostRedisplay();
+
+#ifdef DEBUG
+    if ((glErr = glGetError()) != 0) {
+        fprintf(stderr, "error: Engine::Update failed with error code %d \n", glErr);
+        exit(-1);
+    }
+#endif
+
+    glutSwapBuffers();
+}
+
+void Engine::FixedUpdate()
+{
+#ifdef DEBUG
+    int glErr;
+#endif
+
+    Scene::getCurrent()->fixedUpdate();
+
+#ifdef DEBUG
+    if ((glErr = glGetError()) != 0) {
+        fprintf(stderr, "error: Engine::FixedUpdate failed with error code %d \n", glErr);
+        exit(-1);
+    }
+#endif
 }
 
 }
