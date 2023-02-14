@@ -3,27 +3,29 @@
 
 #include <uuid/uuid.h>
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
 // forward declaration
 class GameObject;
 
-class Component
+class FERDIU_ENGINE_EXPORT Component
 {
 public:
-    Component();
+    FERDIU_ENGINE_EXPORT Component();
 
-    bool isEnabled();
-    void enable();
-    void disable();
+    FERDIU_ENGINE_EXPORT bool isEnabled();
+    FERDIU_ENGINE_EXPORT void enable();
+    FERDIU_ENGINE_EXPORT void disable();
 
-    void setOwner(GameObject *go);
-    void setGameObject(GameObject *go);
-    GameObject *getOwner();
-    GameObject *getGameObject();
+    FERDIU_ENGINE_EXPORT void setOwner(GameObject *go);
+    FERDIU_ENGINE_EXPORT void setGameObject(GameObject *go);
+    FERDIU_ENGINE_EXPORT GameObject *getOwner();
+    FERDIU_ENGINE_EXPORT GameObject *getGameObject();
 
-    friend bool operator==(const Component& lhs, const Component& rhs);
+    FERDIU_ENGINE_EXPORT friend bool operator==(const Component& lhs, const Component& rhs);
 private:
     uuid_t uuid;
 

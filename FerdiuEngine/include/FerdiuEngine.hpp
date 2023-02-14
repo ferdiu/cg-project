@@ -1,8 +1,11 @@
 
 #pragma once
 
-#ifndef _FERDIU_ENGINE_H_
-#define _FERDIU_ENGINE_H_
+#include <iostream>
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/freeglut.h>
 
 #include "Scene.hpp"
 #include "Texture.hpp"
@@ -27,4 +30,36 @@
 #include "utils/Debug.hpp"
 #include "GameObject.hpp"
 
-#endif /* FerdiuEngine.hpp included. */
+#include "FerdiuEngine_export.h"
+
+#ifndef WIN_W
+#define WIN_W 700
+#endif
+
+#ifndef WIN_H
+#define WIN_H 700
+#endif
+
+#ifndef PROJECT_NAME
+#define PROJECT_NAME "FerdiuEngine Player"
+#endif
+
+namespace FerdiuEngine
+{
+
+class FERDIU_ENGINE_EXPORT Engine
+{
+public:
+    FERDIU_ENGINE_EXPORT static void Start(int argc, char **argv, void (*setup)(void));
+    FERDIU_ENGINE_EXPORT static void OnResize(void (*resize)(int w, int h));
+    FERDIU_ENGINE_EXPORT static void OnMouseInput(void (*mouseControl)(int button, int state, int x, int y));
+    FERDIU_ENGINE_EXPORT static void OnKeyboardDown(void (*keyInput)(unsigned char key, int x, int y));
+    FERDIU_ENGINE_EXPORT static void OnKeyboardUp(void (*keyInputUp)(unsigned char key, int x, int y));
+    FERDIU_ENGINE_EXPORT static void OnMouseWheel(void (*mouseWheel)(int wheel, int direction, int x, int y));
+    FERDIU_ENGINE_EXPORT static void OnMouseMove(void (*mousePassive)(int x, int y));
+
+private:
+    static void Update();
+};
+
+}

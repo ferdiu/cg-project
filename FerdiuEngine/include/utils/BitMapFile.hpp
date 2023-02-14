@@ -3,21 +3,23 @@
 
 #include <string>
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class BitMapFile
+class FERDIU_ENGINE_EXPORT BitMapFile
 {
 public:
     // CONSTRUCTORS
-    BitMapFile(char *filename);
-    BitMapFile(std::string filename);
-    ~BitMapFile();
+    FERDIU_ENGINE_EXPORT BitMapFile(char *filename);
+    FERDIU_ENGINE_EXPORT BitMapFile(std::string filename);
+    FERDIU_ENGINE_EXPORT ~BitMapFile();
 
     // GETTERS
-    int width();
-    int height();
-    unsigned char *getData();
+    FERDIU_ENGINE_EXPORT int width();
+    FERDIU_ENGINE_EXPORT int height();
+    FERDIU_ENGINE_EXPORT unsigned char *getData();
 
 private:
     int sizeX;

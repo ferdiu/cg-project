@@ -4,31 +4,33 @@
 #include <glm/glm.hpp>
 #include "Shader.hpp"
 
+#include "FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
 // Material object
-class Material
+class FERDIU_ENGINE_EXPORT Material
 {
 public:
-    Material(std::string vertexFilePath, std::string fragmentFilePath);
-    Material(Shader shader);
+    FERDIU_ENGINE_EXPORT Material(std::string vertexFilePath, std::string fragmentFilePath);
+    FERDIU_ENGINE_EXPORT Material(Shader shader);
 
-    void setAmbient(glm::vec4 ambient);
-    glm::vec4 getAmbient();
-    void setDiffuse(glm::vec4 diffuse);
-    glm::vec4 getDiffuse();
-    void setSpecular(glm::vec4 specular);
-    glm::vec4 getSpecular();
-    void setEmission(glm::vec4 emission);
-    glm::vec4 getEmission();
-    void setShininess(float shininess);
-    float getShininess();
+    FERDIU_ENGINE_EXPORT void setAmbient(glm::vec4 ambient);
+    FERDIU_ENGINE_EXPORT glm::vec4 getAmbient();
+    FERDIU_ENGINE_EXPORT void setDiffuse(glm::vec4 diffuse);
+    FERDIU_ENGINE_EXPORT glm::vec4 getDiffuse();
+    FERDIU_ENGINE_EXPORT void setSpecular(glm::vec4 specular);
+    FERDIU_ENGINE_EXPORT glm::vec4 getSpecular();
+    FERDIU_ENGINE_EXPORT void setEmission(glm::vec4 emission);
+    FERDIU_ENGINE_EXPORT glm::vec4 getEmission();
+    FERDIU_ENGINE_EXPORT void setShininess(float shininess);
+    FERDIU_ENGINE_EXPORT float getShininess();
 
-    void setShader(Shader shader);
-    Shader getShader();
+    FERDIU_ENGINE_EXPORT void setShader(Shader shader);
+    FERDIU_ENGINE_EXPORT Shader getShader();
 
-    void use();
+    FERDIU_ENGINE_EXPORT void use();
 
 private:
     Shader shader;

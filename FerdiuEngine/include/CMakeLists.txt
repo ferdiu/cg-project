@@ -1,6 +1,7 @@
 
 # add headers to SOURCES TODO: add more hpp files here
 set(PUBLIC_HEADERS
+    ${INC_DIR}/Time.hpp
     ${INC_DIR}/Scene.hpp
     ${INC_DIR}/Texture.hpp
     ${INC_DIR}/Material.hpp
@@ -22,7 +23,10 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/utils/GLMatrices.hpp
     ${INC_DIR}/utils/GLMatricesStack.hpp
     ${INC_DIR}/utils/Debug.hpp
+    ${INC_DIR}/FerdiuEngine.hpp
     ${INC_DIR}/GameObject.hpp
+    ${INC_DIR}/FerdiuEngine_export.h
+
 )
 
 set(MAIN_API_HEADER ${INC_DIR}/FerdiuEngine.hpp)

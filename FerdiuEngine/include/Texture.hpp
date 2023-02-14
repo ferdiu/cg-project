@@ -6,19 +6,21 @@
 #include <GL/gl.h>
 #include "utils/BitMapFile.hpp"
 
+#include "FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Texture
+class FERDIU_ENGINE_EXPORT Texture
 {
 public:
-    Texture(std::string path, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
+    FERDIU_ENGINE_EXPORT Texture(std::string path, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
 
-    void ReBind();
+    FERDIU_ENGINE_EXPORT void ReBind();
 
-    int getWidth();
-    int getHeight();
-    unsigned int getId();
+    FERDIU_ENGINE_EXPORT int getWidth();
+    FERDIU_ENGINE_EXPORT int getHeight();
+    FERDIU_ENGINE_EXPORT unsigned int getId();
 
 private:
     std::string filepath;

@@ -5,29 +5,31 @@
 #include <string>
 #include <map>
 
+#include "FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Shader
+class FERDIU_ENGINE_EXPORT Shader
 {
 public:
-    Shader();
-    Shader(std::string vertexFilePath, std::string fragmentFilePath);
-    ~Shader();
+    FERDIU_ENGINE_EXPORT Shader();
+    FERDIU_ENGINE_EXPORT Shader(std::string vertexFilePath, std::string fragmentFilePath);
+    FERDIU_ENGINE_EXPORT ~Shader();
 
-    void use();
+    FERDIU_ENGINE_EXPORT void use();
 
-    bool isEmpty();
+    FERDIU_ENGINE_EXPORT bool isEmpty();
 
     // various setUniform overloads
-    void setUniform(std::string uniform, glm::mat4 *value);
-    void setUniform(std::string uniform, glm::mat3 *value);
-    void setUniform(std::string uniform, glm::mat2 *value);
-    void setUniform(std::string uniform, glm::vec4 *value);
-    void setUniform(std::string uniform, glm::vec3 *value);
-    void setUniform(std::string uniform, glm::vec2 *value);
-    void setUniform(std::string uniform, int value);
-    void setUniform(std::string uniform, float value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat4 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat3 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat2 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec4 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec3 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec2 *value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, int value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, float value);
 
 private:
     std::string vertexPath = "";

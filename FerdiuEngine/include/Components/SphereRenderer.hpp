@@ -12,20 +12,22 @@
 #include "../Texture.hpp"
 #include "../Material.hpp"
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
 #define SPH_STEPS 30
 
-class SphereRenderer : Renderer
+class FERDIU_ENGINE_EXPORT SphereRenderer : Renderer
 {
 public:
-    SphereRenderer(glm::vec3 center, float radius, Material material);
-    SphereRenderer(float radius, Material material);
-    SphereRenderer(glm::vec3 center, float radius, Texture tex, Material material);
-    SphereRenderer(float radius, Texture tex, Material material);
-    SphereRenderer(glm::vec3 center, float radius, ::std::string texturePath, Material material);
-    SphereRenderer(float radius, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(glm::vec3 center, float radius, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(float radius, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(glm::vec3 center, float radius, Texture tex, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(float radius, Texture tex, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(glm::vec3 center, float radius, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT SphereRenderer(float radius, ::std::string texturePath, Material material);
 
 protected:
     void Init() override;

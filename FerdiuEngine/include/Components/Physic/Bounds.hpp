@@ -4,20 +4,22 @@
 #include <glm/glm.hpp>
 #include "../Component.hpp"
 
+#include "../../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Bounds
+class FERDIU_ENGINE_EXPORT Bounds
 {
 public:
-    Bounds(glm::vec3 center = glm::vec3(0), glm::vec3 size = glm::vec3(1));
+    FERDIU_ENGINE_EXPORT Bounds(glm::vec3 center = glm::vec3(0), glm::vec3 size = glm::vec3(1));
 
-    glm::vec3 getCenter();
-    glm::vec3 getSize();
+    FERDIU_ENGINE_EXPORT glm::vec3 getCenter();
+    FERDIU_ENGINE_EXPORT glm::vec3 getSize();
 
-    glm::vec3 getExtents();
-    glm::vec3 getMin();
-    glm::vec3 getMax();
+    FERDIU_ENGINE_EXPORT glm::vec3 getExtents();
+    FERDIU_ENGINE_EXPORT glm::vec3 getMin();
+    FERDIU_ENGINE_EXPORT glm::vec3 getMax();
 
 protected:
     virtual void setCenter(glm::vec3 v);

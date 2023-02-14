@@ -6,13 +6,15 @@
 
 #include "GameObject.hpp"
 
+#include "FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Scene
+class FERDIU_ENGINE_EXPORT Scene
 {
 public:
-    Scene(std::string name);
+    FERDIU_ENGINE_EXPORT Scene(std::string name);
 
 private:
     std::string name = "";

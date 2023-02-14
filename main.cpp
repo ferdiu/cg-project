@@ -5,12 +5,16 @@
 #include <GL/gl.h>
 
 #include "FerdiuEngine/include/Components/Component.hpp"
+#include "FerdiuEngine/include/FerdiuEngine.hpp"
 
 using namespace FerdiuEngine;
 
+void setup()
+{
+}
+
 int main(int argc, char **argv) {
-    (void) argc;
-    (void) argv;
-    std::cout << "Hello, world!" << std::endl;
+    Engine::Start(argc, argv, setup);
+
     return 0;
 }

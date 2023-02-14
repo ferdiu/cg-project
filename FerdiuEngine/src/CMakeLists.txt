@@ -1,5 +1,6 @@
 
 set(SOURCES
+    ${SRC_DIR}/FerdiuEngine.cpp
     ${SRC_DIR}/Material.cpp
     ${SRC_DIR}/Texture.cpp
     ${SRC_DIR}/Components/Transform.cpp
@@ -20,4 +21,5 @@ set(SOURCES
     ${SRC_DIR}/utils/GLMatricesStack.cpp
     ${SRC_DIR}/utils/Debug.cpp
     ${SRC_DIR}/utils/BitMapFile.cpp
+    ${SRC_DIR}/Time.cpp
 )

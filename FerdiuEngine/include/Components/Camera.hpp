@@ -7,35 +7,37 @@
 #include "Component.hpp"
 #include "../utils/GLMatricesStack.hpp"
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Camera : Component
+class FERDIU_ENGINE_EXPORT Camera : Component
 {
 public:
-    enum Mode { PERSPECTIVE, ORTHOGRAPHIC };
+    enum FERDIU_ENGINE_EXPORT Mode { PERSPECTIVE, ORTHOGRAPHIC };
 
-    Camera(float left, float right, float bottom, float top, float near, float far, Mode cameraMode = PERSPECTIVE);
+    FERDIU_ENGINE_EXPORT Camera(float left, float right, float bottom, float top, float near, float far, Mode cameraMode = PERSPECTIVE);
 
     // camera modes
-    void setFrustum(float left, float right, float bottom, float top, float near, float far);
-    void setOrthographic(float left, float right, float bottom, float top, float near, float far);
-    Mode getMode();
+    FERDIU_ENGINE_EXPORT void setFrustum(float left, float right, float bottom, float top, float near, float far);
+    FERDIU_ENGINE_EXPORT void setOrthographic(float left, float right, float bottom, float top, float near, float far);
+    FERDIU_ENGINE_EXPORT Mode getMode();
 
     // current
-    static Camera * getCurrent();
-    void setCurrent();
-    static void setCurrent(Camera *camera);
+    FERDIU_ENGINE_EXPORT static Camera *getCurrent();
+    FERDIU_ENGINE_EXPORT void setCurrent();
+    FERDIU_ENGINE_EXPORT static void setCurrent(Camera *camera);
 
     // matrices getters
-    glm::mat4 *getPorjectionMatrix();
-    glm::mat4 *getViewMatrix();
-    glm::mat4 *getModelMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getPorjectionMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getViewMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
 
-    void clear();
+    FERDIU_ENGINE_EXPORT void clear();
 
 private:
-    static Camera* current;
+    FERDIU_ENGINE_EXPORT static Camera *current;
 
     MatricesStack stack;
     Mode mode = PERSPECTIVE;

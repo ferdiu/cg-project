@@ -2,6 +2,7 @@
 #include <list>
 #include <string>
 #include <optional>
+#include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -54,6 +55,14 @@ void Renderer::setTexture(Texture tex, GLenum texEnum)
     glBindVertexArray(0);
     glActiveTexture(0);
 }
+
+// ------------------------------ protected -----------------------------------
+
+void Renderer::Init()
+{
+    std::cout << "error: Initialization step not overriden in concrete Renderer" << std::endl;
+    exit(1);
+};
 
 // ------------------------------ private -------------------------------------
 void Renderer::PrivateInit()

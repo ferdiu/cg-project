@@ -32,7 +32,7 @@ Camera::Mode Camera::getMode()
 }
 
 // current
-Camera * Camera::getCurrent()
+Camera *Camera::getCurrent()
 {
     return current;
 }
@@ -63,5 +63,7 @@ void Camera::clear()
 {
     glClearColor(this->clearColor[0], this->clearColor[1], this->clearColor[2], 1.0);
 }
+
+Camera* Camera::current = nullptr;
 
 }

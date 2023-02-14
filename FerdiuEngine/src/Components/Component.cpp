@@ -42,7 +42,7 @@ GameObject *Component::getGameObject()
     return getOwner();
 }
 
-inline bool operator==(const Component& lhs, const Component& rhs) {
+bool operator==(const Component& lhs, const Component& rhs) {
     return uuid_compare(lhs.uuid, rhs.uuid) == 0;
 }
 

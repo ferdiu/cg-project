@@ -4,40 +4,42 @@
 #include <glm/glm.hpp>
 #include "GLMatrices.hpp"
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
 // Matrices stack node
-typedef struct GLMatricesStackNode {
+typedef struct FERDIU_ENGINE_EXPORT GLMatricesStackNode {
     GLMatrices *mat;
     struct GLMatricesStackNode *prev;
 } GLMatricesStackNode;
 
 // Matrices stack
-typedef struct GLMatricesStack {
+typedef struct FERDIU_ENGINE_EXPORT GLMatricesStack {
     GLMatricesStackNode *top;
 } GLMatricesStack;
 
 
-class MatricesStack
+class FERDIU_ENGINE_EXPORT MatricesStack
 {
 public:
-    MatricesStack();
-    ~MatricesStack();
+    FERDIU_ENGINE_EXPORT MatricesStack();
+    FERDIU_ENGINE_EXPORT ~MatricesStack();
 
     // matrices getters
-    glm::mat4 *getPorjectionMatrix();
-    glm::mat4 *getViewMatrix();
-    glm::mat4 *getModelMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getPorjectionMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getViewMatrix();
+    FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
 
     // reset
-    void reset();
+    FERDIU_ENGINE_EXPORT void reset();
 
     // stack operations
-    void push();
-    void pop();
+    FERDIU_ENGINE_EXPORT void push();
+    FERDIU_ENGINE_EXPORT void pop();
 
-    bool isEmpty();
+    FERDIU_ENGINE_EXPORT bool isEmpty();
 
 private:
     GLMatricesStack *stack;

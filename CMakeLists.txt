@@ -18,11 +18,43 @@ set(INC_DIR include)
 
 # include headers
 # TODO:include(${INC_DIR}/CMakeLists.txt)
+set(SOURCES
+    FerdiuEngine/include/Time.hpp
+    FerdiuEngine/include/Scene.hpp
+    FerdiuEngine/include/Texture.hpp
+    FerdiuEngine/include/Material.hpp
+    FerdiuEngine/include/Vertex.hpp
+    FerdiuEngine/include/Shader.hpp
+    FerdiuEngine/include/Components/MeshRenderer.hpp
+    FerdiuEngine/include/Components/Component.hpp
+    FerdiuEngine/include/Components/Physic/SphereCollider.hpp
+    FerdiuEngine/include/Components/Physic/Bounds.hpp
+    FerdiuEngine/include/Components/Physic/RigidBody.hpp
+    FerdiuEngine/include/Components/Physic/Collider.hpp
+    FerdiuEngine/include/Components/Physic/BoxCollider.hpp
+    FerdiuEngine/include/Components/Camera.hpp
+    FerdiuEngine/include/Components/SphereRenderer.hpp
+    FerdiuEngine/include/Components/Renderer.hpp
+    FerdiuEngine/include/Components/CubeRenderer.hpp
+    FerdiuEngine/include/Components/Transform.hpp
+    FerdiuEngine/include/utils/BitMapFile.hpp
+    FerdiuEngine/include/utils/GLMatrices.hpp
+    FerdiuEngine/include/utils/GLMatricesStack.hpp
+    FerdiuEngine/include/utils/Debug.hpp
+    FerdiuEngine/include/FerdiuEngine.hpp
+    FerdiuEngine/include/GameObject.hpp
+    FerdiuEngine/include/FerdiuEngine_export.h
+)
+
 
 add_subdirectory(FerdiuEngine)
 ###############################
 
-add_executable(cg-project main.cpp) # TODO: add ${SOURCES}
+add_executable(cg-project main.cpp ${SOURCES})
+include_directories(FerdiuEngine/include)
+
+# link ferdiuengine to main
+target_link_libraries(cg-project ferdiuengine)
 
 # not really needed but KDevelop is complaining about missing glut otherwise...
 include_directories(/usr/include)

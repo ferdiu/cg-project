@@ -6,12 +6,12 @@
 namespace FerdiuEngine
 {
 
-BoxCollider::BoxCollider(glm::vec3 center, glm::vec3 size)
+BoxCollider::BoxCollider(glm::vec3 center, glm::vec3 size) : Collider()
 {
-    setBounds(Bounds(center, size));
+    setBounds(new Bounds(center, size));
 }
 
-bool BoxCollider::checkCollision(Collider c)
+bool BoxCollider::checkCollision(Collider *c)
 {
     // TODO: implement collision check
     (void) c;

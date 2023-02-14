@@ -4,25 +4,29 @@
 #include "../Component.hpp"
 #include "Bounds.hpp"
 
+#include "../../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
-class Collider : Component
+class FERDIU_ENGINE_EXPORT Collider : Component
 {
 public:
-    bool isTrigger();
-    void setTrigger(bool v);
+    FERDIU_ENGINE_EXPORT Collider();
 
-    Bounds getBounds();
-    virtual bool checkCollision(Collider c);
+    FERDIU_ENGINE_EXPORT bool isTrigger();
+    FERDIU_ENGINE_EXPORT void setTrigger(bool v);
+
+    FERDIU_ENGINE_EXPORT Bounds *getBounds();
+    FERDIU_ENGINE_EXPORT virtual bool checkCollision(Collider *c) = 0;
 
 protected:
-    virtual void setBounds(Bounds b);
+    FERDIU_ENGINE_EXPORT virtual void setBounds(Bounds *b);
 
 private:
-    bool trigger;
+    bool trigger = false;
 
-    Bounds bounds;
+    Bounds *bounds;
 };
 
 }

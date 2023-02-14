@@ -12,6 +12,8 @@
 #include "../Material.hpp"
 #include "../Vertex.hpp"
 
+#include "../FerdiuEngine_export.h"
+
 namespace FerdiuEngine
 {
 
@@ -22,15 +24,15 @@ namespace FerdiuEngine
 // normalized component
 #define NC 0.5773502691896258
 
-class CubeRenderer : Renderer
+class FERDIU_ENGINE_EXPORT CubeRenderer : public Renderer
 {
 public:
-    CubeRenderer(glm::vec3 center, float size, Material material);
-    CubeRenderer(float size, Material material);
-    CubeRenderer(glm::vec3 center, float size, Texture tex, Material material);
-    CubeRenderer(float size, Texture tex, Material material);
-    CubeRenderer(glm::vec3 center, float size, ::std::string texturePath, Material material);
-    CubeRenderer(float size, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(glm::vec3 center, float size, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(float size, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(glm::vec3 center, float size, Texture tex, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(float size, Texture tex, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(glm::vec3 center, float size, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT CubeRenderer(float size, ::std::string texturePath, Material material);
 
 protected:
     void Init() override;
