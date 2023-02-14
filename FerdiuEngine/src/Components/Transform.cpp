@@ -3,6 +3,7 @@
 
 #include "../../include/Components/Component.hpp"
 #include "../../include/Components/Transform.hpp"
+#include "../../include/Components/Camera.hpp"
 
 namespace FerdiuEngine
 {

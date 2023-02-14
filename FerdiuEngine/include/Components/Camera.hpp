@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include "Component.hpp"
+#include "Transform.hpp"
 #include "../utils/GLMatricesStack.hpp"
 
 #include "../FerdiuEngine_export.h"
@@ -34,9 +35,15 @@ public:
     FERDIU_ENGINE_EXPORT glm::mat4 *getViewMatrix();
     FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
 
+    FERDIU_ENGINE_EXPORT void pushMatrices();
+    FERDIU_ENGINE_EXPORT void popMatrices();
+
+    FERDIU_ENGINE_EXPORT void applyModelMatrix(Transform *t);
+
     FERDIU_ENGINE_EXPORT void clear();
     FERDIU_ENGINE_EXPORT void setClearColor(glm::vec3 color);
     FERDIU_ENGINE_EXPORT glm::vec3 getClearColor();
+
 
 private:
     FERDIU_ENGINE_EXPORT static Camera *current;

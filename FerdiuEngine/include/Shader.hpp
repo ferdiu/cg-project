@@ -22,14 +22,14 @@ public:
     FERDIU_ENGINE_EXPORT bool isEmpty();
 
     // various setUniform overloads
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat4 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat3 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::mat2 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec4 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec3 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, glm::vec2 *value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, int value);
-    FERDIU_ENGINE_EXPORT void setUniform(std::string uniform, float value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::mat4 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::mat3 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::mat2 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::vec4 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::vec3 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, glm::vec2 const& value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, int const value);
+    FERDIU_ENGINE_EXPORT void setUniform(std::string const uniform, float const value);
 
 private:
     std::string vertexPath = "";

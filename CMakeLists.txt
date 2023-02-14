@@ -16,36 +16,19 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 set(SRC_DIR src)
 set(INC_DIR include)
 
-# include headers
-# TODO:include(${INC_DIR}/CMakeLists.txt)
+# include headers sources
 set(SOURCES
-    FerdiuEngine/include/Time.hpp
-    FerdiuEngine/include/Scene.hpp
-    FerdiuEngine/include/Texture.hpp
-    FerdiuEngine/include/Material.hpp
-    FerdiuEngine/include/Vertex.hpp
-    FerdiuEngine/include/Shader.hpp
-    FerdiuEngine/include/Components/MeshRenderer.hpp
-    FerdiuEngine/include/Components/Component.hpp
-    FerdiuEngine/include/Components/Physic/SphereCollider.hpp
-    FerdiuEngine/include/Components/Physic/Bounds.hpp
-    FerdiuEngine/include/Components/Physic/RigidBody.hpp
-    FerdiuEngine/include/Components/Physic/Collider.hpp
-    FerdiuEngine/include/Components/Physic/BoxCollider.hpp
-    FerdiuEngine/include/Components/Camera.hpp
-    FerdiuEngine/include/Components/SphereRenderer.hpp
-    FerdiuEngine/include/Components/Renderer.hpp
-    FerdiuEngine/include/Components/CubeRenderer.hpp
-    FerdiuEngine/include/Components/Transform.hpp
-    FerdiuEngine/include/utils/BitMapFile.hpp
-    FerdiuEngine/include/utils/GLMatrices.hpp
-    FerdiuEngine/include/utils/GLMatricesStack.hpp
-    FerdiuEngine/include/utils/Debug.hpp
-    FerdiuEngine/include/FerdiuEngine.hpp
-    FerdiuEngine/include/GameObject.hpp
-    FerdiuEngine/include/FerdiuEngine_export.h
+# TODO: add sources
 )
 
+# add all headers of FerdiuEngine NOTE: ugly but functional
+include(FerdiuEngine/include/CMakeLists.txt)
+foreach(H IN LISTS PUBLIC_HEADERS)
+    list(APPEND SOURCES FerdiuEngine/${H})
+endforeach()
+
+# copy shaders to bin directory
+include(shaders/CMakeLists.txt)
 
 add_subdirectory(FerdiuEngine)
 ###############################

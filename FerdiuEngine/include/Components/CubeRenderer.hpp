@@ -36,7 +36,7 @@ public:
 
 protected:
     void Init() override;
-    void _Draw() override;
+    void _draw() override;
 
 private:
     glm::vec3 center = glm::vec3(0);

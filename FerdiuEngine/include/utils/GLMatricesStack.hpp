@@ -11,7 +11,7 @@ namespace FerdiuEngine
 
 // Matrices stack node
 typedef struct FERDIU_ENGINE_EXPORT GLMatricesStackNode {
-    GLMatrices *mat;
+    GLMatrices mat;
     struct GLMatricesStackNode *prev;
 } GLMatricesStackNode;
 
@@ -32,6 +32,11 @@ public:
     FERDIU_ENGINE_EXPORT glm::mat4 *getViewMatrix();
     FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
 
+    // matrices getters
+    FERDIU_ENGINE_EXPORT void setPorjectionMatrix(glm::mat4 const& m);
+    FERDIU_ENGINE_EXPORT void setViewMatrix(glm::mat4 const& m);
+    FERDIU_ENGINE_EXPORT void setModelMatrix(glm::mat4 const& m);
+
     // reset
     FERDIU_ENGINE_EXPORT void reset();
 
@@ -42,12 +47,12 @@ public:
     FERDIU_ENGINE_EXPORT bool isEmpty();
 
 private:
-    GLMatricesStack *stack;
+    GLMatricesStack stack;
 
     void emptyStack();
     void createMatricesStack();
-    void copyMatrix(glm::mat4 *dest, glm::mat4 *src);
-    void copyMatrices(GLMatrices *dest, GLMatrices *src);
+    void copyMatrix(glm::mat4& dest, glm::mat4 const& src);
+    void copyMatrices(GLMatrices& dest, GLMatrices const& src);
     GLMatricesStackNode *createNode(GLMatricesStackNode *prev = nullptr);
     void freeNode(GLMatricesStackNode *node);
 };

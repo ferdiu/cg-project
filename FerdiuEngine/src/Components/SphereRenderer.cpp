@@ -19,16 +19,22 @@ SphereRenderer::SphereRenderer(glm::vec3 center, float radius, Material material
 {
     this->center = center;
     this->radius = radius;
+
+    init();
 }
 SphereRenderer::SphereRenderer(float radius, Material material) : Renderer(material)
 {
     this->center = glm::vec3(0, 0, 0);
     this->radius = radius;
+
+    init();
 }
 SphereRenderer::SphereRenderer(glm::vec3 center, float radius, Texture tex, Material material) : Renderer(material)
 {
     this->center = center;
     this->radius = radius;
+
+    init();
 
     setTexture(tex);
 }
@@ -37,6 +43,8 @@ SphereRenderer::SphereRenderer(float radius, Texture tex, Material material) : R
     this->center = glm::vec3(0, 0, 0);
     this->radius = radius;
 
+    init();
+
     setTexture(tex);
 }
 SphereRenderer::SphereRenderer(glm::vec3 center, float radius, ::std::string texturePath, Material material) : Renderer(material)
@@ -44,12 +52,16 @@ SphereRenderer::SphereRenderer(glm::vec3 center, float radius, ::std::string tex
     this->center = center;
     this->radius = radius;
 
+    init();
+
     setTexture(texturePath);
 }
 SphereRenderer::SphereRenderer(float radius, ::std::string texturePath, Material material) : Renderer(material)
 {
     this->center = glm::vec3(0, 0, 0);
     this->radius = radius;
+
+    init();
 
     setTexture(texturePath);
 }
@@ -92,7 +104,7 @@ void SphereRenderer::Init()
     glEnableVertexAttribArray(2);
 }
 
-void SphereRenderer::_Draw()
+void SphereRenderer::_draw()
 {
     glMultiDrawElements(GL_TRIANGLE_STRIP, this->counts, GL_UNSIGNED_INT,
                         (const void **)this->offsets, SPH_STEPS);

@@ -3,6 +3,9 @@
 #include <string>
 #include <optional>
 #include <iostream>
+#ifdef DEBUG
+#include <stdexcept>
+#endif
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
@@ -10,6 +13,7 @@
 #include "../../include/Material.hpp"
 #include "../../include/Texture.hpp"
 #include "../../include/Components/Renderer.hpp"
+#include "../../include/Components/Camera.hpp"
 
 namespace FerdiuEngine
 {
@@ -17,18 +21,34 @@ namespace FerdiuEngine
 Renderer::Renderer(Material material)
 {
     this->material = material;
+}
 
+void Renderer::init()
+{
     PrivateInit();
     Init();
     FinalizeInit();
+
+#ifdef DEBUG
+    initialized = true;
+#endif
 }
 
-void Renderer::Draw()
+void Renderer::draw()
 {
+#ifdef DEBUG
+    if (!initialized)
+        throw std::invalid_argument("init function not called in contructor of derived Renderer");
+#endif
+    Camera *c = Camera::getCurrent();
+
+    if (nullptr == c)
+        return;
+
     material->use();
     glBindVertexArray(this->vao);
 
-    _Draw();
+    _draw();
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -55,14 +75,6 @@ void Renderer::setTexture(Texture tex, GLenum texEnum)
     glBindVertexArray(0);
     glActiveTexture(0);
 }
-
-// ------------------------------ protected -----------------------------------
-
-void Renderer::Init()
-{
-    std::cout << "error: Initialization step not overriden in concrete Renderer" << std::endl;
-    exit(1);
-};
 
 // ------------------------------ private -------------------------------------
 void Renderer::PrivateInit()

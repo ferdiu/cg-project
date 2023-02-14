@@ -14,7 +14,7 @@ class FERDIU_ENGINE_EXPORT Material
 {
 public:
     FERDIU_ENGINE_EXPORT Material(std::string vertexFilePath, std::string fragmentFilePath);
-    FERDIU_ENGINE_EXPORT Material(Shader shader);
+    FERDIU_ENGINE_EXPORT Material(Shader *shader);
 
     FERDIU_ENGINE_EXPORT void setAmbient(glm::vec4 ambient);
     FERDIU_ENGINE_EXPORT glm::vec4 getAmbient();
@@ -27,13 +27,13 @@ public:
     FERDIU_ENGINE_EXPORT void setShininess(float shininess);
     FERDIU_ENGINE_EXPORT float getShininess();
 
-    FERDIU_ENGINE_EXPORT void setShader(Shader shader);
-    FERDIU_ENGINE_EXPORT Shader getShader();
+    FERDIU_ENGINE_EXPORT void setShader(Shader *shader);
+    FERDIU_ENGINE_EXPORT Shader *getShader();
 
     FERDIU_ENGINE_EXPORT void use();
 
 private:
-    Shader shader;
+    Shader *shader;
 
     glm::vec4 ambient; // ambient reflection
     glm::vec4 diffuse; // diffuse reflection

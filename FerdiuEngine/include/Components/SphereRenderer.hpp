@@ -19,7 +19,7 @@ namespace FerdiuEngine
 
 #define SPH_STEPS 30
 
-class FERDIU_ENGINE_EXPORT SphereRenderer : Renderer
+class FERDIU_ENGINE_EXPORT SphereRenderer : public Renderer
 {
 public:
     FERDIU_ENGINE_EXPORT SphereRenderer(glm::vec3 center, float radius, Material material);
@@ -31,7 +31,7 @@ public:
 
 protected:
     void Init() override;
-    void _Draw() override;
+    void _draw() override;
 
 private:
     glm::vec3 center = glm::vec3(0);

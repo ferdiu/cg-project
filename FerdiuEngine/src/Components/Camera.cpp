@@ -2,7 +2,10 @@
 #include <iostream>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "../../include/Components/Camera.hpp"
+#include "../../include/Components/Transform.hpp"
 #include "../../include/utils/GLMatricesStack.hpp"
 
 namespace FerdiuEngine
@@ -57,6 +60,31 @@ glm::mat4 *Camera::getViewMatrix()
 glm::mat4 *Camera::getModelMatrix()
 {
     return this->stack.getModelMatrix();
+}
+
+void Camera::pushMatrices()
+{
+    this->stack.push();
+}
+void Camera::popMatrices()
+{
+    this->stack.pop();
+}
+
+void Camera::applyModelMatrix(Transform *t)
+{
+    glm::mat4 *m = getModelMatrix();
+    glm::vec3 r = t->getRotation();
+
+    // TODO: completely arbitrary order of transformations!!! but good enough for now
+    *m = glm::translate(*m, t->getPosition());
+    *m = glm::scale(*m, t->getScale());
+    // TODO: uglyer!!!
+    *m = glm::rotate(*m, glm::radians(r[0]), glm::vec3(1.0, 0.0, 0.0));
+    *m = glm::rotate(*m, glm::radians(r[1]), glm::vec3(0.0, 1.0, 0.0));
+    *m = glm::rotate(*m, glm::radians(r[2]), glm::vec3(0.0, 0.0, 1.0));
+
+    stack.setModelMatrix(*m);
 }
 
 void Camera::clear()

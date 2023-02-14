@@ -13,10 +13,10 @@ namespace FerdiuEngine
 
 Material::Material(::std::string vertexFilePath, ::std::string fragmentFilePath)
 {
-    this->shader = Shader(vertexFilePath, fragmentFilePath);
+    this->shader = new Shader(vertexFilePath, fragmentFilePath);
 }
 
-Material::Material(Shader shader)
+Material::Material(Shader *shader)
 {
     this->shader = shader;
 }
@@ -62,18 +62,18 @@ float Material::getShininess()
     return shininess;
 }
 
-void Material::setShader(Shader shader)
+void Material::setShader(Shader *shader)
 {
     this->shader = shader;
 }
-Shader Material::getShader()
+Shader *Material::getShader()
 {
     return shader;
 }
 
 void Material::use()
 {
-    shader.use();
+    shader->use();
 }
 
 }

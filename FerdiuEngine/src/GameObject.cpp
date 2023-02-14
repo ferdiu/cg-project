@@ -10,6 +10,7 @@
 #include "../include/Components/Component.hpp"
 #include "../include/Components/Transform.hpp"
 #include "../include/GameObject.hpp"
+#include "../include/Components/Camera.hpp"
 
 namespace FerdiuEngine
 {
@@ -134,8 +135,28 @@ bool GameObject::isRoot()
 
 void GameObject::draw()
 {
+    Camera *c = Camera::getCurrent();
+
+    if (nullptr == c)
+        return;
+
+    c->pushMatrices();
+
+    c->applyModelMatrix(&transform);
+
+    std::cout << "HERE draw object !!! (pre) " << name << std::endl;
+
+    std::list<GameObject*>::iterator childIter;
+    for (childIter = children.begin(); childIter != children.end(); ++childIter)
+        if ((*childIter)->isActive())
+            (*childIter)->draw();
+
     if (this->renderer().has_value())
-        this->renderer().value()->Draw();
+        this->renderer().value()->draw();
+
+
+    c->popMatrices();
+    std::cout << "HERE draw object !!! (post) " << name << std::endl;
 }
 
 std::optional<Renderer*> GameObject::renderer()

@@ -31,6 +31,7 @@ public:
 private:
     glm::vec3 position;
     glm::vec3 scale;
+    // TODO: should really use quaternion for this!
     glm::vec3 rotation;
 };
 

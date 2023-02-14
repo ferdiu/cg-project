@@ -17,16 +17,22 @@ CubeRenderer::CubeRenderer(glm::vec3 center, float size, Material material) : Re
 {
     this->center = center;
     this->size = size;
+
+    init();
 }
 CubeRenderer::CubeRenderer(float size, Material material) : Renderer(material)
 {
     this->center = glm::vec3(0, 0, 0);
     this->size = size;
+
+    init();
 }
 CubeRenderer::CubeRenderer(glm::vec3 center, float size, Texture tex, Material material) : Renderer(material)
 {
     this->center = center;
     this->size = size;
+
+    init();
 
     setTexture(tex);
 }
@@ -35,6 +41,8 @@ CubeRenderer::CubeRenderer(float size, Texture tex, Material material) : Rendere
     this->center = glm::vec3(0, 0, 0);
     this->size = size;
 
+    init();
+
     setTexture(tex);
 }
 CubeRenderer::CubeRenderer(glm::vec3 center, float size, ::std::string texturePath, Material material) : Renderer(material)
@@ -42,12 +50,16 @@ CubeRenderer::CubeRenderer(glm::vec3 center, float size, ::std::string texturePa
     this->center = center;
     this->size = size;
 
+    init();
+
     setTexture(texturePath);
 }
 CubeRenderer::CubeRenderer(float size, ::std::string texturePath, Material material) : Renderer(material)
 {
     this->center = glm::vec3(0, 0, 0);
     this->size = size;
+
+    init();
 
     setTexture(texturePath);
 }
@@ -90,7 +102,7 @@ void CubeRenderer::Init()
     glEnableVertexAttribArray(2);
 }
 
-void CubeRenderer::_Draw()
+void CubeRenderer::_draw()
 {
     glMultiDrawElements(GL_TRIANGLE_STRIP, this->counts, GL_UNSIGNED_INT,
                         (const void **)this->offsets, N_CUBE_FACES);

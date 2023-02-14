@@ -62,57 +62,55 @@ bool Shader::isEmpty()
 }
 
 // various setUniform overloads
-void Shader::setUniform(std::string uniform, glm::mat4 *value)
+void Shader::setUniform(std::string const uniform, glm::mat4 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniformMatrix4fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) value);
+    glUniformMatrix4fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, glm::mat3 *value)
+void Shader::setUniform(std::string const uniform, glm::mat3 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniformMatrix3fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) value);
+    glUniformMatrix3fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, glm::mat2 *value)
+void Shader::setUniform(std::string const uniform, glm::mat2 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniformMatrix2fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) value);
+    glUniformMatrix2fv(uniformMap[uniform], 1, GL_FALSE, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, glm::vec4 *value)
+void Shader::setUniform(std::string const uniform, glm::vec4 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniform4fv(uniformMap[uniform], 1, (GLfloat *) value);
+    glUniform4fv(uniformMap[uniform], 1, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, glm::vec3 *value)
+void Shader::setUniform(std::string const uniform, glm::vec3 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniform3fv(uniformMap[uniform], 1, (GLfloat *) value);
+    glUniform3fv(uniformMap[uniform], 1, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, glm::vec2 *value)
+void Shader::setUniform(std::string const uniform, glm::vec2 const& value)
 {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
-    glUniform2fv(uniformMap[uniform], 1, (GLfloat *) value);
+    glUniform2fv(uniformMap[uniform], 1, (GLfloat *) &value);
 }
-void Shader::setUniform(std::string uniform, int value)
-{
+void Shader::setUniform(std::string const uniform, int const value) {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
     glUniform1i(uniformMap[uniform], value);
 }
-void Shader::setUniform(std::string uniform, float value)
-{
+void Shader::setUniform(std::string const uniform, float const value) {
     if (uniformMap.count(uniform) == 0)
         uniformMap[uniform] = glGetUniformLocation(this->programId, (char *) uniform.c_str());
 
