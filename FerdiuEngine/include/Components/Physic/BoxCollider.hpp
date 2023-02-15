@@ -9,7 +9,7 @@
 namespace FerdiuEngine
 {
 
-class FERDIU_ENGINE_EXPORT BoxCollider : Collider
+class FERDIU_ENGINE_EXPORT BoxCollider : public Collider
 {
 public:
     FERDIU_ENGINE_EXPORT BoxCollider(glm::vec3 center, glm::vec3 size);

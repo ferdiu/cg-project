@@ -103,8 +103,6 @@ void Engine::Update()
     int glErr;
 #endif
 
-    std::cout << "HERE!!! update (pre) " << std::endl;
-
     Camera::getCurrent()->clear();
 
     // TODO: probably do something with Camera::current
@@ -112,7 +110,6 @@ void Engine::Update()
     Scene::getCurrent()->update();
 
     Scene::getCurrent()->draw();
-    std::cout << "HERE!!! update (post) " << std::endl;
 
     // TODO: remove this
     glutPostRedisplay();

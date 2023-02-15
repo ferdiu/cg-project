@@ -17,14 +17,13 @@ set(SRC_DIR src)
 set(INC_DIR include)
 
 # include headers sources
-set(SOURCES
-# TODO: add sources
-)
+include(${SRC_DIR}/CMakeLists.txt)
+include(${INC_DIR}/CMakeLists.txt)
 
 # add all headers of FerdiuEngine NOTE: ugly but functional
 include(FerdiuEngine/include/CMakeLists.txt)
 foreach(H IN LISTS PUBLIC_HEADERS)
-    list(APPEND SOURCES FerdiuEngine/${H})
+    list(APPEND SRCS FerdiuEngine/${H})
 endforeach()
 
 # copy shaders to bin directory
@@ -33,7 +32,7 @@ include(shaders/CMakeLists.txt)
 add_subdirectory(FerdiuEngine)
 ###############################
 
-add_executable(cg-project main.cpp ${SOURCES})
+add_executable(cg-project main.cpp ${SRCS})
 include_directories(FerdiuEngine/include)
 
 # link ferdiuengine to main

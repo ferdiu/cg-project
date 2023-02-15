@@ -55,6 +55,11 @@ void Renderer::draw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+std::optional<Material*> Renderer::getMaterial()
+{
+    return this->material.has_value() ? &(this->material.value()) : nullptr;
+}
+
 void Renderer::setTexture(std::string filepath, GLenum texEnum)
 {
     glBindVertexArray(this->vao);

@@ -9,6 +9,17 @@
 namespace FerdiuEngine
 {
 
+typedef struct Material_t
+{
+    glm::vec4 ambient; // ambient reflection
+    glm::vec4 diffuse; // diffuse reflection
+    glm::vec4 specular; // specular reflection
+
+    glm::vec4 emission;
+
+    float shininess;
+} Material_t;
+
 // Material object
 class FERDIU_ENGINE_EXPORT Material
 {
@@ -32,16 +43,20 @@ public:
 
     FERDIU_ENGINE_EXPORT void use();
 
+    FERDIU_ENGINE_EXPORT Material_t *materialStruct();
+
 private:
     Shader *shader;
 
-    glm::vec4 ambient; // ambient reflection
-    glm::vec4 diffuse; // diffuse reflection
-    glm::vec4 specular; // specular reflection
+    Material_t material = {
+        { 0.2, 0.2, 0.2, 1.0 }, // amb refl
+        { 0.8, 0.8, 0.8, 1.0 }, // dif refl
+        { 0.0, 0.0, 0.0, 1.0 }, // spec refl
 
-    glm::vec4 emission;
+        { 0.0, 0.0, 0.0, 1.0 }, // emit col
 
-    float shininess;
+        0 // shine
+    };
 };
 
 }

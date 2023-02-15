@@ -5,6 +5,7 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/Scene.hpp
     ${INC_DIR}/Texture.hpp
     ${INC_DIR}/Material.hpp
+    ${INC_DIR}/Components/Light.hpp
     ${INC_DIR}/Vertex.hpp
     ${INC_DIR}/Shader.hpp
     ${INC_DIR}/Components/MeshRenderer.hpp
@@ -16,6 +17,7 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/Components/Physic/BoxCollider.hpp
     ${INC_DIR}/Components/Camera.hpp
     ${INC_DIR}/Components/SphereRenderer.hpp
+    ${SRC_DIR}/Components/PlaneRenderer.cpp
     ${INC_DIR}/Components/Renderer.hpp
     ${INC_DIR}/Components/CubeRenderer.hpp
     ${INC_DIR}/Components/Transform.hpp
@@ -23,6 +25,7 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/utils/GLMatrices.hpp
     ${INC_DIR}/utils/GLMatricesStack.hpp
     ${INC_DIR}/utils/Debug.hpp
+    ${INC_DIR}/Primitives.hpp
     ${INC_DIR}/FerdiuEngine.hpp
     ${INC_DIR}/GameObject.hpp
     ${INC_DIR}/FerdiuEngine_export.h

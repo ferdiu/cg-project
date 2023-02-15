@@ -24,6 +24,8 @@ public:
 
     FERDIU_ENGINE_EXPORT void draw();
 
+    FERDIU_ENGINE_EXPORT std::optional<Material*> getMaterial();
+
     FERDIU_ENGINE_EXPORT void setTexture(std::string filepath, GLenum texEnum = GL_TEXTURE0);
     FERDIU_ENGINE_EXPORT void setTexture(Texture tex, GLenum texEnum = GL_TEXTURE0);
 

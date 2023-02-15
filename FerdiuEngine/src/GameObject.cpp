@@ -144,8 +144,6 @@ void GameObject::draw()
 
     c->applyModelMatrix(&transform);
 
-    std::cout << "HERE draw object !!! (pre) " << name << std::endl;
-
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
@@ -156,7 +154,6 @@ void GameObject::draw()
 
 
     c->popMatrices();
-    std::cout << "HERE draw object !!! (post) " << name << std::endl;
 }
 
 std::optional<Renderer*> GameObject::renderer()
