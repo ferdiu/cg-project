@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 
+#include "../../include/utils/Debug.hpp"
 #include "../../include/Vertex.hpp"
 #include "../../include/Material.hpp"
 #include "../../include/Texture.hpp"
@@ -69,6 +70,11 @@ SphereRenderer::SphereRenderer(float radius, ::std::string texturePath, Material
 // ------------------------------- protected ----------------------------------
 void SphereRenderer::Init()
 {
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("Initializing SphereRenderer");
+#endif
+
     // generate sphere data
     generateVertices();
     generateIndices();
@@ -102,12 +108,15 @@ void SphereRenderer::Init()
                             sizeof(this->vertices[0]),
                             (GLvoid *)(sizeof(this->vertices[0].coords) + sizeof(this->vertices[0].normal)));
     glEnableVertexAttribArray(2);
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("SphereRenderer initialization completed");
+    Debug::unindent();
+#endif
 }
 
 void SphereRenderer::_draw()
 {
-    std::cout << "Drawing sphere!" << std::endl;
-
     glMultiDrawElements(GL_TRIANGLE_STRIP, this->counts, GL_UNSIGNED_INT,
                         (const void **)this->offsets, SPH_STEPS);
 }

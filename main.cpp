@@ -38,9 +38,11 @@ void setup()
         ->addComponent((light = new Light(LIGHT_POINT)));
     lightGO->instantiate(root);
 
+
     // init common
     sh = new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
     material = new Material(sh);
+
 
     // init object
     sr = new SphereRenderer(10, *material);
@@ -51,10 +53,12 @@ void setup()
         ->addRenderer((Renderer*) sr)
         ->addComponent(ds);
     go->instantiate(root);
+    go->setPosition(vec3(0, -30, 0));
+
 
     // cute box
-    GameObject *box = Primitives::Cube(5, material);
-    box->instantiate(root);
+    // GameObject *box = Primitives::Cube(5, material);
+    // box->instantiate(root);
 }
 
 int main(int argc, char **argv) {

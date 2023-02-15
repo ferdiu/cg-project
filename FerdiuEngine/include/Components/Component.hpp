@@ -25,6 +25,8 @@ public:
     FERDIU_ENGINE_EXPORT void setGameObject(GameObject *go);
     FERDIU_ENGINE_EXPORT GameObject *getOwner();
     FERDIU_ENGINE_EXPORT GameObject *getGameObject();
+    FERDIU_ENGINE_EXPORT GameObject& getOwner() const;
+    FERDIU_ENGINE_EXPORT GameObject& getGameObject() const;
 
     // events
     FERDIU_ENGINE_EXPORT virtual bool awaken();

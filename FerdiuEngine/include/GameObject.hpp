@@ -30,22 +30,22 @@ public:
 
     // ------- GETTERS-SETTERS -------
     // active
-    FERDIU_ENGINE_EXPORT bool isActive();
+    FERDIU_ENGINE_EXPORT bool isActive() const;
     FERDIU_ENGINE_EXPORT void setActive(bool v);
 
     // name
-    FERDIU_ENGINE_EXPORT ::std::string getName();
+    FERDIU_ENGINE_EXPORT ::std::string getName() const;
     FERDIU_ENGINE_EXPORT void setName(::std::string name);
 
     // transform (is a component but with a special role)
     FERDIU_ENGINE_EXPORT Transform *getTransform();
-    FERDIU_ENGINE_EXPORT glm::vec3 getPosition();
+    FERDIU_ENGINE_EXPORT glm::vec3 getPosition() const;
     FERDIU_ENGINE_EXPORT void setPosition(glm::vec3 v);
-    FERDIU_ENGINE_EXPORT glm::vec3 getScale();
+    FERDIU_ENGINE_EXPORT glm::vec3 getScale() const;
     FERDIU_ENGINE_EXPORT void setScale(glm::vec3 v);
-    FERDIU_ENGINE_EXPORT glm::vec3 getRotation();
+    FERDIU_ENGINE_EXPORT glm::vec3 getRotation() const;
     FERDIU_ENGINE_EXPORT void setRotation(glm::vec3 v);
-    FERDIU_ENGINE_EXPORT glm::vec3 getGlobalPosition();
+    FERDIU_ENGINE_EXPORT glm::vec3 getGlobalPosition() const;
 
     // components
     FERDIU_ENGINE_EXPORT std::list<Component*> getComponents();
@@ -58,7 +58,7 @@ public:
     FERDIU_ENGINE_EXPORT std::list<GameObject*> getChildren();
     FERDIU_ENGINE_EXPORT std::optional<GameObject*> getParent();
 
-    FERDIU_ENGINE_EXPORT bool isRoot();
+    FERDIU_ENGINE_EXPORT bool isRoot() const;
 
     FERDIU_ENGINE_EXPORT void draw();
 
@@ -81,7 +81,7 @@ public:
     // TODO: ugly (too exposed)
     FERDIU_ENGINE_EXPORT void setScene(Scene *s);
 
-    FERDIU_ENGINE_EXPORT bool instantiated();
+    FERDIU_ENGINE_EXPORT bool instantiated() const;
     FERDIU_ENGINE_EXPORT GameObject *instantiate(GameObject *parent);
     FERDIU_ENGINE_EXPORT void destroy();
 

@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 
+#include "../../include/utils/Debug.hpp"
 #include "../../include/Material.hpp"
 #include "../../include/Texture.hpp"
 #include "../../include/Components/Renderer.hpp"
@@ -41,6 +42,12 @@ void Renderer::draw()
     if (!initialized)
         throw std::invalid_argument("init function not called in contructor of derived Renderer");
 #endif
+
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("start->draw");
+#endif
+
     Camera *c = Camera::getCurrent();
 
     if (nullptr == c)
@@ -56,6 +63,11 @@ void Renderer::draw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     glutPostRedisplay();
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("finish->draw");
+    Debug::unindent();
+#endif
 }
 
 std::optional<Material*> Renderer::getMaterial()

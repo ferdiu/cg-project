@@ -54,8 +54,16 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
         exit(1);
     }
 
+#ifdef DEBUG_VERBOSE
+    Debug::Log("start->setup");
+#endif
+
     if (setup != nullptr)
         setup();
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->setup");
+#endif
 
     if ((glErr = glGetError()) != 0)
     {
@@ -101,6 +109,11 @@ void Engine::Update()
 #ifdef DEBUG
     int glErr;
 #endif
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("start->Engine::Update");
+#endif
+
     Camera *c = Camera::getCurrent();
     Scene *s = Scene::getCurrent();
 
@@ -121,12 +134,20 @@ void Engine::Update()
 #endif
 
     glutSwapBuffers();
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->Engine::Update");
+#endif
 }
 
 void Engine::FixedUpdate()
 {
 #ifdef DEBUG
     int glErr;
+#endif
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("start->Engine::FixedUpdate");
 #endif
 
     Scene::getCurrent()->fixedUpdate();
@@ -136,6 +157,10 @@ void Engine::FixedUpdate()
         fprintf(stderr, "error: Engine::FixedUpdate failed with error code %d \n", glErr);
         exit(-1);
     }
+#endif
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->Engine::FixedUpdate");
 #endif
 }
 

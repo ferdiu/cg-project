@@ -6,6 +6,12 @@
 namespace FerdiuEngine
 {
 
+void fdoublespace(size_t s)
+{
+    for (size_t i = 0; i < s; i++)
+        std::cout << "  ";
+}
+
 void ftab(size_t tab)
 {
     for (size_t i = 0; i < tab; i++)
@@ -36,6 +42,49 @@ void fprint(glm::vec4 const& v)
 void fprint(bool b)
 {
     std::cout << (b ? "true" : "false");
+}
+
+namespace Debug
+{
+    static unsigned int _indent = 0;
+    void indent()
+    {
+        _indent++;
+    }
+    void unindent()
+    {
+        _indent--;
+    }
+
+    void Log(std::string message)
+    {
+#ifdef DEBUG
+#ifndef DEBUG_NO_INDENT
+        fdoublespace(_indent);
+#endif
+        std::cout << "Log: " << message << std::endl;
+#endif
+    }
+
+    void Warn(std::string message)
+    {
+#ifdef DEBUG
+#ifndef DEBUG_NO_INDENT
+        fdoublespace(_indent);
+#endif
+        std::cout << "Warn: " << message << std::endl;
+#endif
+    }
+
+    void Error(std::string message)
+    {
+#ifdef DEBUG
+#ifndef DEBUG_NO_INDENT
+        fdoublespace(_indent);
+#endif
+        std::cout << "Error: " << message << std::endl;
+#endif
+    }
 }
 
 }

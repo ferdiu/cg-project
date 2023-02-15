@@ -25,7 +25,7 @@ GameObject::GameObject(std::string name)
 
 // ------- GETTERS-SETTERS -------
 // active
-bool GameObject::isActive()
+bool GameObject::isActive() const
 {
     return active;
 }
@@ -37,7 +37,7 @@ void GameObject::setActive(bool v)
 }
 
 // name
-std::string GameObject::getName()
+std::string GameObject::getName() const
 {
     return this->name;
 }
@@ -51,7 +51,7 @@ Transform *GameObject::getTransform()
 {
     return &transform;
 }
-glm::vec3 GameObject::getPosition()
+glm::vec3 GameObject::getPosition() const
 {
     return this->transform.getPosition();
 }
@@ -59,7 +59,7 @@ void GameObject::setPosition(glm::vec3 v)
 {
     this->transform.setPosition(v);
 }
-glm::vec3 GameObject::getScale()
+glm::vec3 GameObject::getScale() const
 {
     return this->transform.getScale();
 }
@@ -67,7 +67,7 @@ void GameObject::setScale(glm::vec3 v)
 {
     this->transform.setScale(v);
 }
-glm::vec3 GameObject::getRotation()
+glm::vec3 GameObject::getRotation() const
 {
     return this->transform.getRotation();
 }
@@ -75,7 +75,7 @@ void GameObject::setRotation(glm::vec3 v)
 {
     this->transform.setRotation(v);
 }
-glm::vec3 GameObject::getGlobalPosition()
+glm::vec3 GameObject::getGlobalPosition() const
 {
     glm::vec3 pos = glm::vec3(getPosition());
     std::optional<GameObject*> p = parent;
@@ -133,13 +133,18 @@ std::optional<GameObject*> GameObject::getParent()
     return parent;
 }
 
-bool GameObject::isRoot()
+bool GameObject::isRoot() const
 {
     return !(parent.has_value()) && instantiated();
 }
 
 void GameObject::draw()
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("start->draw: " + name);
+#endif
+
     Camera *c = Camera::getCurrent();
     glm::mat4 *m = new glm::mat4(1);
 
@@ -163,6 +168,11 @@ void GameObject::draw()
     }
 
     c->popMatrices();
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->draw: " + name);
+    Debug::unindent();
+#endif
 }
 
 std::optional<Renderer*> GameObject::renderer()
@@ -202,6 +212,11 @@ GameObject *GameObject::addRigidbody(RigidBody *rb)
 
 void GameObject::awake()
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("start->awake: " + name);
+#endif
+
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
@@ -227,9 +242,19 @@ void GameObject::awake()
     //
 
     start();
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->awake: " + name);
+    Debug::unindent();
+#endif
 }
 void GameObject::start()
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("start->start: " + name);
+#endif
+
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
@@ -252,10 +277,20 @@ void GameObject::start()
     if (rigidbody().has_value() && rigidbody().value()->isEnabled())
         rigidbody().value()->start();
     //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->start: " + name);
+    Debug::unindent();
+#endif
 }
 
 void GameObject::fixedUpdate()
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("start->fixedUpdate: " + name);
+#endif
+
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
@@ -278,9 +313,20 @@ void GameObject::fixedUpdate()
     if (rigidbody().has_value() && rigidbody().value()->isEnabled())
         rigidbody().value()->fixedUpdate();
     //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->fixedUpdate: " + name);
+    Debug::unindent();
+#endif
+
 }
 void GameObject::update()
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("start->update: " + name);
+#endif
+
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
@@ -303,6 +349,11 @@ void GameObject::update()
     if (rigidbody().has_value() && rigidbody().value()->isEnabled())
         rigidbody().value()->update();
     //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("finish->update: " + name);
+    Debug::unindent();
+#endif
 }
 
 void GameObject::setScene(Scene *s)
@@ -310,7 +361,7 @@ void GameObject::setScene(Scene *s)
     this->scene = s;
 }
 
-bool GameObject::instantiated()
+bool GameObject::instantiated() const
 {
     return this->scene.has_value();
 }

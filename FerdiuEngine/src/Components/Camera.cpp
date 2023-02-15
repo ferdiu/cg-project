@@ -92,7 +92,7 @@ void Camera::popMatrices()
 
 void Camera::updateProjectionMatrix()
 {
-    glm::mat4 proj;
+    glm::mat4 proj = glm::mat4(1);
     switch (this->mode)
     {
         case PERSPECTIVE:
@@ -117,9 +117,9 @@ void Camera::updateViewMatrix(Transform const& t)
         std::cerr << "warning: a Camera has not been assigned to any object!" << std::endl;
 #endif
     // apply transormation
-    glm::mat4 *m = getViewMatrix();
+    glm::mat4 *m = new glm::mat4(1);
     applyTransoform(*m, t);
-    stack.setModelMatrix(*m);
+    stack.setViewMatrix(*m);
 }
 
 glm::mat4 *Camera::applyModelMatrix(Transform const& t)

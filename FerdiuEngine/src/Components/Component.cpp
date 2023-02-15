@@ -43,6 +43,15 @@ GameObject *Component::getGameObject()
     return getOwner();
 }
 
+GameObject& Component::getOwner() const
+{
+    return *go;
+}
+GameObject& Component::getGameObject() const
+{
+    return getOwner();
+}
+
 bool Component::awaken()
 {
     return this->_awaken;

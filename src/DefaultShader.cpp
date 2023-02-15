@@ -44,6 +44,19 @@ void DefaultShader::update()
     //   not all uniforms need to be updated at every refresh
     Camera *camera = Camera::getCurrent();
 
+#ifdef DEBUG
+    // Debug::indent();
+    // Debug::Log("MATRICES:");
+    // Debug::Log("--- proj ---");
+    // fprint(*camera->getPorjectionMatrix());
+    // Debug::Log("--- view---");
+    // fprint(*camera->getViewMatrix());
+    // Debug::Log("--- model ---");
+    // fprint(*renderer->getModelMatrix());
+    // Debug::Log("");
+    // Debug::unindent();
+#endif
+
     shader->setUniform("projMat", *camera->getPorjectionMatrix());
     shader->setUniform("viewMat", *camera->getViewMatrix());
     shader->setUniform("modelMat", *renderer->getModelMatrix());

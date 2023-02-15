@@ -14,6 +14,13 @@ set(CMAKE_CXX_FLAGS "-shared -std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm 
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 
+# NOTE: enable this to add verbose debug messages
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_VERBOSE")
+# NOTE: disable debug log indentation
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_NO_INDENT")
+# NOTE: enable this to add rendering debug infos
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_RENDERING")
+
 # dir definitions
 set(SRC_DIR src)
 set(INC_DIR include)
