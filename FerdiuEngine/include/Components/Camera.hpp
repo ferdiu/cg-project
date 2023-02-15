@@ -46,6 +46,8 @@ public:
     FERDIU_ENGINE_EXPORT void setClearColor(glm::vec3 color);
     FERDIU_ENGINE_EXPORT glm::vec3 getClearColor();
 
+    FERDIU_ENGINE_EXPORT void lookAt(Transform& camera, glm::vec3 pos, glm::vec3 up = glm::vec3(0, 1, 0));
+    FERDIU_ENGINE_EXPORT void lookAt(Transform& camera, Transform const& pos, glm::vec3 up = glm::vec3(0, 1, 0));
 
 private:
     FERDIU_ENGINE_EXPORT static Camera *current;

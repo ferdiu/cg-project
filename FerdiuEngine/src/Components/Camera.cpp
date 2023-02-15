@@ -1,8 +1,10 @@
 
 #include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
 #include <iostream>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
 #include "../../include/Components/Camera.hpp"
@@ -154,6 +156,19 @@ void Camera::setClearColor(glm::vec3 color)
 glm::vec3 Camera::getClearColor()
 {
     return this->clearColor;
+}
+
+void Camera::lookAt(Transform& camera, glm::vec3 pos, glm::vec3 up)
+{
+    glm::mat4 *la = new glm::mat4(glm::lookAt(camera.getPosition(), pos, up));
+
+    glm::mat4 *m = new glm::mat4(1);
+    GLMatrix::copy(*m, *la);
+    stack.setViewMatrix(*m);
+}
+void Camera::lookAt(Transform& camera, Transform const& pos, glm::vec3 up)
+{
+    lookAt(camera, pos.getPosition(), up);
 }
 
 Camera* Camera::current = new Camera(-5, 5, -5, 5, 5, 1000);
