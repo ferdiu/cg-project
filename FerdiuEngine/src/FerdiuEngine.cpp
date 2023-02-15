@@ -1,7 +1,5 @@
 
-#include "../include/Time.hpp"
 #include "../include/FerdiuEngine.hpp"
-#include "GameObject.hpp"
 
 namespace FerdiuEngine
 {
@@ -103,17 +101,17 @@ void Engine::Update()
 #ifdef DEBUG
     int glErr;
 #endif
+    Camera *c = Camera::getCurrent();
+    Scene *s = Scene::getCurrent();
 
-    Camera::getCurrent()->clear();
+    // update camera
+    c->clear();
+    c->updateProjectionMatrix();
+    c->updateViewMatrix(*c->getOwner()->getTransform());
 
-    // TODO: probably do something with Camera::current
-
-    Scene::getCurrent()->update();
-
-    Scene::getCurrent()->draw();
-
-    // TODO: remove this
-    glutPostRedisplay();
+    // update scene
+    s->update();
+    s->draw();
 
 #ifdef DEBUG
     if ((glErr = glGetError()) != 0) {

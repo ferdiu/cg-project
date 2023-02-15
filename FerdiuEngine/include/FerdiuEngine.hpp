@@ -10,6 +10,7 @@
 #include "Scene.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"
+#include "Time.hpp"
 #include "Components/Light.hpp"
 #include "Vertex.hpp"
 #include "Shader.hpp"

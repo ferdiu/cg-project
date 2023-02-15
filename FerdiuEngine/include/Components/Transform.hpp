@@ -17,15 +17,15 @@ public:
 
     // ------- GETTERS-SETTERS -------
     // position
-    FERDIU_ENGINE_EXPORT glm::vec3 getPosition();
+    FERDIU_ENGINE_EXPORT glm::vec3 getPosition() const;
     FERDIU_ENGINE_EXPORT void setPosition(glm::vec3 v);
 
     // scale
-    FERDIU_ENGINE_EXPORT glm::vec3 getScale();
+    FERDIU_ENGINE_EXPORT glm::vec3 getScale() const;
     FERDIU_ENGINE_EXPORT void setScale(glm::vec3 v);
 
     // rotation
-    FERDIU_ENGINE_EXPORT glm::vec3 getRotation();
+    FERDIU_ENGINE_EXPORT glm::vec3 getRotation() const;
     FERDIU_ENGINE_EXPORT void setRotation(glm::vec3 v);
 
 private:

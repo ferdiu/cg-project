@@ -32,6 +32,7 @@ public:
 
     FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
     FERDIU_ENGINE_EXPORT void setModelMatrix(glm::mat4 const& m);
+
 protected:
     void init();
     virtual void Init() = 0;

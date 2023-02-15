@@ -1,4 +1,5 @@
 
+#include <glm/ext/matrix_clip_space.hpp>
 #include <iostream>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
@@ -11,6 +12,23 @@
 
 namespace FerdiuEngine
 {
+
+void applyTransoform(glm::mat4& mat, Transform const& t)
+{
+    glm::mat4 *tmp = new glm::mat4(1);
+    GLMatrix::copy(*tmp, mat);
+
+    glm::vec3 rot = t.getRotation();
+    // TODO: completely arbitrary order of transformations!!! but good enough for now
+    *tmp = glm::translate(*tmp, t.getPosition());
+    *tmp = glm::scale(*tmp, t.getScale());
+    // TODO: even uglyer!!!
+    *tmp = glm::rotate(*tmp, glm::radians(rot[0]), glm::vec3(1.0, 0.0, 0.0));
+    *tmp = glm::rotate(*tmp, glm::radians(rot[1]), glm::vec3(0.0, 1.0, 0.0));
+    *tmp = glm::rotate(*tmp, glm::radians(rot[2]), glm::vec3(0.0, 0.0, 1.0));
+
+    GLMatrix::copy(mat, *tmp);
+}
 
 Camera::Camera(float left, float right, float bottom, float top, float near, float far, Mode cameraMode)
 {
@@ -72,24 +90,48 @@ void Camera::popMatrices()
     this->stack.pop();
 }
 
-glm::mat4 *Camera::applyModelMatrix(Transform *t)
+void Camera::updateProjectionMatrix()
 {
+    glm::mat4 proj;
+    switch (this->mode)
+    {
+        case PERSPECTIVE:
+            proj = glm::frustum(
+                params.left, params.right,
+                params.bottom, params.top,
+                params.near, params.far);
+            break;
+        case ORTHOGRAPHIC:
+            proj = glm::ortho(
+                params.left, params.right,
+                params.bottom, params.top,
+                params.near, params.far);
+            break;
+    }
+    this->stack.setPorjectionMatrix(proj);
+}
+void Camera::updateViewMatrix(Transform const& t)
+{
+#ifdef DEBUG
+    if (nullptr == this->getOwner())
+        std::cerr << "warning: a Camera has not been assigned to any object!" << std::endl;
+#endif
+    // apply transormation
+    glm::mat4 *m = getViewMatrix();
+    applyTransoform(*m, t);
+    stack.setModelMatrix(*m);
+}
+
+glm::mat4 *Camera::applyModelMatrix(Transform const& t)
+{
+    // apply transormation
     glm::mat4 *m = getModelMatrix();
-    glm::mat4 *res = new glm::mat4(1);
-    glm::vec3 r = t->getRotation();
-
-    // TODO: completely arbitrary order of transformations!!! but good enough for now
-    *m = glm::translate(*m, t->getPosition());
-    *m = glm::scale(*m, t->getScale());
-    // TODO: even uglyer!!!
-    *m = glm::rotate(*m, glm::radians(r[0]), glm::vec3(1.0, 0.0, 0.0));
-    *m = glm::rotate(*m, glm::radians(r[1]), glm::vec3(0.0, 1.0, 0.0));
-    *m = glm::rotate(*m, glm::radians(r[2]), glm::vec3(0.0, 0.0, 1.0));
-
+    applyTransoform(*m, t);
     stack.setModelMatrix(*m);
 
+    // copy result in a new pointer and return it
+    glm::mat4 *res = new glm::mat4(1);
     GLMatrix::copy(*res, *m);
-
     return res;
 }
 

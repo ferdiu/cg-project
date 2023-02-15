@@ -148,7 +148,7 @@ void GameObject::draw()
 
     c->pushMatrices();
 
-    m = c->applyModelMatrix(&transform);
+    m = c->applyModelMatrix(transform);
 
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)

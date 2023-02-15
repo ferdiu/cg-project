@@ -106,6 +106,8 @@ void SphereRenderer::Init()
 
 void SphereRenderer::_draw()
 {
+    std::cout << "Drawing sphere!" << std::endl;
+
     glMultiDrawElements(GL_TRIANGLE_STRIP, this->counts, GL_UNSIGNED_INT,
                         (const void **)this->offsets, SPH_STEPS);
 }

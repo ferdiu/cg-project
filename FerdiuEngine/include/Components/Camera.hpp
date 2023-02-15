@@ -38,7 +38,9 @@ public:
     FERDIU_ENGINE_EXPORT void pushMatrices();
     FERDIU_ENGINE_EXPORT void popMatrices();
 
-    FERDIU_ENGINE_EXPORT glm::mat4 *applyModelMatrix(Transform *t);
+    FERDIU_ENGINE_EXPORT void updateProjectionMatrix();
+    FERDIU_ENGINE_EXPORT void updateViewMatrix(Transform const& t);
+    FERDIU_ENGINE_EXPORT glm::mat4 *applyModelMatrix(Transform const& t);
 
     FERDIU_ENGINE_EXPORT void clear();
     FERDIU_ENGINE_EXPORT void setClearColor(glm::vec3 color);

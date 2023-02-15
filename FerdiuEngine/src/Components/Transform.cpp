@@ -18,7 +18,7 @@ Transform::Transform(glm::vec3 pos, glm::vec3 scale, glm::vec3 rot)
 
 // ------- GETTERS-SETTERS -------
 // position
-glm::vec3 Transform::getPosition()
+glm::vec3 Transform::getPosition() const
 {
     return this->position;
 }
@@ -30,7 +30,7 @@ void Transform::setPosition(glm::vec3 v)
 }
 
 // scale
-glm::vec3 Transform::getScale()
+glm::vec3 Transform::getScale() const
 {
     return this->scale;
 }
@@ -42,7 +42,7 @@ void Transform::setScale(glm::vec3 v)
 }
 
 // rotation
-glm::vec3 Transform::getRotation()
+glm::vec3 Transform::getRotation() const
 {
     return this->rotation;
 }
