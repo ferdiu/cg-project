@@ -21,6 +21,7 @@ namespace FerdiuEngine
 GameObject::GameObject(std::string name)
 {
     this->name = name;
+    this->transform.setOwner(this);
 }
 
 // ------- GETTERS-SETTERS -------
@@ -146,16 +147,21 @@ void GameObject::draw()
 #endif
 
     Camera *c = Camera::getCurrent();
-    glm::mat4 *m = new glm::mat4(1);
+    std::list<GameObject*>::iterator childIter;
+    glm::mat4 mm = getTransform()->getModelMatrix();
 
     if (nullptr == c)
         return;
 
     c->pushMatrices();
 
-    m = c->applyModelMatrix(transform);
+    c->updateModelMatrix(mm);
 
-    std::list<GameObject*>::iterator childIter;
+#ifdef DEBUG_MATRICES
+    printf("--- model ---\n");
+    fprint(*c->getModelMatrix());
+#endif
+
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
             (*childIter)->draw();
@@ -164,7 +170,7 @@ void GameObject::draw()
     {
         Renderer *r = this->renderer().value();
         r->draw();
-        r->setModelMatrix(*m);
+        r->setModelMatrix(*c->getModelMatrix());
     }
 
     c->popMatrices();

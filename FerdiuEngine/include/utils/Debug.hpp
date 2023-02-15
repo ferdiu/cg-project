@@ -8,8 +8,12 @@
 
 #ifndef DEBUG
 // disable all debugging if DEBUG is not enabled
-#undef DEBUG_RENDERING
 #undef DEBUG_VERBOSE
+#endif
+
+#ifndef DEBUG_VERBOSE
+#undef DEBUG_RENDERING
+#undef DEBUG_MATRICES
 #endif
 
 namespace FerdiuEngine

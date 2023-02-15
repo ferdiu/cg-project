@@ -15,10 +15,12 @@ set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 
 # NOTE: enable this to add verbose debug messages
-# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_VERBOSE")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_VERBOSE")
+# NOTE: enable this to add proj, view and model matrices to be printed (needs DEBUG_VERBOSE)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MATRICES")
 # NOTE: disable debug log indentation
 # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_NO_INDENT")
-# NOTE: enable this to add rendering debug infos
+# NOTE: enable this to add rendering debug infos (needs DEBUG_VERBOSE)
 # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_RENDERING")
 
 # dir definitions

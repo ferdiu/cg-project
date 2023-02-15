@@ -42,7 +42,6 @@ struct Light {
 
 // UNIFORMS LIGHTS
 uniform Light light0;
-uniform vec4 globAmb;
 
 // MATERIAL
 struct Material {
@@ -76,7 +75,7 @@ vec3 calcLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main(void)
 {
-    tmpColor = globAmb * (useTex ? texture(tex, texcoord) : color);
+    tmpColor = useTex ? texture(tex, texcoord) : color;
 
     // properties
     vec3 norm = normalize(normalcoord);
@@ -87,6 +86,7 @@ void main(void)
 //     for (int i = 0; i < NR_LIGHTS; i++)
 //         result += calcLight(light0, norm, fragcoord, viewDir);
 
+//     colorsOut = tmpColor;
     colorsOut = tmpColor * vec4(calcLight(light0, norm, fragcoord, viewDir), tmpColor.a);
 }
 

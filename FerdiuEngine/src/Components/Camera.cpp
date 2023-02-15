@@ -1,7 +1,10 @@
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 #include <iostream>
+#include <cmath>
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,27 +13,11 @@
 #include "../../include/Components/Camera.hpp"
 #include "../../include/Components/Transform.hpp"
 #include "../../include/utils/GLMatricesStack.hpp"
+#include "GameObject.hpp"
 #include "utils/GLMatrices.hpp"
 
 namespace FerdiuEngine
 {
-
-void applyTransoform(glm::mat4& mat, Transform const& t)
-{
-    glm::mat4 *tmp = new glm::mat4(1);
-    GLMatrix::copy(*tmp, mat);
-
-    glm::vec3 rot = t.getRotation();
-    // TODO: completely arbitrary order of transformations!!! but good enough for now
-    *tmp = glm::translate(*tmp, t.getPosition());
-    *tmp = glm::scale(*tmp, t.getScale());
-    // TODO: even uglyer!!!
-    *tmp = glm::rotate(*tmp, glm::radians(rot[0]), glm::vec3(1.0, 0.0, 0.0));
-    *tmp = glm::rotate(*tmp, glm::radians(rot[1]), glm::vec3(0.0, 1.0, 0.0));
-    *tmp = glm::rotate(*tmp, glm::radians(rot[2]), glm::vec3(0.0, 0.0, 1.0));
-
-    GLMatrix::copy(mat, *tmp);
-}
 
 Camera::Camera(float left, float right, float bottom, float top, float near, float far, Mode cameraMode)
 {
@@ -111,8 +98,12 @@ void Camera::updateProjectionMatrix()
             break;
     }
     this->stack.setPorjectionMatrix(proj);
+#ifdef DEBUG_MATRICES
+    printf("--- proj ---\n");
+    fprint(*getPorjectionMatrix());
+#endif
 }
-void Camera::updateViewMatrix(Transform const& t)
+void Camera::updateViewMatrix()
 {
 #ifdef DEBUG
     if (nullptr == this->getOwner())
@@ -120,21 +111,22 @@ void Camera::updateViewMatrix(Transform const& t)
 #endif
     // apply transormation
     glm::mat4 *m = new glm::mat4(1);
-    applyTransoform(*m, t);
+    getOwner()->getTransform()->apply(*m);
     stack.setViewMatrix(*m);
+
+#ifdef DEBUG_MATRICES
+    printf("--- view ---\n");
+    fprint(*getViewMatrix());
+#endif
 }
 
-glm::mat4 *Camera::applyModelMatrix(Transform const& t)
+void Camera::updateModelMatrix(glm::mat4 const& m)
 {
-    // apply transormation
-    glm::mat4 *m = getModelMatrix();
-    applyTransoform(*m, t);
-    stack.setModelMatrix(*m);
-
-    // copy result in a new pointer and return it
-    glm::mat4 *res = new glm::mat4(1);
-    GLMatrix::copy(*res, *m);
-    return res;
+#ifdef DEBUG
+    if (nullptr == this->getOwner())
+        std::cerr << "warning: a Camera has not been assigned to any object!" << std::endl;
+#endif
+    stack.setModelMatrix(m * (*getModelMatrix()));
 }
 
 void Camera::clear()
@@ -158,17 +150,30 @@ glm::vec3 Camera::getClearColor()
     return this->clearColor;
 }
 
-void Camera::lookAt(Transform& camera, glm::vec3 pos, glm::vec3 up)
+void Camera::lookAt(glm::vec3 pos, glm::vec3 up)
 {
-    glm::mat4 *la = new glm::mat4(glm::lookAt(camera.getPosition(), pos, up));
+    Transform *t = this->getOwner()->getTransform();
+    glm::mat4 *la = new glm::mat4(glm::lookAt(t->getPosition(), pos, up));
+    stack.setViewMatrix(*la);
 
-    glm::mat4 *m = new glm::mat4(1);
-    GLMatrix::copy(*m, *la);
-    stack.setViewMatrix(*m);
+    // TODO: update angles https://stackoverflow.com/questions/15022630/how-to-calculate-the-angle-from-rotation-matrix
+    // t->setRotation(glm::vec3(
+    //     glm::euler() * atan2((*m)[3][2], (*m)[3][3]),
+    //     glm::euler() * atan2(-(*m)[3][1], sqrt((*m)[3][2]*(*m)[3][2] + (*m)[3][3]*(*m)[3][3])),
+    //     glm::euler() * atan2((*m)[2][1], (*m)[1][1])
+    // ));
 }
-void Camera::lookAt(Transform& camera, Transform const& pos, glm::vec3 up)
+void Camera::lookAt(Transform const& pos, glm::vec3 up)
 {
-    lookAt(camera, pos.getPosition(), up);
+    lookAt(pos.getPosition(), up);
+}
+void Camera::lookAt(GameObject const& pos, glm::vec3 up)
+{
+    lookAt(pos.getPosition(), up);
+}
+void Camera::lookAt(Component const& pos, glm::vec3 up)
+{
+    lookAt(pos.getOwner().getPosition(), up);
 }
 
 Camera* Camera::current = new Camera(-5, 5, -5, 5, 5, 1000);

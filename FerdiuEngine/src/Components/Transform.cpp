@@ -1,9 +1,12 @@
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "../../include/Components/Component.hpp"
 #include "../../include/Components/Transform.hpp"
 #include "../../include/Components/Camera.hpp"
+#include "GameObject.hpp"
 
 namespace FerdiuEngine
 {
@@ -51,6 +54,30 @@ void Transform::setRotation(glm::vec3 v)
     this->rotation.x = v.x;
     this->rotation.y = v.y;
     this->rotation.z = v.z;
+}
+
+// model matrix
+glm::mat4 Transform::getModelMatrix() const
+{
+    glm::mat4 model = glm::mat4(1);
+    apply(model);
+    return model;
+}
+
+void Transform::apply(Transform const& t, glm::mat4& mat)
+{
+    glm::vec3 const& rot = t.getRotation();
+    // https://gamedev.stackexchange.com/questions/138358/what-is-the-transformation-order-when-using-the-transform-class
+    mat = glm::scale(mat, t.getScale());
+    mat = glm::rotate(mat, glm::radians(rot[2]), glm::vec3(0.0, 0.0, 1.0)); // z
+    mat = glm::rotate(mat, glm::radians(rot[0]), glm::vec3(1.0, 0.0, 0.0)); // x
+    mat = glm::rotate(mat, glm::radians(rot[1]), glm::vec3(0.0, 1.0, 0.0)); // y
+    mat = glm::translate(mat, t.getPosition());
+}
+
+void Transform::apply(glm::mat4& mat) const
+{
+    apply(*getOwner().getTransform(), mat);
 }
 
 }

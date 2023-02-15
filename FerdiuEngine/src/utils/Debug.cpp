@@ -22,13 +22,13 @@ void ftab(size_t tab)
 void fprint(glm::mat3 const& mat)
 {
     for (size_t i = 0; i < 3; i++)
-        std::cout << "| " << mat[i][0] << " " << mat[i][1] << " " << mat[i][2] << " |" << std::endl;
+        std::cout << "| " << mat[0][i] << " " << mat[1][i] << " " << mat[2][i] << " |" << std::endl;
 }
 // Print 4x4 matrix
 void fprint(glm::mat4 const& mat)
 {
     for (size_t i = 0; i < 4; i++)
-        std::cout << "| " << mat[i][0] << " " << mat[i][1] << " " << mat[i][2] << " " << mat[i][3] << " |" << std::endl;
+        std::cout << "| " << mat[0][i] << " " << mat[1][i] << " " << mat[2][i] << " " << mat[3][i] << " |" << std::endl;
 }
 
 void fprint(glm::vec3 const& v)

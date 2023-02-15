@@ -120,16 +120,24 @@ void Engine::Update()
     // update camera
     c->clear();
     c->updateProjectionMatrix();
-    c->updateViewMatrix(*c->getOwner()->getTransform());
+    c->updateViewMatrix();
 
     // update scene
     s->update();
+    // glm::vec3 cPos = c->getOwner()->getTransform()->getPosition();
+    // glm::vec3 cScale = c->getOwner()->getTransform()->getScale();
+    // glm::vec3 cRot = c->getOwner()->getTransform()->getRotation();
+    // printf("Camera position: (%.3f, %.3f, %.3f)\n", cPos[0], cPos[1], cPos[2]);
+    // printf("Camera scale: (%.3f, %.3f, %.3f)\n", cScale[0], cScale[1], cScale[2]);
+    // printf("Camera rotation: (%.3f, %.3f, %.3f)\n", cRot[0], cRot[1], cRot[2]);
+
+    // draw scene
     s->draw();
 
 #ifdef DEBUG
     if ((glErr = glGetError()) != 0) {
         fprintf(stderr, "error: Engine::Update failed with error code %d \n", glErr);
-        exit(-1);
+        exit(1);
     }
 #endif
 
@@ -150,7 +158,10 @@ void Engine::FixedUpdate()
     Debug::Log("start->Engine::FixedUpdate");
 #endif
 
-    Scene::getCurrent()->fixedUpdate();
+    Scene *s = Scene::getCurrent();
+
+    // fixed update
+    s->fixedUpdate();
 
 #ifdef DEBUG
     if ((glErr = glGetError()) != 0) {

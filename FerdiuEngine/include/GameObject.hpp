@@ -97,7 +97,7 @@ private:
 
     bool active = true;
 
-    Transform transform;
+    Transform transform = Transform();
     std::list<Component*> components = std::list<Component*>();
     std::list<Component*>::iterator getComponentPosition(Component *c);
 
