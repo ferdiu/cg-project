@@ -50,8 +50,8 @@ public:
     // components
     FERDIU_ENGINE_EXPORT std::list<Component*> getComponents();
     FERDIU_ENGINE_EXPORT bool hasComponent(Component *c);
-    FERDIU_ENGINE_EXPORT void addComponent(Component *c);
-    FERDIU_ENGINE_EXPORT void addComponent(Transform*);
+    FERDIU_ENGINE_EXPORT GameObject *addComponent(Component *c);
+    FERDIU_ENGINE_EXPORT GameObject *addComponent(Transform*);
     FERDIU_ENGINE_EXPORT void removeComponent(Component *c);
     FERDIU_ENGINE_EXPORT void removeComponent(int index);
 

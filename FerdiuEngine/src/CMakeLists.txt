@@ -24,5 +24,6 @@ set(SOURCES
     ${SRC_DIR}/utils/GLMatricesStack.cpp
     ${SRC_DIR}/utils/Debug.cpp
     ${SRC_DIR}/utils/BitMapFile.cpp
+    ${SRC_DIR}/utils/GLMatrices.cpp
     ${SRC_DIR}/Time.cpp
 )

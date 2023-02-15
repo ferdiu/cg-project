@@ -41,15 +41,15 @@ glm::mat4 *MatricesStack::getModelMatrix()
 // matrices getters
 void MatricesStack::setPorjectionMatrix(glm::mat4 const& m)
 {
-    copyMatrix(stack.top->mat.proj, m);
+    GLMatrix::copy(stack.top->mat.proj, m);
 }
 void MatricesStack::setViewMatrix(glm::mat4 const& m)
 {
-    copyMatrix(stack.top->mat.view, m);
+    GLMatrix::copy(stack.top->mat.view, m);
 }
 void MatricesStack::setModelMatrix(glm::mat4 const& m)
 {
-    copyMatrix(stack.top->mat.model, m);
+    GLMatrix::copy(stack.top->mat.model, m);
 }
 
 
@@ -68,7 +68,7 @@ void MatricesStack::reset()
 void MatricesStack::push()
 {
     GLMatricesStackNode *node = createNode(stack.top);
-    copyMatrices(node->mat, stack.top->mat);
+    GLMatrix::copy(node->mat, stack.top->mat);
     stack.top = node;
 
 }
@@ -108,23 +108,6 @@ void MatricesStack::emptyStack()
 void MatricesStack::createMatricesStack()
 {
     stack.top = nullptr;
-}
-
-void MatricesStack::copyMatrix(glm::mat4& dest, glm::mat4 const& src)
-{
-    // NOTE: not sure this is the best way to do this
-    // probably could have used memcpy for performances
-    size_t i = 0, j = 0;
-    for (i = 0; i < 4; i++)
-        for (j = 0; j < 4; j++)
-            dest[i][j] = src[i][j];
-}
-
-void MatricesStack::copyMatrices(GLMatrices& dest, GLMatrices const& src)
-{
-    copyMatrix(dest.proj, src.proj);
-    copyMatrix(dest.view, src.view);
-    copyMatrix(dest.model, src.model);
 }
 
 GLMatricesStackNode *MatricesStack::createNode(GLMatricesStackNode *prev)

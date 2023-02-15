@@ -11,6 +11,7 @@
 #include "../include/Components/Transform.hpp"
 #include "../include/GameObject.hpp"
 #include "../include/Components/Camera.hpp"
+#include "Components/Renderer.hpp"
 
 namespace FerdiuEngine
 {
@@ -96,14 +97,18 @@ bool GameObject::hasComponent(Component *c)
 {
     return getComponentPosition(c) != components.end();
 }
-void GameObject::addComponent(Component *c)
+GameObject *GameObject::addComponent(Component *c)
 {
     components.push_back(c);
     c->setOwner(this);
+
+    return this;
 }
-void GameObject::addComponent(Transform*)
+GameObject *GameObject::addComponent(Transform*)
 {
     throw std::invalid_argument("Can't have an other Transform in a single GameObject.");
+
+    return this;
 }
 void GameObject::removeComponent(Component *c)
 {
@@ -136,13 +141,14 @@ bool GameObject::isRoot()
 void GameObject::draw()
 {
     Camera *c = Camera::getCurrent();
+    glm::mat4 *m = new glm::mat4(1);
 
     if (nullptr == c)
         return;
 
     c->pushMatrices();
 
-    c->applyModelMatrix(&transform);
+    m = c->applyModelMatrix(&transform);
 
     std::list<GameObject*>::iterator childIter;
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
@@ -150,8 +156,11 @@ void GameObject::draw()
             (*childIter)->draw();
 
     if (this->renderer().has_value())
-        this->renderer().value()->draw();
-
+    {
+        Renderer *r = this->renderer().value();
+        r->draw();
+        r->setModelMatrix(*m);
+    }
 
     c->popMatrices();
 }

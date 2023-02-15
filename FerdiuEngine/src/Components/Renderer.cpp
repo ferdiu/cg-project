@@ -14,6 +14,7 @@
 #include "../../include/Texture.hpp"
 #include "../../include/Components/Renderer.hpp"
 #include "../../include/Components/Camera.hpp"
+#include "../../include/utils/GLMatrices.hpp"
 
 namespace FerdiuEngine
 {
@@ -25,9 +26,9 @@ Renderer::Renderer(Material material)
 
 void Renderer::init()
 {
-    PrivateInit();
+    PreInit();
     Init();
-    FinalizeInit();
+    PostInit();
 
 #ifdef DEBUG
     initialized = true;
@@ -81,14 +82,24 @@ void Renderer::setTexture(Texture tex, GLenum texEnum)
     glActiveTexture(0);
 }
 
+glm::mat4 *Renderer::getModelMatrix()
+{
+    return this->_modelMatrix;
+}
+
+void Renderer::setModelMatrix(glm::mat4 const& m)
+{
+    GLMatrix::copy(*this->_modelMatrix, m);
+}
+
 // ------------------------------ private -------------------------------------
-void Renderer::PrivateInit()
+void Renderer::PreInit()
 {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(this->vao);
 }
 
-void Renderer::FinalizeInit()
+void Renderer::PostInit()
 {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

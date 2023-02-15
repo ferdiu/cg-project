@@ -5,6 +5,7 @@
 #include "GLMatrices.hpp"
 
 #include "../FerdiuEngine_export.h"
+#include "utils/Debug.hpp"
 
 namespace FerdiuEngine
 {
@@ -51,8 +52,6 @@ private:
 
     void emptyStack();
     void createMatricesStack();
-    void copyMatrix(glm::mat4& dest, glm::mat4 const& src);
-    void copyMatrices(GLMatrices& dest, GLMatrices const& src);
     GLMatricesStackNode *createNode(GLMatricesStackNode *prev = nullptr);
     void freeNode(GLMatricesStackNode *node);
 };

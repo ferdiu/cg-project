@@ -16,4 +16,11 @@ typedef struct FERDIU_ENGINE_EXPORT GLMatrices {
     glm::mat4 model;
 } GLMatrices;
 
+class FERDIU_ENGINE_EXPORT GLMatrix
+{
+public:
+    FERDIU_ENGINE_EXPORT static void copy(glm::mat4& dest, glm::mat4 const& src);
+    FERDIU_ENGINE_EXPORT static void copy(GLMatrices& dest, GLMatrices const& src);
+};
+
 }
