@@ -1,7 +1,7 @@
 
-# add headers to SOURCES TODO: add more hpp files here
 set(PUBLIC_HEADERS
     ${INC_DIR}/Time.hpp
+    ${INC_DIR}/Screen.hpp
     ${INC_DIR}/Scene.hpp
     ${INC_DIR}/Texture.hpp
     ${INC_DIR}/Material.hpp

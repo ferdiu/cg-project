@@ -8,6 +8,7 @@
 #include <GL/freeglut.h>
 
 #include "Scene.hpp"
+#include "Screen.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"
 #include "Time.hpp"
@@ -37,11 +38,11 @@
 #include "FerdiuEngine_export.h"
 
 #ifndef WIN_W
-#define WIN_W 700
+#define WIN_W 800
 #endif
 
 #ifndef WIN_H
-#define WIN_H 700
+#define WIN_H 600
 #endif
 
 #ifndef PROJECT_NAME
@@ -55,16 +56,16 @@ class FERDIU_ENGINE_EXPORT Engine
 {
 public:
     FERDIU_ENGINE_EXPORT static void Start(int argc, char **argv, void (*setup)(void));
-    FERDIU_ENGINE_EXPORT static void OnResize(void (*resize)(int w, int h));
-    FERDIU_ENGINE_EXPORT static void OnMouseInput(void (*mouseControl)(int button, int state, int x, int y));
-    FERDIU_ENGINE_EXPORT static void OnKeyboardDown(void (*keyInput)(unsigned char key, int x, int y));
-    FERDIU_ENGINE_EXPORT static void OnKeyboardUp(void (*keyInputUp)(unsigned char key, int x, int y));
-    FERDIU_ENGINE_EXPORT static void OnMouseWheel(void (*mouseWheel)(int wheel, int direction, int x, int y));
-    FERDIU_ENGINE_EXPORT static void OnMouseMove(void (*mousePassive)(int x, int y));
+    FERDIU_ENGINE_EXPORT static void onResize(void (*resize)(int w, int h));
+    FERDIU_ENGINE_EXPORT static void onMouseInput(void (*mouseControl)(int button, int state, int x, int y));
+    FERDIU_ENGINE_EXPORT static void onKeyboardDown(void (*keyInput)(unsigned char key, int x, int y));
+    FERDIU_ENGINE_EXPORT static void onKeyboardUp(void (*keyInputUp)(unsigned char key, int x, int y));
+    FERDIU_ENGINE_EXPORT static void onMouseWheel(void (*mouseWheel)(int wheel, int direction, int x, int y));
+    FERDIU_ENGINE_EXPORT static void onMouseMove(void (*mousePassive)(int x, int y));
 
 private:
-    static void Update();
-    static void FixedUpdate();
+    static void update();
+    static void fixedUpdate();
 };
 
 }

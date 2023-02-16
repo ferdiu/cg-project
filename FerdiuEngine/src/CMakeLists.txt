@@ -19,6 +19,7 @@ set(SOURCES
     ${SRC_DIR}/Components/Renderer.cpp
     ${SRC_DIR}/Shader.cpp
     ${SRC_DIR}/GameObject.cpp
+    ${SRC_DIR}/Screen.cpp
     ${SRC_DIR}/Scene.cpp
     ${SRC_DIR}/Primitives.cpp
     ${SRC_DIR}/utils/GLMatricesStack.cpp

@@ -40,6 +40,7 @@ void setup()
     root = Scene::getCurrent()->root();
     c = Camera::getCurrent();
     c->getOwner()->setPosition(glm::vec3(0, 0, -20));
+    c->setClearColor(glm::vec4(1,1,1,1));
 
 
     // light

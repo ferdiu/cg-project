@@ -16,6 +16,16 @@
 namespace FerdiuEngine
 {
 
+typedef struct FERDIU_ENGINE_EXPORT CameraModeParams
+{
+    float left;
+    float right;
+    float bottom;
+    float top;
+    float near;
+    float far;
+} CameraModeParams;
+
 class FERDIU_ENGINE_EXPORT Camera : public Component
 {
 public:
@@ -27,6 +37,9 @@ public:
     FERDIU_ENGINE_EXPORT void setFrustum(float left, float right, float bottom, float top, float near, float far);
     FERDIU_ENGINE_EXPORT void setOrthographic(float left, float right, float bottom, float top, float near, float far);
     FERDIU_ENGINE_EXPORT Mode getMode();
+    FERDIU_ENGINE_EXPORT void setParametes(float left, float right, float bottom, float top, float near, float far);
+    FERDIU_ENGINE_EXPORT CameraModeParams const& getParameters() const;
+    FERDIU_ENGINE_EXPORT void setParameterMults(float left = 1, float right = 1, float bottom = 1, float top = 1, float near = 1, float far = 1);
 
     // current
     FERDIU_ENGINE_EXPORT static Camera *getCurrent();
@@ -61,15 +74,8 @@ private:
     Mode mode = PERSPECTIVE;
     glm::vec3 clearColor = glm::vec3(0);
 
-    struct CameraModeParams
-    {
-        float left;
-        float right;
-        float bottom;
-        float top;
-        float near;
-        float far;
-    } params = { -1, 1, -1, 1, 50, 1000 };
+    CameraModeParams params = { -1, 1, -1, 1, 5, 1000 };
+    CameraModeParams paramsMult = { 1, 1, 1, 1, 1, 1 };
 };
 
 }

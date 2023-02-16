@@ -30,16 +30,28 @@ Camera::Camera(float left, float right, float bottom, float top, float near, flo
 void Camera::setFrustum(float left, float right, float bottom, float top, float near, float far)
 {
     this->mode = PERSPECTIVE;
-    this->params = { left, right, bottom, top, near, far };
+    setParametes(left, right, bottom, top, near, far);
 }
 void Camera::setOrthographic(float left, float right, float bottom, float top, float near, float far)
 {
     this->mode = ORTHOGRAPHIC;
-    this->params = { left, right, bottom, top, near, far };
+    setParametes(left, right, bottom, top, near, far);
 }
 Camera::Mode Camera::getMode()
 {
     return mode;
+}
+void Camera::setParametes(float left, float right, float bottom, float top, float near, float far)
+{
+    this->params = { left, right, bottom, top, near, far };
+}
+CameraModeParams const& Camera::getParameters() const
+{
+    return params;
+}
+void Camera::setParameterMults(float left, float right, float bottom, float top, float near, float far)
+{
+    this->paramsMult = { left, right, bottom, top, near, far };
 }
 
 // current
@@ -86,15 +98,15 @@ void Camera::updateProjectionMatrix()
     {
         case PERSPECTIVE:
             proj = glm::frustum(
-                params.left, params.right,
-                params.bottom, params.top,
-                params.near, params.far);
+                params.left * paramsMult.left, params.right * paramsMult.right,
+                params.bottom * paramsMult.bottom, params.top * paramsMult.top,
+                params.near * paramsMult.near, params.far * paramsMult.far);
             break;
         case ORTHOGRAPHIC:
             proj = glm::ortho(
-                params.left, params.right,
-                params.bottom, params.top,
-                params.near, params.far);
+                params.left * paramsMult.left, params.right * paramsMult.right,
+                params.bottom * paramsMult.bottom, params.top * paramsMult.top,
+                params.near * paramsMult.near, params.far * paramsMult.far);
             break;
     }
     this->stack.setPorjectionMatrix(proj);

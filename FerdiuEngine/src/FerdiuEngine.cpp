@@ -23,8 +23,8 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     glutCreateWindow(PROJECT_NAME);
 
     // INITIALIZE TIME
-    Time::setUpdateRoutine(FixedUpdate);
-    glutDisplayFunc(Engine::Update);
+    Time::setUpdateRoutine(fixedUpdate);
+    glutDisplayFunc(Engine::update);
 
     // INITIALIZE DEFAULT SCENE
     Scene::setCurrent(new Scene("DefaultScene"));
@@ -33,6 +33,9 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     GameObject *cameraObject = new GameObject("MainCamera");
     cameraObject->addComponent(Camera::getCurrent());
     cameraObject->instantiate(Scene::getCurrent()->root());
+
+    // RESIZE
+    glutReshapeFunc(Screen::resize);
 
     // TODO: too hardcoded
     glEnable(GL_DEPTH_TEST);
@@ -74,37 +77,37 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     glutMainLoop();
 }
 
-void Engine::OnResize(void (*resize)(int w, int h))
+void Engine::onResize(void (*resize)(int w, int h))
 {
-    glutReshapeFunc(resize);
+    Screen::onResize(resize);
 }
 
-void Engine::OnMouseInput(void (*mouseControl)(int button, int state, int x, int y))
+void Engine::onMouseInput(void (*mouseControl)(int button, int state, int x, int y))
 {
     glutMouseFunc(mouseControl);
 }
 
-void Engine::OnKeyboardDown(void (*keyInput)(unsigned char key, int x, int y))
+void Engine::onKeyboardDown(void (*keyInput)(unsigned char key, int x, int y))
 {
     glutKeyboardFunc(keyInput);
 }
 
-void Engine::OnKeyboardUp(void (*keyInputUp)(unsigned char key, int x, int y))
+void Engine::onKeyboardUp(void (*keyInputUp)(unsigned char key, int x, int y))
 {
     glutKeyboardUpFunc(keyInputUp);
 }
 
-void Engine::OnMouseWheel(void (*mouseWheel)(int wheel, int direction, int x, int y))
+void Engine::onMouseWheel(void (*mouseWheel)(int wheel, int direction, int x, int y))
 {
     glutMouseWheelFunc(mouseWheel);
 }
 
-void Engine::OnMouseMove(void (*mousePassive)(int x, int y))
+void Engine::onMouseMove(void (*mousePassive)(int x, int y))
 {
     glutMotionFunc(mousePassive);
 }
 
-void Engine::Update()
+void Engine::update()
 {
 #ifdef DEBUG
     int glErr;
@@ -148,7 +151,7 @@ void Engine::Update()
 #endif
 }
 
-void Engine::FixedUpdate()
+void Engine::fixedUpdate()
 {
 #ifdef DEBUG
     int glErr;
