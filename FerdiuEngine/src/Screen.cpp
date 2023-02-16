@@ -175,16 +175,16 @@ void Screen::fullscreen(bool v)
 
     if (_fullscreen)
     {
-        glutReshapeWindow(_oldSize[0], _oldSize[1]);
-        glutPositionWindow(_oldPos[0], _oldPos[1]);
-    }
-    else
-    {
         _oldSize[0] = windowWidth();
         _oldSize[1] = windowHeight();
         _oldPos[0] = windowX();
-        _oldPos[1] = windowHeight();
+        _oldPos[1] = windowY();
         glutFullScreen();
+    }
+    else
+    {
+        glutReshapeWindow(_oldSize[0], _oldSize[1]);
+        glutPositionWindow(_oldPos[0], _oldPos[1]);
     }
 }
 bool Screen::fullscreen()

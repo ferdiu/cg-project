@@ -9,6 +9,7 @@
 
 #include <FerdiuEngine.hpp>
 
+#include "Screen.hpp"
 #include "include/DefaultShader.hpp"
 #include "include/LookAtCamera.hpp"
 
@@ -34,6 +35,15 @@ GameObject *go;
 GameObject *goChild;
 
 
+// Handle user keyboard input.
+void keyInput(unsigned char key, int x, int y) {
+    (void) x;
+    (void) y;
+    switch (key) {
+        case 'f': case 'F': Screen::fullscreen(!Screen::fullscreen()); break;
+    }
+}
+
 void setup()
 {
     // init globals
@@ -57,6 +67,7 @@ void setup()
 
     lightGO->instantiate(root);
 
+    Engine::onKeyboardDown(keyInput);
 
     // init common
     sh = new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
