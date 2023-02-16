@@ -23,12 +23,6 @@ void DefaultShader::awake()
     if (nullptr != this->material)
         this->shader = this->material->getShader();
 
-    if (nullptr != this->shader)
-    {
-        shader->use();
-        shader->setUniform("tex", 0);
-    }
-
 #ifdef DEBUG
     if (nullptr == light)
         std::cerr << "warning: no light set in DefaultShader in object " <<
@@ -37,25 +31,21 @@ void DefaultShader::awake()
     Component::awake();
 }
 
-void DefaultShader::update()
+void DefaultShader::draw()
 {
-    shader->use();
+    renderer->bind();
+    updateShader();
+    renderer->unbind();
+}
+
+void DefaultShader::updateShader()
+{
     // TODO: space for optimization here:
     //   not all uniforms need to be updated at every refresh
     Camera *camera = Camera::getCurrent();
 
-#ifdef DEBUG
-    // Debug::indent();
-    // Debug::Log("MATRICES:");
-    // Debug::Log("--- proj ---");
-    // fprint(*camera->getPorjectionMatrix());
-    // Debug::Log("--- view---");
-    // fprint(*camera->getViewMatrix());
-    // Debug::Log("--- model ---");
-    // fprint(*renderer->getModelMatrix());
-    // Debug::Log("");
-    // Debug::unindent();
-#endif
+    shader->setUniform("tex", 0);
+    shader->setUniform("useTex", useTex);
 
     shader->setUniform("projMat", *camera->getPorjectionMatrix());
     shader->setUniform("viewMat", *camera->getViewMatrix());
@@ -92,14 +82,14 @@ glm::vec4 DefaultShader::getColor()
 void DefaultShader::setTexture(std::string const& t)
 {
     renderer->setTexture(t);
-    shader->setUniform("useTex", true);
+    useTex = true;
 }
 void DefaultShader::setTexture(FerdiuEngine::Texture const& t)
 {
     renderer->setTexture(t);
-    shader->setUniform("useTex", true);
+    useTex = true;
 }
 void DefaultShader::unsetTexture()
 {
-    shader->setUniform("useTex", false);
+    useTex = false;
 }

@@ -72,7 +72,7 @@ void SphereRenderer::Init()
 {
 #ifdef DEBUG_RENDERING
     Debug::indent();
-    Debug::Log("Initializing SphereRenderer");
+    Debug::Log("[SphereRenderer] start->Init");
 #endif
 
     // generate sphere data
@@ -110,15 +110,25 @@ void SphereRenderer::Init()
     glEnableVertexAttribArray(2);
 
 #ifdef DEBUG_RENDERING
-    Debug::Log("SphereRenderer initialization completed");
+    Debug::Log("[SphereRenderer] finish->Init");
     Debug::unindent();
 #endif
 }
 
 void SphereRenderer::_draw()
 {
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("[SphereRenderer] start->_draw");
+#endif
+
     glMultiDrawElements(GL_TRIANGLE_STRIP, this->counts, GL_UNSIGNED_INT,
                         (const void **)this->offsets, SPH_STEPS);
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("[SphereRenderer] finish->_draw");
+    Debug::unindent();
+#endif
 }
 
 // ------------------------------- private -----------------------------------
@@ -129,7 +139,8 @@ void SphereRenderer::generateVertices()
     float xSegment, ySegment, xPos, yPos, zPos;
 
     for (i = 0; i <= SPH_STEPS; i++)
-        for (j = 0; j <= SPH_STEPS; j++) {
+        for (j = 0; j <= SPH_STEPS; j++)
+        {
             xSegment = (float) i / (float) SPH_STEPS;
             ySegment = (float) j / (float) SPH_STEPS;
             xPos = cos(xSegment * 2.0 * M_PI) * sin(ySegment * M_PI);

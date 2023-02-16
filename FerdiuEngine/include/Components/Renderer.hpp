@@ -33,6 +33,9 @@ public:
     FERDIU_ENGINE_EXPORT glm::mat4 *getModelMatrix();
     FERDIU_ENGINE_EXPORT void setModelMatrix(glm::mat4 const& m);
 
+    FERDIU_ENGINE_EXPORT void bind();
+    FERDIU_ENGINE_EXPORT void unbind();
+
 protected:
     void init();
     virtual void Init() = 0;
@@ -49,8 +52,8 @@ private:
 
     GLuint vao;
 
-    void PreInit();
-    void PostInit();
+    void preInit();
+    void postInit();
 };
 
 }

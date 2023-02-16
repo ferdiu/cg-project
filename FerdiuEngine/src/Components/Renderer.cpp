@@ -27,12 +27,22 @@ Renderer::Renderer(Material material)
 
 void Renderer::init()
 {
-    PreInit();
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("[Renderer] start->init");
+#endif
+
+    preInit();
     Init();
-    PostInit();
+    postInit();
 
 #ifdef DEBUG
     initialized = true;
+#endif
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("[Renderer] start->init");
+    Debug::unindent();
 #endif
 }
 
@@ -45,7 +55,7 @@ void Renderer::draw()
 
 #ifdef DEBUG_RENDERING
     Debug::indent();
-    Debug::Log("start->draw");
+    Debug::Log("[Renderer] start->draw");
 #endif
 
     Camera *c = Camera::getCurrent();
@@ -65,7 +75,7 @@ void Renderer::draw()
     glutPostRedisplay();
 
 #ifdef DEBUG_RENDERING
-    Debug::Log("finish->draw");
+    Debug::Log("[Renderer] finish->draw");
     Debug::unindent();
 #endif
 }
@@ -107,13 +117,46 @@ void Renderer::setModelMatrix(glm::mat4 const& m)
 }
 
 // ------------------------------ private -------------------------------------
-void Renderer::PreInit()
+void Renderer::preInit()
 {
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("[Renderer] start->preInit");
+#endif
+
     glGenVertexArrays(1, &vao);
+    glBindVertexArray(this->vao);
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("[Renderer] finish->preInit");
+    Debug::unindent();
+#endif
+}
+
+void Renderer::postInit()
+{
+#ifdef DEBUG_RENDERING
+    Debug::indent();
+    Debug::Log("[Renderer] start->postInit");
+#endif
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+#ifdef DEBUG_RENDERING
+    Debug::Log("[Renderer] finish->postInit");
+    Debug::unindent();
+#endif
+}
+
+void Renderer::bind()
+{
+    material->use();
     glBindVertexArray(this->vao);
 }
 
-void Renderer::PostInit()
+void Renderer::unbind()
 {
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

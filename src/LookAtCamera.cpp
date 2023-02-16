@@ -1,5 +1,6 @@
 
 #include "../include/LookAtCamera.hpp"
+#include "utils/Debug.hpp"
 
 using namespace FerdiuEngine;
 
@@ -21,8 +22,10 @@ void LookAtCamera::awake()
 #ifdef DEBUG
     if (nullptr == this->camera)
     {
+        Debug::indent();
         Debug::Warn("Camera not setted in constructor of LookAtCamera: falling back to current");
         Debug::Warn("Consider adding it in your script because this will not happen in non-debug build!");
+        Debug::unindent();
         this->camera = Camera::getCurrent();
     }
 #endif

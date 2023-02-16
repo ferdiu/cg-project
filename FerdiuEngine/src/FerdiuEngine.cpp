@@ -58,7 +58,7 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     }
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("start->setup");
+    Debug::Log("[Engine] start->setup");
 #endif
 
     if (setup != nullptr)
@@ -147,7 +147,7 @@ void Engine::update()
     glutSwapBuffers();
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->Engine::Update");
+    Debug::Log("[Engine] finish->Engine::Update");
 #endif
 }
 
@@ -158,7 +158,7 @@ void Engine::fixedUpdate()
 #endif
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("start->Engine::FixedUpdate");
+    Debug::Log("[Engine] start->Engine::FixedUpdate");
 #endif
 
     Scene *s = Scene::getCurrent();
@@ -174,7 +174,7 @@ void Engine::fixedUpdate()
 #endif
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->Engine::FixedUpdate");
+    Debug::Log("[Engine] finish->Engine::FixedUpdate");
 #endif
 }
 

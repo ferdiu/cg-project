@@ -9,7 +9,7 @@ class DefaultShader : public FerdiuEngine::Component
 {
 public:
     void awake() override;
-    void update() override;
+    void draw() override;
 
     void setLight(FerdiuEngine::Light *l);
     FerdiuEngine::Light *getLight();
@@ -21,8 +21,11 @@ public:
     void setTexture(std::string const& t);
     void unsetTexture();
 
+    void updateShader();
+
 private:
     glm::vec4 color = glm::vec4(1);
+    bool useTex = false;
 
     FerdiuEngine::Renderer *renderer = nullptr;
     FerdiuEngine::Material *material = nullptr;

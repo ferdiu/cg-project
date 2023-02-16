@@ -39,7 +39,7 @@ private:
 
     unsigned int vbos[2];
 
-    FerdiuEngine::Vertex vertices[(SPH_STEPS + 1) * (SPH_STEPS + 1)];
+    Vertex vertices[(SPH_STEPS + 1) * (SPH_STEPS + 1)];
     unsigned int indices[SPH_STEPS][2 * (SPH_STEPS + 1)];
     int counts[2 * SPH_STEPS];
     void *offsets[2 * SPH_STEPS];

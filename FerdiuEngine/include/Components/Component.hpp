@@ -37,6 +37,8 @@ public:
     FERDIU_ENGINE_EXPORT virtual void fixedUpdate() {};
     FERDIU_ENGINE_EXPORT virtual void update() {};
 
+    FERDIU_ENGINE_EXPORT virtual void draw() {};
+
     FERDIU_ENGINE_EXPORT friend bool operator==(const Component& lhs, const Component& rhs);
 private:
     bool _awaken = false;

@@ -49,7 +49,7 @@ void setup()
     // init globals
     root = Scene::getCurrent()->root();
     c = Camera::getCurrent();
-    c->getOwner()->setPosition(glm::vec3(0, 0, -20));
+    c->getOwner()->setPosition(glm::vec3(0, 0, 0));
     c->setClearColor(glm::vec4(1,1,1,1));
 
 
@@ -77,44 +77,52 @@ void setup()
     material->setSpecular(glm::vec4(1, 1, 1, 1));
     material->setEmission(glm::vec4(.75, .75, .75, 1));
     material->setShininess(64);
+    Material *material2 = new Material(sh);
+    material2->setAmbient(glm::vec4(.5, .5, .5, 1));
+    material2->setDiffuse(glm::vec4(.25, .25, .25, 1));
+    material2->setSpecular(glm::vec4(1, 1, 1, 1));
+    material2->setEmission(glm::vec4(.75, .75, .75, 1));
+    material2->setShininess(64);
 
+    (void) lac;
+    (void) ds;
+    (void) sr;
     // init object
-    sr = new SphereRenderer(10, *material);
+    sr = new SphereRenderer(5, *material);
     ds = new DefaultShader();
-    ds->setColor(glm::vec4(.25, .25, .25, 1));
+    ds->setColor(glm::vec4(1, 0, 0, 1));
     ds->setLight(light);
 
     go = (new GameObject("Test"))
         ->addRenderer((Renderer*) sr) // add renderer
         ->addComponent(ds); // add shader handler
-    lac = new LookAtCamera(go, c);
-    go->addComponent(lac); // add look at camera script
-    go->setPosition(vec3(0, 0, -30));
+    // lac = new LookAtCamera(go, c);
+    // go->addComponent(lac); // add look at camera script
+    go->setPosition(vec3(-5, 0, -20));
     go->instantiate(root);
 
     // init object (child)
-    // DefaultShader *dsChild = new DefaultShader();
-    // dsChild->setColor(glm::vec4(.25, .25, .25, 1));
-    // dsChild->setLight(light);
-    //
-    // goChild = new GameObject("Child");
-    // go
-    //     ->addRenderer((Renderer*) new SphereRenderer(10, *material)) // add renderer
-    //     ->addComponent(dsChild) // add shader handler
-    //     ->addComponent(new LookAtCamera(goChild, c)); // add look at camera script
-    // goChild->setPosition(vec3(0, 0, -5));
-    // goChild->instantiate(go);
+    DefaultShader *dsChild = new DefaultShader();
+    dsChild->setColor(glm::vec4(0, 0, 1, 1));
+    dsChild->setLight(light);
+
+    goChild = new GameObject("Child");
+    goChild
+        ->addRenderer((Renderer*) new SphereRenderer(5, *material2)) // add renderer
+        ->addComponent(dsChild); // add shader handler
+        // ->addComponent(new LookAtCamera(goChild, c)); // add look at camera script
+    goChild->setPosition(vec3(5, 0, -20));
+    goChild->instantiate(root);
 
     // // cute box
-    // GameObject *box = Primitives::Plane(20, material);
+    // GameObject *box = Primitives::Cube(20, material);
     // DefaultShader *dsBox = new DefaultShader();
-    // dsBox->setColor(glm::vec4(.25, .25, .25, 1));
+    // dsBox->setColor(glm::vec4(0, 1, 0, 1));
     // dsBox->setLight(light);
     // box->addComponent(dsBox);
-    // box->addComponent(new LookAtCamera(box, c)); // add look at camera script
-    // box->setRotation(vec3(90, 0, 0));
-    // box->setPosition(vec3(0, 0, -20));
-    // box->instantiate(root);
+    // // box->addComponent(new LookAtCamera(box, c)); // add look at camera script
+    // box->setPosition(vec3(5, 0, -20));
+    // box->instantiate(go);
 }
 
 int main(int argc, char **argv) {

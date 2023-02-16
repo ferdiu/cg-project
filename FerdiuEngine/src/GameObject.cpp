@@ -143,11 +143,12 @@ void GameObject::draw()
 {
 #ifdef DEBUG_VERBOSE
     Debug::indent();
-    Debug::Log("start->draw: " + name);
+    Debug::Log("[GameObject] start->draw: " + name);
 #endif
 
     Camera *c = Camera::getCurrent();
     std::list<GameObject*>::iterator childIter;
+    std::list<Component*>::iterator componentIter;
     glm::mat4 mm = getTransform()->getModelMatrix();
 
     if (nullptr == c)
@@ -162,21 +163,28 @@ void GameObject::draw()
     fprint(*c->getModelMatrix());
 #endif
 
+    // render children
     for (childIter = children.begin(); childIter != children.end(); ++childIter)
         if ((*childIter)->isActive())
             (*childIter)->draw();
 
+    // call draw on all components
+    for (componentIter = components.begin(); componentIter != components.end(); ++componentIter)
+        if ((*componentIter)->isEnabled())
+            (*componentIter)->draw();
+
+    // render this
     if (this->renderer().has_value())
     {
         Renderer *r = this->renderer().value();
-        r->draw();
         r->setModelMatrix(*c->getModelMatrix());
+        r->draw();
     }
 
     c->popMatrices();
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->draw: " + name);
+    Debug::Log("[GameObject] finish->draw: " + name);
     Debug::unindent();
 #endif
 }
@@ -220,7 +228,7 @@ void GameObject::awake()
 {
 #ifdef DEBUG_VERBOSE
     Debug::indent();
-    Debug::Log("start->awake: " + name);
+    Debug::Log("[GameObject] start->awake: " + name);
 #endif
 
     std::list<GameObject*>::iterator childIter;
@@ -228,13 +236,13 @@ void GameObject::awake()
         if ((*childIter)->isActive())
             (*childIter)->awake();
 
+    if (!getTransform()->awaken())
+        getTransform()->awake();
+
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
         if ((*compIter)->isEnabled() && !(*compIter)->awaken())
             (*compIter)->awake();
-
-    if (!getTransform()->awaken())
-        getTransform()->awake();
 
     // TODO: ugly, remove this in the future
     if (renderer().has_value() && renderer().value()->isEnabled() && !renderer().value()->awaken())
@@ -250,7 +258,7 @@ void GameObject::awake()
     start();
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->awake: " + name);
+    Debug::Log("[GameObject] finish->awake: " + name);
     Debug::unindent();
 #endif
 }
@@ -258,7 +266,7 @@ void GameObject::start()
 {
 #ifdef DEBUG_VERBOSE
     Debug::indent();
-    Debug::Log("start->start: " + name);
+    Debug::Log("[GameObject] start->start: " + name);
 #endif
 
     std::list<GameObject*>::iterator childIter;
@@ -266,12 +274,12 @@ void GameObject::start()
         if ((*childIter)->isActive())
             (*childIter)->start();
 
+    getTransform()->start();
+
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
         if ((*compIter)->isEnabled())
             (*compIter)->start();
-
-    getTransform()->start();
 
     // TODO: ugly, remove this in the future
     if (renderer().has_value() && renderer().value()->isEnabled())
@@ -285,7 +293,7 @@ void GameObject::start()
     //
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->start: " + name);
+    Debug::Log("[GameObject] finish->start: " + name);
     Debug::unindent();
 #endif
 }
@@ -294,7 +302,7 @@ void GameObject::fixedUpdate()
 {
 #ifdef DEBUG_VERBOSE
     Debug::indent();
-    Debug::Log("start->fixedUpdate: " + name);
+    Debug::Log("[GameObject] start->fixedUpdate: " + name);
 #endif
 
     std::list<GameObject*>::iterator childIter;
@@ -302,12 +310,12 @@ void GameObject::fixedUpdate()
         if ((*childIter)->isActive())
             (*childIter)->fixedUpdate();
 
+    getTransform()->fixedUpdate();
+
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
         if ((*compIter)->isEnabled())
             (*compIter)->fixedUpdate();
-
-    getTransform()->fixedUpdate();
 
     // TODO: ugly, remove this in the future
     if (renderer().has_value() && renderer().value()->isEnabled())
@@ -321,7 +329,7 @@ void GameObject::fixedUpdate()
     //
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->fixedUpdate: " + name);
+    Debug::Log("[GameObject] finish->fixedUpdate: " + name);
     Debug::unindent();
 #endif
 
@@ -330,7 +338,7 @@ void GameObject::update()
 {
 #ifdef DEBUG_VERBOSE
     Debug::indent();
-    Debug::Log("start->update: " + name);
+    Debug::Log("[GameObject] start->update: " + name);
 #endif
 
     std::list<GameObject*>::iterator childIter;
@@ -338,12 +346,12 @@ void GameObject::update()
         if ((*childIter)->isActive())
             (*childIter)->update();
 
+    getTransform()->update();
+
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
         if ((*compIter)->isEnabled())
             (*compIter)->update();
-
-    getTransform()->update();
 
     // TODO: ugly, remove this in the future
     if (renderer().has_value() && renderer().value()->isEnabled())
@@ -357,7 +365,7 @@ void GameObject::update()
     //
 
 #ifdef DEBUG_VERBOSE
-    Debug::Log("finish->update: " + name);
+    Debug::Log("[GameObject] finish->update: " + name);
     Debug::unindent();
 #endif
 }
