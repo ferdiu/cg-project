@@ -108,5 +108,9 @@ unsigned char *BitMapFile::getData()
 {
     return data;
 }
+unsigned char& BitMapFile::getData() const
+{
+    return *data;
+}
 
 }

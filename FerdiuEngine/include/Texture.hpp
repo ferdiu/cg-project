@@ -14,7 +14,7 @@ namespace FerdiuEngine
 class FERDIU_ENGINE_EXPORT Texture
 {
 public:
-    FERDIU_ENGINE_EXPORT Texture(std::string path, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
+    FERDIU_ENGINE_EXPORT Texture(std::string path, bool bind = false, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
 
     FERDIU_ENGINE_EXPORT void ReBind();
 
@@ -28,8 +28,11 @@ private:
     int height = 0;
     unsigned int id = 0;
 
-    void Load(GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
-    void Bind(BitMapFile image, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
+    BitMapFile bmp;
+    bool _imgSet = false;
+
+    void Load(bool bind = false, GLenum filtering = GL_NEAREST, GLenum wrap = GL_REPEAT);
+    void Bind();
 };
 
 }

@@ -28,6 +28,8 @@ endforeach()
 
 # copy shaders to bin directory
 include(shaders/CMakeLists.txt)
+# copy resources to bin directory
+include(resources/CMakeLists.txt)
 
 add_subdirectory(FerdiuEngine)
 ###############################

@@ -66,6 +66,9 @@ void Renderer::draw()
     material->use();
     glBindVertexArray(this->vao);
 
+    if (texture.has_value())
+        glBindTexture(GL_TEXTURE_2D, texture.value().getId());
+
     _draw();
 
     glBindVertexArray(0);
@@ -90,7 +93,7 @@ void Renderer::setTexture(std::string filepath, GLenum texEnum)
     glBindVertexArray(this->vao);
     glActiveTexture(texEnum);
 
-    texture = Texture(filepath);
+    texture = Texture(filepath, true);
 
     glBindVertexArray(0);
     glActiveTexture(0);

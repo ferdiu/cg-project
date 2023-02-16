@@ -171,6 +171,7 @@ void Camera::lookAt(glm::vec3 pos, glm::vec3 up)
     glm::mat4 *la = new glm::mat4(glm::lookAt(t->getPosition(), pos, up));
     stack.setViewMatrix(*la);
 
+    // https://community.khronos.org/t/determining-angles-from-modelview-matrix/55809
     // TODO: update angles https://stackoverflow.com/questions/15022630/how-to-calculate-the-angle-from-rotation-matrix
     // t->setRotation(glm::vec3(
     //     glm::euler() * atan2((*m)[3][2], (*m)[3][3]),

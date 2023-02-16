@@ -20,6 +20,7 @@ public:
     FERDIU_ENGINE_EXPORT int width();
     FERDIU_ENGINE_EXPORT int height();
     FERDIU_ENGINE_EXPORT unsigned char *getData();
+    FERDIU_ENGINE_EXPORT unsigned char& getData() const;
 
 private:
     int sizeX;

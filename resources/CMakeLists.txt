@@ -1,0 +1,31 @@
+
+## COPY MAPS
+set(MAPS_DIR resources/maps)
+set(IN_MAPS_DIR ${CMAKE_SOURCE_DIR}/${MAPS_DIR})
+set(OUT_MAPS_DIR ${CMAKE_CURRENT_BINARY_DIR}/${MAPS_DIR})
+
+file(MAKE_DIRECTORY ${OUT_MAPS_DIR})
+
+set(MAPS
+    map1.map
+)
+
+foreach(S IN LISTS MAPS)
+    configure_file(${IN_MAPS_DIR}/${S} ${OUT_MAPS_DIR}/${S} COPYONLY)
+endforeach()
+
+## COPY TEXTURES
+set(TEXTURES_DIR resources/textures)
+set(IN_TEXTURES_DIR ${CMAKE_SOURCE_DIR}/${TEXTURES_DIR})
+set(OUT_TEXTURES_DIR ${CMAKE_CURRENT_BINARY_DIR}/${TEXTURES_DIR})
+
+file(MAKE_DIRECTORY ${OUT_TEXTURES_DIR})
+
+set(TEXTURES
+    wood.bmp
+)
+
+foreach(S IN LISTS TEXTURES)
+    configure_file(${IN_TEXTURES_DIR}/${S} ${OUT_TEXTURES_DIR}/${S} COPYONLY)
+endforeach()
+

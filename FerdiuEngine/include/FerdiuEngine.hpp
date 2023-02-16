@@ -38,11 +38,11 @@
 #include "FerdiuEngine_export.h"
 
 #ifndef WIN_W
-#define WIN_W 800
+#define WIN_W 1280
 #endif
 
 #ifndef WIN_H
-#define WIN_H 600
+#define WIN_H 720
 #endif
 
 #ifndef PROJECT_NAME
@@ -56,6 +56,7 @@ class FERDIU_ENGINE_EXPORT Engine
 {
 public:
     FERDIU_ENGINE_EXPORT static void Start(int argc, char **argv, void (*setup)(void));
+    FERDIU_ENGINE_EXPORT static void onUpdate(void (*update)(void));
     FERDIU_ENGINE_EXPORT static void onResize(void (*resize)(int w, int h));
     FERDIU_ENGINE_EXPORT static void onMouseInput(void (*mouseControl)(int button, int state, int x, int y));
     FERDIU_ENGINE_EXPORT static void onKeyboardDown(void (*keyInput)(unsigned char key, int x, int y));
@@ -66,6 +67,8 @@ public:
 private:
     static void update();
     static void fixedUpdate();
+
+    static void (*userUpdate)(void);
 };
 
 }

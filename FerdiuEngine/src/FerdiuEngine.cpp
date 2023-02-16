@@ -77,6 +77,11 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     glutMainLoop();
 }
 
+void Engine::onUpdate(void (*update)(void))
+{
+    Engine::userUpdate = (update);
+}
+
 void Engine::onResize(void (*resize)(int w, int h))
 {
     Screen::onResize(resize);
@@ -116,6 +121,9 @@ void Engine::update()
 #ifdef DEBUG_VERBOSE
     Debug::Log("start->Engine::Update");
 #endif
+
+    if (nullptr != userUpdate)
+        userUpdate();
 
     Camera *c = Camera::getCurrent();
     Scene *s = Scene::getCurrent();
@@ -177,5 +185,8 @@ void Engine::fixedUpdate()
     Debug::Log("[Engine] finish->Engine::FixedUpdate");
 #endif
 }
+
+void (*Engine::userUpdate)(void) = nullptr;
+
 
 }

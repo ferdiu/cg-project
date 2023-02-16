@@ -63,6 +63,8 @@ namespace Debug
         fdoublespace(_indent);
 #endif
         std::cout << "Log: " << message << std::endl;
+#else
+        (void) message;
 #endif
     }
 
@@ -73,6 +75,8 @@ namespace Debug
         fdoublespace(_indent);
 #endif
         std::cout << "Warn: " << message << std::endl;
+#else
+        (void) message;
 #endif
     }
 
@@ -83,6 +87,8 @@ namespace Debug
         fdoublespace(_indent);
 #endif
         std::cout << "Error: " << message << std::endl;
+#else
+        (void) message;
 #endif
     }
 }
