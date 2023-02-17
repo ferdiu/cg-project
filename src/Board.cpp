@@ -174,18 +174,32 @@ void Board::instantiateWall(int i, int j)
 
 void Board::instantiateStart(int i, int j)
 {
+    GameObject *go = (new GameObject("START(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
+    ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
+    ->addRenderer(new SphereRenderer(0.5, *finish));
+
     glm::vec2 xz = realPos(i, j);
     startPostion = glm::vec3(xz[0], 0.5, xz[1]);
+    go->setPosition(glm::vec3(xz[0], 1, xz[1]));
+
+    DefaultShader *ds = new DefaultShader();
+    ds->setColor(glm::vec4(1, 0, 0, .5));
+    if (nullptr != l)
+        ds->setLight(l);
+    go->addComponent(ds);
+
+    go->collider().value()->setTrigger(true);
+    go->instantiate(root);
 }
 
 void Board::instantiateFinish(int i, int j)
 {
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
-        ->addRenderer(new SphereRenderer(1, *finish));
+        ->addRenderer(new SphereRenderer(0.5, *finish));
 
     glm::vec2 xz = realPos(i, j);
-    go->setPosition(glm::vec3(xz[0], 0.5, xz[1]));
+    go->setPosition(glm::vec3(xz[0], 1, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
     ds->setColor(glm::vec4(0, 1, 0, .5));
@@ -194,6 +208,7 @@ void Board::instantiateFinish(int i, int j)
     go->addComponent(ds);
 
     go->collider().value()->setTrigger(true);
+    go->instantiate(root);
 }
 
 void Board::instantiateFloor(int i, int j)
@@ -234,8 +249,8 @@ void Board::build()
             switch (map(i, j))
             {
                 case ' ': instantiateFloor(i, j); break;
-                case 'S': instantiateStart(i, j); break;
-                case 'F': instantiateFinish(i, j); break;
+                case 'S': instantiateFloor(i, j); instantiateStart(i, j); break;
+                case 'F': instantiateFloor(i, j); instantiateFinish(i, j); break;
                 case '#': instantiateWall(i, j); break;
                 case 'O': instantiateHole(i, j); break;
             }

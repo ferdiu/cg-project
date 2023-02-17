@@ -47,7 +47,7 @@ void setup()
     // init globals
     root = Scene::getCurrent()->root();
     c = Camera::getCurrent();
-    // c->getOwner()->setPosition(glm::vec3(0, CAMERA_Y, 0));
+    c->getOwner()->setPosition(glm::vec3(0, CAMERA_Y, 0));
     c->setFrustum(-3, 3, -3, 3, 5, 1000);
 
     Engine::onUpdate(update);
@@ -82,12 +82,12 @@ void setup()
 
 
 
-    // // BUILD BOARD
-    // b = new Board("resources/maps/map1.map", light);
-    // b->instantiate(root);
-    // lac = new LookAtCamera(b->getRoot(), c, glm::vec3(0, 0, -1));
-    // b->getRoot()->addComponent(lac); // add look at camera script
-    //
+    // BUILD BOARD
+    b = new Board("resources/maps/map1.map", light);
+    b->instantiate(root);
+    lac = new LookAtCamera(b->getRoot(), c, glm::vec3(0, 0, -1));
+    b->getRoot()->addComponent(lac); // add look at camera script
+
 
 
     (void) b;
@@ -109,10 +109,20 @@ void setup()
     // go->instantiate(root);
 }
 
-
+void instructions()
+{
+    cout << "##############################################" << endl;
+    cout << "# Click and drag to tilt the board           #" << endl;
+    cout << "# Bring the ball from the start (red sphere) #" << endl;
+    cout << "# to the finish (green sphere) to win        #" << endl;
+    cout << "# ESC - quit game                            #" << endl;
+    cout << "# F - toggle full screen                     #" << endl;
+    cout << "##############################################" << endl;
+}
 
 int main(int argc, char **argv) {
     std::cout << "STARTING GAME!!!" << std::endl;
+    instructions();
 
     Engine::Start(argc, argv, setup);
 
