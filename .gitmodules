@@ -1,0 +1,3 @@
+[submodule "FerdiuEngine/reactphysics3d"]
+	path = FerdiuEngine/reactphysics3d
+	url = git@github.com:DanielChappuis/reactphysics3d.git
