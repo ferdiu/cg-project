@@ -130,10 +130,6 @@ void CubeRenderer::generateIndices()
         indices[i][2] = (i*N_CUBE_VERTICES_PER_FACE) + 2;
         indices[i][3] = (i*N_CUBE_VERTICES_PER_FACE) + 3;
     }
-    for (size_t i = 0; i < N_CUBE_FACES; i++)
-        for (size_t j = 0; j < 4; j++)
-            printf("%d\n", indices[i][j]);
-
 }
 
 // Fill the array of counts.
