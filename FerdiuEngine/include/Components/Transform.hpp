@@ -35,6 +35,9 @@ public:
     FERDIU_ENGINE_EXPORT static void apply(Transform const& t, glm::mat4& mat);
     FERDIU_ENGINE_EXPORT void apply(glm::mat4& mat) const;
 
+    FERDIU_ENGINE_EXPORT void copy(Transform const& t);
+    FERDIU_ENGINE_EXPORT void copy(Transform *t);
+
 private:
     glm::vec3 position = glm::vec3(0);
     glm::vec3 scale = glm::vec3(1);

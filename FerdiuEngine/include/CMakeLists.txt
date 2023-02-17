@@ -25,6 +25,8 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/utils/GLMatrices.hpp
     ${INC_DIR}/utils/GLMatricesStack.hpp
     ${INC_DIR}/utils/Debug.hpp
+    ${INC_DIR}/utils/Math.hpp
+    ${INC_DIR}/Physics.hpp
     ${INC_DIR}/Primitives.hpp
     ${INC_DIR}/FerdiuEngine.hpp
     ${INC_DIR}/GameObject.hpp

@@ -4,6 +4,7 @@
 
 #include "../include/Scene.hpp"
 #include "../include/GameObject.hpp"
+#include "Physics.hpp"
 
 namespace FerdiuEngine
 {

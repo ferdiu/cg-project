@@ -15,8 +15,6 @@ public:
     FERDIU_ENGINE_EXPORT BoxCollider(glm::vec3 center, glm::vec3 size);
 
     FERDIU_ENGINE_EXPORT bool checkCollision(Collider *c) override;
-private:
-    // TODO:
 };
 
 }

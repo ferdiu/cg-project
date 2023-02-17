@@ -30,7 +30,7 @@ void Time::updateFixedDeltaTime(int n) {
     Time::instance()._fixedDeltaTime = currentTime - Time::instance()._fixed_lastTime;
     Time::instance()._fixed_lastTime = currentTime;
 
-    if (Time::instance().updateRoutine != nullptr)
+    if (nullptr != Time::instance().updateRoutine)
         Time::instance().updateRoutine();
 
     glutTimerFunc(FIXED_DELTA_TIME_MILLISEC, updateFixedDeltaTime, 0);

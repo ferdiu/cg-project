@@ -6,7 +6,8 @@
 #include "../../include/Components/Component.hpp"
 #include "../../include/Components/Transform.hpp"
 #include "../../include/Components/Camera.hpp"
-#include "GameObject.hpp"
+#include "../../include/GameObject.hpp"
+#include "../../include/utils/Math.hpp"
 
 namespace FerdiuEngine
 {
@@ -66,21 +67,25 @@ glm::mat4 Transform::getModelMatrix() const
 
 void Transform::apply(Transform const& t, glm::mat4& mat)
 {
-    glm::vec3 const& rot = t.getRotation();
-    // https://gamedev.stackexchange.com/questions/138358/what-is-the-transformation-order-when-using-the-transform-class
-    // https://community.khronos.org/t/correct-order-of-transformations/75448/2
-    glm::mat4 matRX = glm::rotate(mat, glm::radians(rot[0]), glm::vec3(1.0, 0.0, 0.0)); // x
-    glm::mat4 matRY = glm::rotate(mat, glm::radians(rot[1]), glm::vec3(0.0, 1.0, 0.0)); // y
-    glm::mat4 matRZ = glm::rotate(mat, glm::radians(rot[2]), glm::vec3(0.0, 0.0, 1.0)); // z
-    glm::mat4 matS = glm::scale(mat, t.getScale());
-    glm::mat4 matT = glm::translate(mat, t.getPosition());
-
-    mat = matT * matS * matRZ * matRY * matRX;
+    mat = Math::convert(t, mat);
 }
 
 void Transform::apply(glm::mat4& mat) const
 {
     apply(*getOwner().getTransform(), mat);
+}
+
+void Transform::copy(Transform const& t)
+{
+    this->setPosition(t.getPosition());
+    this->setRotation(t.getRotation());
+    this->setScale(t.getScale());
+}
+void Transform::copy(Transform *t)
+{
+    this->setPosition(t->getPosition());
+    this->setRotation(t->getRotation());
+    this->setScale(t->getScale());
 }
 
 }

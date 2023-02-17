@@ -5,8 +5,10 @@
 #include <string>
 
 #include "GameObject.hpp"
+#include "Physics.hpp"
 
 #include "FerdiuEngine_export.h"
+#include "Physics.hpp"
 
 namespace FerdiuEngine
 {

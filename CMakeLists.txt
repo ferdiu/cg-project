@@ -38,7 +38,6 @@ endforeach()
 
 add_subdirectory(FerdiuEngine)
 include_directories(FerdiuEngine/include)
-# include_directories(FerdiuEngine/reactphysics3d/include)
 
 # link ferdiuengine to main
 target_link_libraries(cg-project ferdiuengine)
@@ -47,6 +46,7 @@ target_link_libraries(cg-project ferdiuengine)
 
 ########## KDevelop ###########
 # not really needed but KDevelop is complaining about missing glut otherwise...
+include_directories(FerdiuEngine/reactphysics3d/include)
 include_directories(/usr/include)
 include_directories(/usr/lib)
 link_directories(/usr/lib64)

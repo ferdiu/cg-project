@@ -26,6 +26,17 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     Time::setUpdateRoutine(fixedUpdate);
     glutDisplayFunc(Engine::update);
 
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[Engine] start->Physics::init");
+    #endif
+
+// INITIALIZE PHYSICS
+    Physics::init();
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[Engine] finish->Physics::init");
+#endif
+
     // INITIALIZE DEFAULT SCENE
     Scene::setCurrent(new Scene("DefaultScene"));
 
@@ -121,6 +132,9 @@ void Engine::update()
 #ifdef DEBUG_VERBOSE
     Debug::Log("start->Engine::Update");
 #endif
+    // https://docs.unity3d.com/Manual/ExecutionOrder.html
+
+    Physics::update();
 
     if (nullptr != userUpdate)
         userUpdate();
@@ -135,12 +149,6 @@ void Engine::update()
 
     // update scene
     s->update();
-    // glm::vec3 cPos = c->getOwner()->getTransform()->getPosition();
-    // glm::vec3 cScale = c->getOwner()->getTransform()->getScale();
-    // glm::vec3 cRot = c->getOwner()->getTransform()->getRotation();
-    // printf("Camera position: (%.3f, %.3f, %.3f)\n", cPos[0], cPos[1], cPos[2]);
-    // printf("Camera scale: (%.3f, %.3f, %.3f)\n", cScale[0], cScale[1], cScale[2]);
-    // printf("Camera rotation: (%.3f, %.3f, %.3f)\n", cRot[0], cRot[1], cRot[2]);
 
     // draw scene
     s->draw();

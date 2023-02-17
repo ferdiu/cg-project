@@ -14,6 +14,7 @@
 #ifndef DEBUG_VERBOSE
 #undef DEBUG_RENDERING
 #undef DEBUG_MATRICES
+#undef DEBUG_PHYSICS
 #endif
 
 namespace FerdiuEngine
