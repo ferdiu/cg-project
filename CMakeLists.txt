@@ -7,8 +7,8 @@ project(cg-project)
 
 ########## MAIN ###############
 # compiler flags and build mode
-set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type")
-set(CMAKE_CXX_FLAGS "-std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm -pedantic -Wall -Wextra -Werror")
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type")
+set(CMAKE_CXX_FLAGS "-std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm -pedantic -Wall -Wextra -Werror -Wno-error=type-limits")
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 
@@ -38,6 +38,7 @@ endforeach()
 
 add_subdirectory(FerdiuEngine)
 include_directories(FerdiuEngine/include)
+# include_directories(FerdiuEngine/reactphysics3d/include)
 
 # link ferdiuengine to main
 target_link_libraries(cg-project ferdiuengine)
@@ -48,9 +49,9 @@ target_link_libraries(cg-project ferdiuengine)
 # not really needed but KDevelop is complaining about missing glut otherwise...
 include_directories(/usr/include)
 include_directories(/usr/lib)
-include_directories(/usr/include)
 link_directories(/usr/lib64)
 link_directories(/usr/lib32)
+link_directories(/usr/lib)
 ###############################
 
 
