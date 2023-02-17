@@ -10,27 +10,27 @@ namespace FerdiuEngine
 {
     namespace Math
     {
-        reactphysics3d::Quaternion convert(glm::fquat q)
+        rp3d::Quaternion convert(glm::fquat q)
         {
-            return reactphysics3d::Quaternion(q.x, q.y, q.z, q.w);
+            return rp3d::Quaternion(q.x, q.y, q.z, q.w);
         }
-        reactphysics3d::Vector3 convert(glm::vec3 v)
+        rp3d::Vector3 convert(glm::vec3 v)
         {
-            return reactphysics3d::Vector3(v.x, v.y, v.z);
+            return rp3d::Vector3(v.x, v.y, v.z);
         }
-        reactphysics3d::Vector2 convert(glm::vec2 v)
+        rp3d::Vector2 convert(glm::vec2 v)
         {
-            return reactphysics3d::Vector2(v.x, v.y);
+            return rp3d::Vector2(v.x, v.y);
         }
-        glm::fquat convert(reactphysics3d::Quaternion q)
+        glm::fquat convert(rp3d::Quaternion q)
         {
             return glm::fquat(q.x, q.y, q.z, q.w);
         }
-        glm::vec3 convert(reactphysics3d::Vector3 v)
+        glm::vec3 convert(rp3d::Vector3 v)
         {
             return glm::vec3(v.x, v.y, v.z);
         }
-        glm::vec2 convert(reactphysics3d::Vector2 v)
+        glm::vec2 convert(rp3d::Vector2 v)
         {
             return glm::vec2(v.x, v.y);
         }
@@ -43,21 +43,21 @@ namespace FerdiuEngine
                 *scaleMatrix(t.getScale(), mat)
                 *rotationMatrix(t.getRotation(), mat);
         }
-        reactphysics3d::Transform convert(Transform const& t)
+        rp3d::Transform convert(Transform const& t)
         {
-            return reactphysics3d::Transform(
+            return rp3d::Transform(
                 convert(t.getPosition()),
                 convert(eulerToQuaternion(t.getRotation()))
             );
         }
-        Transform convert(reactphysics3d::Transform t, glm::vec3 scale)
+        Transform convert(rp3d::Transform t, glm::vec3 scale)
         {
             return Transform(
                 convert(t.getPosition()),
                 scale,
                 quaternionToEuler(convert(t.getOrientation())));
         }
-        Transform convert(reactphysics3d::Transform t, reactphysics3d::Vector3 scale)
+        Transform convert(rp3d::Transform t, rp3d::Vector3 scale)
         {
             return convert(t, (glm::vec3) convert(scale));
         }
@@ -69,7 +69,7 @@ namespace FerdiuEngine
             glm::fquat qz = glm::angleAxis(rot.z, glm::vec3(0, 0, 1));
             return qz * qy * qx;
         }
-        reactphysics3d::Quaternion eulerToQuaternion(reactphysics3d::Vector3 rot)
+        rp3d::Quaternion eulerToQuaternion(rp3d::Vector3 rot)
         {
             return convert(eulerToQuaternion(convert(rot)));
         }
@@ -96,7 +96,7 @@ namespace FerdiuEngine
 
             return angles;
         }
-        reactphysics3d::Vector3 quaternionToEuler(reactphysics3d::Vector3 q)
+        rp3d::Vector3 quaternionToEuler(rp3d::Vector3 q)
         {
             return convert(quaternionToEuler((convert(q))));
         }

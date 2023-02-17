@@ -39,13 +39,18 @@ public:
 
     // transform (is a component but with a special role)
     FERDIU_ENGINE_EXPORT Transform *getTransform();
-    FERDIU_ENGINE_EXPORT glm::vec3 getPosition() const;
-    FERDIU_ENGINE_EXPORT void setPosition(glm::vec3 v);
-    FERDIU_ENGINE_EXPORT glm::vec3 getScale() const;
-    FERDIU_ENGINE_EXPORT void setScale(glm::vec3 v);
-    FERDIU_ENGINE_EXPORT glm::vec3 getRotation() const;
-    FERDIU_ENGINE_EXPORT void setRotation(glm::vec3 v);
+
+    FERDIU_ENGINE_EXPORT glm::vec3 getLocalPosition() const;
+    FERDIU_ENGINE_EXPORT void setLocalPosition(glm::vec3 v);
+    FERDIU_ENGINE_EXPORT glm::vec3 getLocalScale() const;
+    FERDIU_ENGINE_EXPORT void setLocalScale(glm::vec3 v);
+    FERDIU_ENGINE_EXPORT glm::vec3 getLocalRotation() const;
+    FERDIU_ENGINE_EXPORT void setLocalRotation(glm::vec3 v);
+
     FERDIU_ENGINE_EXPORT glm::vec3 getGlobalPosition() const;
+    FERDIU_ENGINE_EXPORT void setGlobalPosition(glm::vec3 v);
+
+    FERDIU_ENGINE_EXPORT glm::vec3 getParentGlobalPosition() const;
 
     // components
     FERDIU_ENGINE_EXPORT std::list<Component*> getComponents();

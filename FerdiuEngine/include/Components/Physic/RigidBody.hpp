@@ -13,6 +13,8 @@
 namespace FerdiuEngine
 {
 
+class Transform;
+
 class FERDIU_ENGINE_EXPORT RigidBody : public Component
 {
 public:
@@ -42,11 +44,17 @@ public:
 
     FERDIU_ENGINE_EXPORT void applyForce(glm::vec3 v);
 
-    FERDIU_ENGINE_EXPORT reactphysics3d::RigidBody *getPhysicsRigidBody();
+    FERDIU_ENGINE_EXPORT rp3d::RigidBody *getPhysicsRigidBody();
+
+    FERDIU_ENGINE_EXPORT Transform *getPhysicsTransform();
+    FERDIU_ENGINE_EXPORT Transform *getTransform();
+
+    FERDIU_ENGINE_EXPORT void syncTransfromToPhysics();
+    FERDIU_ENGINE_EXPORT void syncPhysicsToTransform();
 
 private:
-    reactphysics3d::Transform *tr;
-    reactphysics3d::RigidBody *rb;
+    rp3d::Transform *tr;
+    rp3d::RigidBody *rb;
 
     RigidBodyType type;
 
@@ -54,6 +62,11 @@ private:
     float mass = 1.0;
 
     void initRigidBody();
+
+    rp3d::Transform *getTransform_RP3D();
+    Transform *getTransform_Normal();
+    rp3d::Transform *getPhysicsTransform_RP3D();
+    Transform *getPhysicsTransform_Normal();
 };
 
 }

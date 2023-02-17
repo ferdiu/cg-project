@@ -11,7 +11,7 @@ namespace FerdiuEngine
 {
 
 // Your event listener class
-class FERDIU_ENGINE_EXPORT PhysicsEventListener : public reactphysics3d::EventListener
+class FERDIU_ENGINE_EXPORT PhysicsEventListener : public rp3d::EventListener
 {
 };
 
@@ -20,18 +20,18 @@ class FERDIU_ENGINE_EXPORT Physics
 public:
     FERDIU_ENGINE_EXPORT static void init();
 
-    FERDIU_ENGINE_EXPORT static reactphysics3d::PhysicsCommon& common();
+    FERDIU_ENGINE_EXPORT static rp3d::PhysicsCommon& common();
 
-    FERDIU_ENGINE_EXPORT static reactphysics3d::PhysicsWorld& world();
+    FERDIU_ENGINE_EXPORT static rp3d::PhysicsWorld& world();
 
     FERDIU_ENGINE_EXPORT static float accumulator();
 
 private:
     static bool _initialized;
 
-    static reactphysics3d::PhysicsCommon physicsCommon;
-    static reactphysics3d::PhysicsWorld *_world;
-    static PhysicsEventListener listener;
+    static rp3d::PhysicsCommon *physicsCommon;
+    static rp3d::PhysicsWorld *_world;
+    static PhysicsEventListener *listener;
 
     static float _accumulator;
     static void update(); friend class Engine;

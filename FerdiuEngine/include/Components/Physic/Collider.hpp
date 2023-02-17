@@ -25,13 +25,13 @@ public:
     FERDIU_ENGINE_EXPORT Bounds *getBounds();
     FERDIU_ENGINE_EXPORT virtual bool checkCollision(Collider *c) = 0;
 
-    FERDIU_ENGINE_EXPORT void bindToRigidBody(reactphysics3d::RigidBody *rb);
+    FERDIU_ENGINE_EXPORT void bindToRigidBody(rp3d::RigidBody *rb);
 
 protected:
     FERDIU_ENGINE_EXPORT virtual void setBounds(Bounds *b);
 
-    reactphysics3d::Collider *collider;
-    reactphysics3d::CollisionShape *shape;
+    rp3d::Collider *collider;
+    rp3d::CollisionShape *shape;
 
 private:
 

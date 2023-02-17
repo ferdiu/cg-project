@@ -26,16 +26,8 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     Time::setUpdateRoutine(fixedUpdate);
     glutDisplayFunc(Engine::update);
 
-#ifdef DEBUG_PHYSICS
-    Debug::Log("[Engine] start->Physics::init");
-    #endif
-
-// INITIALIZE PHYSICS
+    // INITIALIZE PHYSICS
     Physics::init();
-
-#ifdef DEBUG_PHYSICS
-    Debug::Log("[Engine] finish->Physics::init");
-#endif
 
     // INITIALIZE DEFAULT SCENE
     Scene::setCurrent(new Scene("DefaultScene"));

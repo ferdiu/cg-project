@@ -14,29 +14,29 @@ namespace FerdiuEngine
 {
 
 
-RigidBody::RigidBodyType convert(reactphysics3d::BodyType bt)
+RigidBody::RigidBodyType convert(rp3d::BodyType bt)
 {
     switch (bt)
     {
-        case reactphysics3d::BodyType::DYNAMIC:
+        case rp3d::BodyType::DYNAMIC:
             return RigidBody::RigidBodyType::RB_DYNAMIC;
-        case reactphysics3d::BodyType::KINEMATIC:
+        case rp3d::BodyType::KINEMATIC:
             return RigidBody::RigidBodyType::RB_KINEMATIC;
         default:
             return RigidBody::RigidBodyType::RB_STATIC;
     }
 }
 
-reactphysics3d::BodyType convert(RigidBody::RigidBodyType bt)
+rp3d::BodyType convert(RigidBody::RigidBodyType bt)
 {
     switch (bt)
     {
         case RigidBody::RigidBodyType::RB_DYNAMIC:
-            return reactphysics3d::BodyType::DYNAMIC;
+            return rp3d::BodyType::DYNAMIC;
         case RigidBody::RigidBodyType::RB_KINEMATIC:
-            return reactphysics3d::BodyType::KINEMATIC;
+            return rp3d::BodyType::KINEMATIC;
         default:
-            return reactphysics3d::BodyType::STATIC;
+            return rp3d::BodyType::STATIC;
     }
 }
 
@@ -44,20 +44,30 @@ RigidBody::RigidBody(RigidBody::RigidBodyType type, float mass) : type(type), ma
 
 void RigidBody::awake()
 {
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[RigidBody] start->awake");
+#endif
+
     initRigidBody();
     Component::awake();
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[RigidBody] finish->awake");
+    Debug::unindent();
+#endif
 }
+
 void RigidBody::start() {}
 
 void RigidBody::update()
 {
-    this->getOwner()->setPosition(Math::convert(this->rb->getLocalCenterOfMass()));
-    // TODO: set rotation????
+    syncTransfromToPhysics();
 //     // TODO: is this really needed now???
 //     decimal factor = Physics::accumulator() / PHYSICS_TIME_STEP;
 //
 //     // Compute the interpolated transform of the rigid body
-//     reactphysics3d::Transform interpolatedTransform = reactphysics3d::Transform::interpolateTransforms(prevTransform, tr, factor);
+//     rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(prevTransform, tr, factor);
 //
 //     // Now you can render your body using the interpolated transform here
 //
@@ -88,6 +98,11 @@ void RigidBody::setGravityScale(float v)
 
 void RigidBody::initRigidBody()
 {
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[RigidBody] start->initRigidBody");
+#endif
+
     GameObject *o = getOwner();
 
     if (nullptr == o)
@@ -96,13 +111,18 @@ void RigidBody::initRigidBody()
         return;
     }
 
-    tr = new reactphysics3d::Transform(
+    tr = new rp3d::Transform(
         Math::convert(o->getGlobalPosition()),
-        Math::convert(Math::eulerToQuaternion(o->getRotation())));
+        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())));
 
     this->rb = Physics::world().createRigidBody(*tr);
     this->rb->setMass(mass);
     this->rb->setType(convert(this->type));
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[RigidBody] finish->initRigidBody");
+    Debug::unindent();
+#endif
 }
 
 void RigidBody::applyForce(glm::vec3 force)
@@ -110,9 +130,59 @@ void RigidBody::applyForce(glm::vec3 force)
     this->rb->applyWorldForceAtCenterOfMass(Math::convert(force));
 }
 
-reactphysics3d::RigidBody *RigidBody::getPhysicsRigidBody()
+rp3d::RigidBody *RigidBody::getPhysicsRigidBody()
 {
     return this->rb;
+}
+
+Transform *RigidBody::getTransform()
+{
+    return getTransform_Normal();
+}
+
+Transform *RigidBody::getPhysicsTransform()
+{
+    return getPhysicsTransform_Normal();
+}
+
+rp3d::Transform *RigidBody::getTransform_RP3D()
+{
+    GameObject *o = getOwner();
+    return new rp3d::Transform(
+        Math::convert(o->getGlobalPosition()),
+        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())));
+}
+
+Transform *RigidBody::getTransform_Normal()
+{
+    return getOwner()->getTransform();
+}
+
+rp3d::Transform *RigidBody::getPhysicsTransform_RP3D()
+{
+    return new rp3d::Transform(rb->getTransform());
+}
+
+Transform *RigidBody::getPhysicsTransform_Normal()
+{
+    return getOwner()->getTransform();
+}
+
+void RigidBody::syncPhysicsToTransform()
+{
+    rp3d::Transform *t = getTransform_RP3D();
+    GameObject *o = getOwner();
+    t->setPosition(Math::convert(o->getGlobalPosition()));
+    t->setOrientation(Math::convert(Math::eulerToQuaternion(o->getTransform()->getRotation())));
+    rb->setTransform(*t);
+}
+
+void RigidBody::syncTransfromToPhysics()
+{
+    Transform *pt = getPhysicsTransform();
+    Transform *nt = getTransform();
+    nt->position = pt->getPosition();
+    nt->rotation = pt->getRotation();
 }
 
 }

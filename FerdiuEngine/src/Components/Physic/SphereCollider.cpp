@@ -16,8 +16,18 @@ namespace FerdiuEngine
 
 SphereCollider::SphereCollider(glm::vec3 center, float radius) : Collider()
 {
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[SphereCollider] start->constructor");
+#endif
+
     setBounds(new Bounds(center, glm::vec3(radius)));
     this->shape = Physics::common().createSphereShape(radius);
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[SphereCollider] finish->constructor");
+    Debug::unindent();
+#endif
 }
 
 bool SphereCollider::checkCollision(Collider *c)

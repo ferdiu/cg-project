@@ -14,16 +14,27 @@ set(CMAKE_CXX_FLAGS "-shared -std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm 
 set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 
-# NOTE: enable this to add verbose debug messages
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_VERBOSE")
-# NOTE: enable this to add proj, view and model matrices to be printed (needs DEBUG_VERBOSE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MATRICES")
-# NOTE: enable this to add rendering debug infos (needs DEBUG_VERBOSE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_RENDERING")
-# NOTE: enable this to add physics debug infos (needs DEBUG_VERBOSE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_PHYSICS")
-# NOTE: disable debug log indentation
-# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_NO_INDENT")
+option(FENG_VERBOSE "Enable this to add verbose debug messages" OFF)
+option(FENG_MATRICES "Enable this to add proj, view and model matrices to be printed (needs DEBUG_VERBOSE)" OFF)
+option(FENG_RENDERING "Enable this to add rendering debug infos (needs DEBUG_VERBOSE)" OFF)
+option(FENG_PHYSICS "Enable this to add physics debug infos (needs DEBUG_VERBOSE)" OFF)
+option(FENG_NO_INDENT "Disable debug log indentation" OFF)
+
+if(FENG_VERBOSE)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_VERBOSE")
+endif()
+if(FENG_MATRICES)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MATRICES")
+endif()
+if(FENG_RENDERING)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_RENDERING")
+endif()
+if(FENG_PHYSICS)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_PHYSICS")
+endif()
+if(FENG_NO_INDENT)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_NO_INDENT")
+endif()
 
 # dir definitions
 set(SRC_DIR src)

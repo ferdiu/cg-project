@@ -47,7 +47,7 @@ void setup()
     // init globals
     root = Scene::getCurrent()->root();
     c = Camera::getCurrent();
-    c->getOwner()->setPosition(glm::vec3(0, CAMERA_Y, 0));
+    c->getOwner()->setLocalPosition(glm::vec3(0, CAMERA_Y, 0));
     c->setFrustum(-3, 3, -3, 3, 5, 1000);
 
     Engine::onUpdate(update);

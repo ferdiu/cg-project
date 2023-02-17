@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include "Component.hpp"
 #include "../utils/GLMatrices.hpp"
+#include "../Components/Physic/RigidBody.hpp"
 
 #include "../FerdiuEngine_export.h"
 
@@ -37,6 +38,8 @@ public:
 
     FERDIU_ENGINE_EXPORT void copy(Transform const& t);
     FERDIU_ENGINE_EXPORT void copy(Transform *t);
+
+    FERDIU_ENGINE_EXPORT friend void RigidBody::syncTransfromToPhysics();
 
 private:
     glm::vec3 position = glm::vec3(0);

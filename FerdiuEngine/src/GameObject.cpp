@@ -11,7 +11,7 @@
 #include "../include/Components/Transform.hpp"
 #include "../include/GameObject.hpp"
 #include "../include/Components/Camera.hpp"
-#include "Components/Renderer.hpp"
+#include "../include/Components/Renderer.hpp"
 
 namespace FerdiuEngine
 {
@@ -52,37 +52,48 @@ Transform *GameObject::getTransform()
 {
     return &transform;
 }
-glm::vec3 GameObject::getPosition() const
+glm::vec3 GameObject::getLocalPosition() const
 {
     return this->transform.getPosition();
 }
-void GameObject::setPosition(glm::vec3 v)
+void GameObject::setLocalPosition(glm::vec3 v)
 {
     this->transform.setPosition(v);
+
+    if (rigidbody().has_value())
+        rigidbody().value()->syncTransfromToPhysics();
 }
-glm::vec3 GameObject::getScale() const
+glm::vec3 GameObject::getLocalScale() const
 {
     return this->transform.getScale();
 }
-void GameObject::setScale(glm::vec3 v)
+void GameObject::setLocalScale(glm::vec3 v)
 {
     this->transform.setScale(v);
 }
-glm::vec3 GameObject::getRotation() const
+glm::vec3 GameObject::getLocalRotation() const
 {
     return this->transform.getRotation();
 }
-void GameObject::setRotation(glm::vec3 v)
+void GameObject::setLocalRotation(glm::vec3 v)
 {
     this->transform.setRotation(v);
 }
 glm::vec3 GameObject::getGlobalPosition() const
 {
-    glm::vec3 pos = glm::vec3(getPosition());
+    return getParentGlobalPosition() + getLocalPosition();
+}
+void GameObject::setGlobalPosition(glm::vec3 pos)
+{
+    setLocalPosition(pos - getParentGlobalPosition());
+}
+glm::vec3 GameObject::getParentGlobalPosition() const
+{
+    glm::vec3 pos = glm::vec3(0);
     std::optional<GameObject*> p = parent;
 
     while (p.has_value()) {
-        pos += p.value()->getPosition();
+        pos += p.value()->getLocalPosition();
         p = p.value()->getParent();
     }
 

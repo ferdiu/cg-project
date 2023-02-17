@@ -185,11 +185,11 @@ void Camera::lookAt(Transform const& pos, glm::vec3 up)
 }
 void Camera::lookAt(GameObject const& pos, glm::vec3 up)
 {
-    lookAt(pos.getPosition(), up);
+    lookAt(pos.getLocalPosition(), up);
 }
 void Camera::lookAt(Component const& pos, glm::vec3 up)
 {
-    lookAt(pos.getOwner().getPosition(), up);
+    lookAt(pos.getOwner().getLocalPosition(), up);
 }
 
 Camera* Camera::current = new Camera(-5, 5, -5, 5, 5, 1000);

@@ -14,25 +14,31 @@ namespace FerdiuEngine
 Collider::Collider()
 {
     this->bounds = nullptr;
+    this->collider = nullptr;
 }
 
 void Collider::start()
 {
-    if (nullptr != shape)
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[Collider] start->start");
+#endif
+
+    if (nullptr == shape)
     {
         Debug::Log("This Collider has no Shape: initialize it in the constructor of the derived class!!!");
         return;
     }
 
-    GameObject *o = getOwner();
+    GameObject *o = this->getOwner();
 
-    if (nullptr != o)
+    if (nullptr == o)
     {
         Debug::Log("This Collider has no Owner!!!");
         return;
     }
 
-    if (!o->rigidbody().has_value())
+    if (!(o->rigidbody().has_value()))
     {
         Debug::Log("This Collider has no RigidBody!!!");
         return;
@@ -41,16 +47,21 @@ void Collider::start()
     RigidBody *rb = o->rigidbody().value();
 
     bindToRigidBody(rb->getPhysicsRigidBody());
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[Collider] finish->start");
+    Debug::unindent();
+#endif
 }
 
 bool Collider::isTrigger()
 {
-    return collider->getIsTrigger();
+    return trigger;
 }
 void Collider::setTrigger(bool v)
 {
-    collider->setIsTrigger(v);
     trigger = v;
+    collider->setIsTrigger(v);
 }
 
 Bounds *Collider::getBounds()
@@ -58,14 +69,25 @@ Bounds *Collider::getBounds()
     return bounds;
 }
 
-void Collider::bindToRigidBody(reactphysics3d::RigidBody *rb)
+void Collider::bindToRigidBody(rp3d::RigidBody *rb)
 {
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[Collider] start->bindToRigidBody");
+#endif
+
     Transform *t = this->getOwner()->getTransform();
     this->collider = rb->addCollider(
         shape,
-        reactphysics3d::Transform(
+        rp3d::Transform(
             Math::convert(t->getPosition()),
             Math::eulerToQuaternion(Math::convert(t->getRotation()))));
+    collider->setIsTrigger(trigger);
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[Collider] finish->bindToRigidBody");
+    Debug::unindent();
+#endif
 }
 
 // --------------------------------- protected -------------------------------

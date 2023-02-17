@@ -50,7 +50,7 @@ void mousePassive(Board *b, Camera *c, int x, int y)
     {
         b->addTilt(glm::vec2(TILT_SCALE * dev_x, TILT_SCALE * dev_y));
         glm::vec2 tilt = b->getTilt();
-        c->getOwner()->setPosition(glm::vec3(tilt[0] * 5, CAMERA_Y, tilt[1] * 5));
+        c->getOwner()->setLocalPosition(glm::vec3(tilt[0] * 5, CAMERA_Y, tilt[1] * 5));
     }
 }
 
