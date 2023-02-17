@@ -47,7 +47,7 @@ void setup()
     // init globals
     root = Scene::getCurrent()->root();
     c = Camera::getCurrent();
-    c->getOwner()->setPosition(glm::vec3(0, CAMERA_Y, 0));
+    // c->getOwner()->setPosition(glm::vec3(0, CAMERA_Y, 0));
     c->setFrustum(-3, 3, -3, 3, 5, 1000);
 
     Engine::onUpdate(update);
@@ -82,12 +82,12 @@ void setup()
 
 
 
-    // BUILD BOARD
-    b = new Board("resources/maps/map1.map", light);
-    b->instantiate(root);
-    lac = new LookAtCamera(b->getRoot(), c, glm::vec3(0, 0, -1));
-    b->getRoot()->addComponent(lac); // add look at camera script
-
+    // // BUILD BOARD
+    // b = new Board("resources/maps/map1.map", light);
+    // b->instantiate(root);
+    // lac = new LookAtCamera(b->getRoot(), c, glm::vec3(0, 0, -1));
+    // b->getRoot()->addComponent(lac); // add look at camera script
+    //
 
 
     (void) b;
@@ -107,20 +107,6 @@ void setup()
     // // go->addComponent(lac); // add look at camera script
     // go->setPosition(vec3(-5, 0, -20));
     // go->instantiate(root);
-
-
-
-    // TODO: fix cube rendering
-    // // cute box
-    // GameObject *box = Primitives::Cube(20, material);
-    // DefaultShader *dsBox = new DefaultShader();
-    // dsBox->setColor(glm::vec4(0, 1, 0, 1));
-    // dsBox->setLight(light);
-    // box->addComponent(dsBox);
-    // // box->addComponent(new LookAtCamera(box, c)); // add look at camera script
-    // box->setPosition(vec3(0, 0, -30));
-    // box->setRotation(vec3(45, 0, 0));
-    // box->instantiate(root);
 }
 
 

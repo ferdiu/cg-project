@@ -125,11 +125,15 @@ void CubeRenderer::applySize()
 void CubeRenderer::generateIndices()
 {
     for (size_t i = 0; i < N_CUBE_FACES; i++) {
-        indices[i][0] = i;
-        indices[i][1] = i + 1;
-        indices[i][2] = i + 2;
-        indices[i][3] = i + 3;
+        indices[i][0] = (i*N_CUBE_VERTICES_PER_FACE);
+        indices[i][1] = (i*N_CUBE_VERTICES_PER_FACE) + 1;
+        indices[i][2] = (i*N_CUBE_VERTICES_PER_FACE) + 2;
+        indices[i][3] = (i*N_CUBE_VERTICES_PER_FACE) + 3;
     }
+    for (size_t i = 0; i < N_CUBE_FACES; i++)
+        for (size_t j = 0; j < 4; j++)
+            printf("%d\n", indices[i][j]);
+
 }
 
 // Fill the array of counts.

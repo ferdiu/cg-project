@@ -41,10 +41,10 @@ private:
 
     FerdiuEngine::Vertex vertices[N_PLANE_VERTICES_PER_FACE] = {
         // top
-        { {  1, 0, -1, 1 }, { 0, 1, 0 }, { 0, 0 } },
-        { { -1, 0, -1, 1 }, { 0, 1, 0 }, { 1, 0 } },
-        { {  1, 0,  1, 1 }, { 0, 1, 0 }, { 0, 1 } },
-        { { -1, 0,  1, 1 }, { 0, 1, 0 }, { 1, 1 } },
+        { { -1,  1,  1, 1 }, { 0, 1, 0 }, { 0, 0 } },
+        { {  1,  1,  1, 1 }, { 0, 1, 0 }, { 1, 0 } },
+        { { -1,  1, -1, 1 }, { 0, 1, 0 }, { 0, 1 } },
+        { {  1,  1, -1, 1 }, { 0, 1, 0 }, { 1, 1 } },
     };
     unsigned int indices[1][N_PLANE_VERTICES_PER_FACE] = {{ 0, 1, 2, 3 }};
     int counts[1] = { N_PLANE_VERTICES_PER_FACE };

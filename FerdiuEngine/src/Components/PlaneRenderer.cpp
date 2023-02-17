@@ -111,8 +111,12 @@ void PlaneRenderer::_draw()
 void PlaneRenderer::applySize()
 {
     float halfSize = size * 0.5;
-    vertices[0].coords[0] = halfSize;
-    vertices[0].coords[2] = halfSize;
+    for (size_t i = 0; i < N_PLANE_VERTICES_PER_FACE; i++)
+    {
+        vertices[i].coords[0] *= halfSize;
+        vertices[i].coords[1] *= halfSize;
+        vertices[i].coords[2] *= halfSize;
+    }
 }
 
 }
