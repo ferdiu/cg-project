@@ -45,7 +45,6 @@ void Engine::Start(int argc, char **argv, void (*setup)(void))
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glEnable(GL_CULL_FACE);
 
     if ((glErr = glGetError()) != 0)
@@ -126,13 +125,16 @@ void Engine::update()
 #endif
     // https://docs.unity3d.com/Manual/ExecutionOrder.html
 
+    Camera *c = Camera::getCurrent();
+    Scene *s = Scene::getCurrent();
+
+    // physics
+    s->physicsUpdatePre();
     Physics::update();
+    s->physicsUpdatePost();
 
     if (nullptr != userUpdate)
         userUpdate();
-
-    Camera *c = Camera::getCurrent();
-    Scene *s = Scene::getCurrent();
 
     // update camera
     c->clear();

@@ -80,8 +80,11 @@ public:
     FERDIU_ENGINE_EXPORT void awake();
     FERDIU_ENGINE_EXPORT void start();
 
-    FERDIU_ENGINE_EXPORT void fixedUpdate();
+    FERDIU_ENGINE_EXPORT void physicsUpdatePre();
+    FERDIU_ENGINE_EXPORT void physicsUpdatePost();
     FERDIU_ENGINE_EXPORT void update();
+
+    FERDIU_ENGINE_EXPORT void fixedUpdate();
 
     // TODO: ugly (too exposed)
     FERDIU_ENGINE_EXPORT void setScene(Scene *s);

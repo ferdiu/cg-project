@@ -36,6 +36,9 @@ public:
     void addTilt(glm::vec2 v);
     glm::vec2 getTilt();
 
+    glm::vec3 getStartPosition();
+    glm::vec3 getStartPositionGlobal();
+
 private:
     FerdiuEngine::GameObject *root = nullptr;
     glm::vec2 _tilt = glm::vec2(0);

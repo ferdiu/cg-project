@@ -59,9 +59,6 @@ glm::vec3 GameObject::getLocalPosition() const
 void GameObject::setLocalPosition(glm::vec3 v)
 {
     this->transform.setPosition(v);
-
-    if (rigidbody().has_value())
-        rigidbody().value()->syncTransfromToPhysics();
 }
 glm::vec3 GameObject::getLocalScale() const
 {
@@ -152,7 +149,7 @@ bool GameObject::isRoot() const
 
 void GameObject::draw()
 {
-#ifdef DEBUG_VERBOSE
+#ifdef DEBUG_RENDERING
     Debug::indent();
     Debug::Log("[GameObject] start->draw: " + name);
 #endif
@@ -194,7 +191,7 @@ void GameObject::draw()
 
     c->popMatrices();
 
-#ifdef DEBUG_VERBOSE
+#ifdef DEBUG_RENDERING
     Debug::Log("[GameObject] finish->draw: " + name);
     Debug::unindent();
 #endif
@@ -344,6 +341,50 @@ void GameObject::fixedUpdate()
     Debug::unindent();
 #endif
 
+}
+void GameObject::physicsUpdatePre()
+{
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("[GameObject] start->physicsUpdatePre: " + name);
+#endif
+
+    std::list<GameObject*>::iterator childIter;
+    for (childIter = children.begin(); childIter != children.end(); ++childIter)
+        if ((*childIter)->isActive())
+            (*childIter)->physicsUpdatePre();
+
+    // TODO: ugly, remove this in the future
+    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+        rigidbody().value()->physicsUpdatePre();
+    //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("[GameObject] finish->physicsUpdatePre: " + name);
+    Debug::unindent();
+#endif
+}
+void GameObject::physicsUpdatePost()
+{
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("[GameObject] start->physicsUpdatePost: " + name);
+#endif
+
+    std::list<GameObject*>::iterator childIter;
+    for (childIter = children.begin(); childIter != children.end(); ++childIter)
+        if ((*childIter)->isActive())
+            (*childIter)->physicsUpdatePost();
+
+    // TODO: ugly, remove this in the future
+    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+        rigidbody().value()->physicsUpdatePost();
+    //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("[GameObject] finish->physicsUpdatePost: " + name);
+    Debug::unindent();
+#endif
 }
 void GameObject::update()
 {

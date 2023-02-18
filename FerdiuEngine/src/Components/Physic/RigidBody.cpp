@@ -60,19 +60,33 @@ void RigidBody::awake()
 
 void RigidBody::start() {}
 
-void RigidBody::update()
+void RigidBody::physicsUpdatePre()
 {
-    syncTransfromToPhysics();
-//     // TODO: is this really needed now???
-//     decimal factor = Physics::accumulator() / PHYSICS_TIME_STEP;
-//
-//     // Compute the interpolated transform of the rigid body
-//     rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(prevTransform, tr, factor);
-//
-//     // Now you can render your body using the interpolated transform here
-//
-//     // Update the previous transform
-//     prevTransform = currTranform;
+    syncPhysicsToTransform();
+
+    _prevTransform = rb->getTransform();
+}
+
+void RigidBody::physicsUpdatePost()
+{
+
+    // float factor = Physics::accumulator() / PHYSICS_TIME_STEP;
+    //
+    // // Get the updated transform of the body
+    // rp3d::Transform currTransform = rb->getTransform();
+    //
+    // std::cout << "position (physicsUpdatePost): (" << currTransform.getPosition().x << ", " << currTransform.getPosition().y << ", " << currTransform.getPosition().z << ")" << std::endl;
+    // // Compute the interpolated transform of the rigid body
+    // rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(
+    //     _prevTransform, currTransform, factor);
+    // (void) interpolatedTransform;
+    //
+    // // Now you can render your body using the interpolated transform here
+    //
+    // // Update the previous transform
+    // _prevTransform = currTransform;
+
+    syncTransfromToPhysics(rb->getTransform());
 }
 glm::vec3 RigidBody::getVelocity()
 {
@@ -84,7 +98,7 @@ void RigidBody::setVelocity(glm::vec3 v)
 }
 void RigidBody::addVelocity(glm::vec3 v)
 {
-    this->rb->setLinearVelocity(rb->getLinearVelocity() + Math::convert(v));
+    this->rb->applyWorldForceAtCenterOfMass(rb->getLinearVelocity() + Math::convert(v));
 }
 
 float RigidBody::getGravityScale()
@@ -181,8 +195,15 @@ void RigidBody::syncTransfromToPhysics()
 {
     Transform *pt = getPhysicsTransform();
     Transform *nt = getTransform();
-    nt->position = pt->getPosition();
-    nt->rotation = pt->getRotation();
+    nt->setPosition(pt->getPosition());
+    nt->setRotation(pt->getRotation());
+}
+
+void RigidBody::syncTransfromToPhysics(rp3d::Transform t)
+{
+    Transform *nt = getTransform();
+    nt->position = Math::convert(t.getPosition());
+    nt->rotation = Math::convert(Math::quaternionToEuler(t.getOrientation()));
 }
 
 }

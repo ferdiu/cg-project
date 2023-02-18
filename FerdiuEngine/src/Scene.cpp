@@ -43,6 +43,14 @@ void Scene::init()
     this->hierarchy.awake();
 }
 
+void Scene::physicsUpdatePre()
+{
+    this->hierarchy.physicsUpdatePre();
+}
+void Scene::physicsUpdatePost()
+{
+    this->hierarchy.physicsUpdatePost();
+}
 void Scene::update()
 {
     this->hierarchy.update();

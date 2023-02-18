@@ -14,6 +14,7 @@ namespace FerdiuEngine
 {
 
 class Transform;
+class Engine;
 
 class FERDIU_ENGINE_EXPORT RigidBody : public Component
 {
@@ -30,7 +31,9 @@ public:
     // Component
     FERDIU_ENGINE_EXPORT void awake() override;
     FERDIU_ENGINE_EXPORT void start() override;
-    FERDIU_ENGINE_EXPORT void update() override;
+    FERDIU_ENGINE_EXPORT void physicsUpdatePre() override;
+    FERDIU_ENGINE_EXPORT void physicsUpdatePost() override;
+
 
     FERDIU_ENGINE_EXPORT glm::vec3 getVelocity();
     FERDIU_ENGINE_EXPORT void setVelocity(glm::vec3 v);
@@ -50,6 +53,7 @@ public:
     FERDIU_ENGINE_EXPORT Transform *getTransform();
 
     FERDIU_ENGINE_EXPORT void syncTransfromToPhysics();
+    FERDIU_ENGINE_EXPORT void syncTransfromToPhysics(rp3d::Transform t);
     FERDIU_ENGINE_EXPORT void syncPhysicsToTransform();
 
 private:
@@ -60,6 +64,8 @@ private:
 
     float gravityScale = 1;
     float mass = 1.0;
+
+    rp3d::Transform _prevTransform;
 
     void initRigidBody();
 

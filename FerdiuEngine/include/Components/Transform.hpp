@@ -40,6 +40,7 @@ public:
     FERDIU_ENGINE_EXPORT void copy(Transform *t);
 
     FERDIU_ENGINE_EXPORT friend void RigidBody::syncTransfromToPhysics();
+    FERDIU_ENGINE_EXPORT friend void RigidBody::syncTransfromToPhysics(rp3d::Transform t);
 
 private:
     glm::vec3 position = glm::vec3(0);

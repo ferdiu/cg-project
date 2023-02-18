@@ -96,7 +96,7 @@ namespace FerdiuEngine
 
             return angles;
         }
-        rp3d::Vector3 quaternionToEuler(rp3d::Vector3 q)
+        rp3d::Vector3 quaternionToEuler(rp3d::Quaternion q)
         {
             return convert(quaternionToEuler((convert(q))));
         }

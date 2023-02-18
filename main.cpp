@@ -14,6 +14,7 @@
 #include "include/DefaultShader.hpp"
 #include "include/LookAtCamera.hpp"
 #include "include/Board.hpp"
+#include "include/Ball.hpp"
 #include "include/Inputs.hpp"
 
 using namespace FerdiuEngine;
@@ -27,18 +28,14 @@ static GameObject *lightGO;
 static Camera *c;
 
 // common
-static Shader *sh;
 static Material *material;
 
 // board
 static Board *b;
 
 // testing object
-static SphereRenderer *sr;
-static DefaultShader *ds;
 static LookAtCamera *lac;
-GameObject *go;
-GameObject *goChild;
+GameObject *ball;
 
 void mouseMove(int x, int y) { mousePassive(b, c, x, y); }
 
@@ -71,17 +68,6 @@ void setup()
 
 
 
-    // init common
-    sh = new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
-    material = new Material(sh);
-    material->setAmbient(glm::vec4(.5, .5, .5, 1));
-    material->setDiffuse(glm::vec4(.25, .25, .25, 1));
-    material->setSpecular(glm::vec4(3, 3, 3, 1));
-    material->setEmission(glm::vec4(.75, .75, .75, 1));
-    material->setShininess(32);
-
-
-
     // BUILD BOARD
     b = new Board("resources/maps/map1.map", light);
     b->instantiate(root);
@@ -89,24 +75,28 @@ void setup()
     b->getRoot()->addComponent(lac); // add look at camera script
 
 
+    // INIT BALL
+    material = new Material(new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl"));
+    material->setAmbient(glm::vec4(.25, .25, .25, 1));
+    material->setDiffuse(glm::vec4(.25, .25, .25, 1));
+    material->setSpecular(glm::vec4(1, 1, 1, 1));
+    material->setEmission(glm::vec4(.75, .75, .75, 1));
+    material->setShininess(32);
 
-    (void) b;
-    (void) lac;
-    (void) ds;
-    (void) sr;
-    // // TODO: init ball
-    // sr = new SphereRenderer(5, *material);
-    // ds = new DefaultShader();
-    // ds->setColor(glm::vec4(1, 0, 0, 1));
-    // ds->setLight(light);
-    //
-    // go = (new GameObject("BALL"))
-    // ->addRenderer((Renderer*) sr) // add renderer
-    // ->addComponent(ds); // add shader handler
-    // // lac = new LookAtCamera(go, c);
-    // // go->addComponent(lac); // add look at camera script
-    // go->setPosition(vec3(-5, 0, -20));
-    // go->instantiate(root);
+    // instantiate
+    SphereRenderer *sr = new SphereRenderer(.5, *material);
+    DefaultShader *ds = new DefaultShader();
+    ds->setColor(glm::vec4(0.5, 0.5, 0.5, 1));
+    ds->setLight(light);
+
+    ball = (new GameObject("BALL"))
+        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_DYNAMIC))
+        ->addRenderer(sr) // add renderer
+        ->addComponent(ds) // add shader handler
+        ->addComponent(new Ball(b));
+    ball->instantiate(Scene::getCurrent()->root());
+    ball->setGlobalPosition(b->getStartPosition());
+
 }
 
 void instructions()

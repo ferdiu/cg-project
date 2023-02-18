@@ -28,6 +28,8 @@ public:
     FERDIU_ENGINE_EXPORT void init();
     FERDIU_ENGINE_EXPORT void draw();
 
+    FERDIU_ENGINE_EXPORT void physicsUpdatePre();
+    FERDIU_ENGINE_EXPORT void physicsUpdatePost();
     FERDIU_ENGINE_EXPORT void update();
     FERDIU_ENGINE_EXPORT void fixedUpdate();
 private:

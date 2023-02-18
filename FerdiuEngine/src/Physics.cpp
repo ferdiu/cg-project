@@ -55,14 +55,14 @@ void Physics::update()
 
     // While there is enough accumulated time to take
     // one or several physics steps
-    while (_accumulator >= PHYSICS_TIME_STEP) {
+    do {
 
         // Update the Dynamics world with a constant time step
         world().update(PHYSICS_TIME_STEP);
 
         // Decrease the accumulated time
         _accumulator -= PHYSICS_TIME_STEP;
-    }
+    } while (_accumulator >= PHYSICS_TIME_STEP);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[Physics] start->update");

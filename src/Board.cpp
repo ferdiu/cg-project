@@ -138,10 +138,21 @@ void Board::addTilt(glm::vec2 v)
         fmax(-1, fmin(_tilt[0], 1)),
         fmax(-1, fmin(_tilt[1], 1))
     );
+    _tilt = glm::normalize(_tilt);
 }
 glm::vec2 Board::getTilt()
 {
     return _tilt;
+}
+
+glm::vec3 Board::getStartPosition()
+{
+    return startPostion;
+}
+
+glm::vec3 Board::getStartPositionGlobal()
+{
+    return startPostion + root->getGlobalPosition();
 }
 
 // ---------------------------------------------------------------------------------
@@ -156,7 +167,6 @@ glm::vec2 Board::realPos(int i, int j)
 
 void Board::instantiateWall(int i, int j)
 {
-    printf("START instantiateWall\n");
     GameObject *go = (new GameObject("WALL(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
@@ -171,13 +181,10 @@ void Board::instantiateWall(int i, int j)
     if (nullptr != l)
         ds->setLight(l);
     go->addComponent(ds);
-
-    printf("FINISH instantiateWall\n");
 }
 
 void Board::instantiateStart(int i, int j)
 {
-    printf("START instantiateStart\n");
     GameObject *go = (new GameObject("START(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
@@ -185,8 +192,8 @@ void Board::instantiateStart(int i, int j)
     go->instantiate(root);
 
     glm::vec2 xz = realPos(i, j);
-    startPostion = glm::vec3(xz[0], 0.5, xz[1]);
-    go->setLocalPosition(glm::vec3(xz[0], 1, xz[1]));
+    startPostion = glm::vec3(xz[0], 3, xz[1]);
+    go->setLocalPosition(glm::vec3(xz[0], .5, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
     ds->setColor(glm::vec4(1, 0, 0, .5));
@@ -195,12 +202,10 @@ void Board::instantiateStart(int i, int j)
     go->addComponent(ds);
 
     go->collider().value()->setTrigger(true);
-    printf("FINISH instantiateStart\n");
 }
 
 void Board::instantiateFinish(int i, int j)
 {
-    printf("START instantiateFinish\n");
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
@@ -217,12 +222,10 @@ void Board::instantiateFinish(int i, int j)
     go->addComponent(ds);
 
     go->collider().value()->setTrigger(true);
-    printf("FINISH instantiateFinish\n");
 }
 
 void Board::instantiateFloor(int i, int j)
 {
-    printf("START instantiateFloor\n");
     GameObject *go = (new GameObject("FLOOR(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
@@ -238,13 +241,10 @@ void Board::instantiateFloor(int i, int j)
 
     glm::vec2 xz = realPos(i, j);
     go->setLocalPosition(glm::vec3(xz[0], 0, xz[1]));
-
-    printf("FINISH instantiateFloor\n");
 }
 
 void Board::instantiateHole(int i, int j)
 {
-    printf("START instantiateHole\n");
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)));
@@ -254,8 +254,6 @@ void Board::instantiateHole(int i, int j)
     glm::vec2 xz = realPos(i, j);
     go->setLocalPosition(glm::vec3(xz[0], -1, xz[1]));
     go->collider().value()->setTrigger(true);
-
-    printf("FINISH instantiateHole\n");
 }
 
 void Board::build()

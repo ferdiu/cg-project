@@ -27,7 +27,7 @@ namespace FerdiuEngine
         FERDIU_ENGINE_EXPORT glm::fquat eulerToQuaternion(glm::vec3 rot);
         FERDIU_ENGINE_EXPORT rp3d::Quaternion eulerToQuaternion(rp3d::Vector3 rot);
 
-        FERDIU_ENGINE_EXPORT rp3d::Vector3 quaternionToEuler(rp3d::Vector3 q);
+        reactphysics3d::Vector3 quaternionToEuler(reactphysics3d::Quaternion q);
         FERDIU_ENGINE_EXPORT glm::vec3 quaternionToEuler(glm::fquat q);
 
         FERDIU_ENGINE_EXPORT glm::mat4 rotationMatrix(glm::vec3 rot, glm::mat4 mat = glm::mat4(1));
