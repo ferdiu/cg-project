@@ -5,12 +5,10 @@ set(SOURCES
     ${SRC_DIR}/Components/Light.cpp
     ${SRC_DIR}/Texture.cpp
     ${SRC_DIR}/Components/Transform.cpp
-    ${SRC_DIR}/Components/MeshRenderer.cpp
     ${SRC_DIR}/Components/Physic/BoxCollider.cpp
     ${SRC_DIR}/Components/Physic/Collider.cpp
     ${SRC_DIR}/Components/Physic/SphereCollider.cpp
     ${SRC_DIR}/Components/Physic/RigidBody.cpp
-    ${SRC_DIR}/Components/Physic/Bounds.cpp
     ${SRC_DIR}/Components/CubeRenderer.cpp
     ${SRC_DIR}/Components/Camera.cpp
     ${SRC_DIR}/Components/SphereRenderer.cpp

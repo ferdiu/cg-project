@@ -9,7 +9,7 @@ project(cg-project)
 # compiler flags and build mode
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type")
 set(CMAKE_CXX_FLAGS "-std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm -pedantic -Wall -Wextra -Werror -Wno-error=type-limits")
-set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -DDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-fdiagnostics-show-option -ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
 
 # define directories

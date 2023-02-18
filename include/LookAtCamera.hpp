@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include <FerdiuEngine.hpp>
 #include <glm/glm.hpp>
 
@@ -7,6 +9,7 @@ class LookAtCamera : public FerdiuEngine::Component
 public:
     LookAtCamera(FerdiuEngine::GameObject *target, FerdiuEngine::Camera *c = nullptr, glm::vec3 up = glm::vec3(0, 1, 0));
     LookAtCamera(FerdiuEngine::Transform *target, FerdiuEngine::Camera *c = nullptr, glm::vec3 up = glm::vec3(0, 1, 0));
+    ~LookAtCamera() override;
 
     void awake() override;
     void update() override;

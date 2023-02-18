@@ -1,7 +1,4 @@
 
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/gtc/constants.hpp>
 #include <iostream>
 #include <cmath>
 #include <GL/glew.h>
@@ -9,12 +6,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 
 #include "../../include/Components/Camera.hpp"
 #include "../../include/Components/Transform.hpp"
 #include "../../include/utils/GLMatricesStack.hpp"
-#include "GameObject.hpp"
-#include "utils/GLMatrices.hpp"
+#include "../../include/GameObject.hpp"
+#include "../../include/utils/GLMatrices.hpp"
 
 namespace FerdiuEngine
 {
@@ -24,6 +24,11 @@ Camera::Camera(float left, float right, float bottom, float top, float near, flo
     this->stack = MatricesStack();
     this->mode = cameraMode;
     this->params = { left, right, bottom, top, near, far };
+}
+
+Camera::~Camera()
+{
+    // TODO: DESTORY
 }
 
 // camera modes

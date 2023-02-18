@@ -1,8 +1,10 @@
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
 #include <reactphysics3d/reactphysics3d.h>
+#pragma GCC diagnostic pop
 
 #include "../../../include/Components/Physic/Collider.hpp"
-#include "../../../include/Components/Physic/Bounds.hpp"
 #include "../../../include/GameObject.hpp"
 #include "../../../include/utils/Math.hpp"
 #include "../../../include/Components/Transform.hpp"
@@ -11,11 +13,7 @@ namespace FerdiuEngine
 {
 
 // --------------------------------- public ----------------------------------
-Collider::Collider()
-{
-    this->bounds = nullptr;
-    this->collider = nullptr;
-}
+Collider::Collider() : collider(nullptr) {}
 
 void Collider::start()
 {
@@ -64,11 +62,6 @@ void Collider::setTrigger(bool v)
     collider->setIsTrigger(v);
 }
 
-Bounds *Collider::getBounds()
-{
-    return bounds;
-}
-
 void Collider::bindToRigidBody(rp3d::RigidBody *rb)
 {
 #ifdef DEBUG_PHYSICS
@@ -77,10 +70,11 @@ void Collider::bindToRigidBody(rp3d::RigidBody *rb)
 #endif
 
     Transform *t = this->getOwner()->getTransform();
+    glm::vec3 pos = this->getOwner()->getGlobalPosition();
     this->collider = rb->addCollider(
         shape,
         rp3d::Transform(
-            Math::convert(t->getPosition()),
+            Math::convert(pos),
             Math::eulerToQuaternion(Math::convert(t->getRotation()))));
     collider->setIsTrigger(trigger);
 
@@ -88,12 +82,6 @@ void Collider::bindToRigidBody(rp3d::RigidBody *rb)
     Debug::Log("[Collider] finish->bindToRigidBody");
     Debug::unindent();
 #endif
-}
-
-// --------------------------------- protected -------------------------------
-void Collider::setBounds(Bounds *b)
-{
-    bounds = b;
 }
 
 }

@@ -19,6 +19,11 @@ Transform::Transform(glm::vec3 pos, glm::vec3 scale, glm::vec3 rot)
     this->scale = scale;
     this->rotation = rot;
 }
+Transform::~Transform()
+{
+    // TODO: DESTROY
+}
+
 
 // ------- GETTERS-SETTERS -------
 // position
@@ -75,13 +80,13 @@ void Transform::apply(glm::mat4& mat) const
     apply(*getOwner().getTransform(), mat);
 }
 
-void Transform::copy(Transform const& t)
+void Transform::copyFrom(Transform const& t)
 {
     this->setPosition(t.getPosition());
     this->setRotation(t.getRotation());
     this->setScale(t.getScale());
 }
-void Transform::copy(Transform *t)
+void Transform::copyFrom(Transform *t)
 {
     this->setPosition(t->getPosition());
     this->setRotation(t->getRotation());

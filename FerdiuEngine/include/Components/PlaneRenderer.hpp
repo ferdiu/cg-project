@@ -28,6 +28,7 @@ public:
     FERDIU_ENGINE_EXPORT PlaneRenderer(float size, Texture tex, Material material);
     FERDIU_ENGINE_EXPORT PlaneRenderer(glm::vec3 center, float size, ::std::string texturePath, Material material);
     FERDIU_ENGINE_EXPORT PlaneRenderer(float size, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT ~PlaneRenderer() override;
 
 protected:
     void Init() override;

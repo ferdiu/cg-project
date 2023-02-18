@@ -5,6 +5,7 @@
 
 #include "../include/Board.hpp"
 #include "../include/DefaultShader.hpp"
+#include "../include/PrintPhysicsPosition.hpp"
 #include "Components/Physic/RigidBody.hpp"
 #include "Material.hpp"
 
@@ -138,7 +139,8 @@ void Board::addTilt(glm::vec2 v)
         fmax(-1, fmin(_tilt[0], 1)),
         fmax(-1, fmin(_tilt[1], 1))
     );
-    _tilt = glm::normalize(_tilt);
+    if (glm::length(_tilt) > 1)
+        _tilt = glm::normalize(_tilt);
 }
 glm::vec2 Board::getTilt()
 {
@@ -169,9 +171,12 @@ void Board::instantiateWall(int i, int j)
 {
     GameObject *go = (new GameObject("WALL(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
+        ->addCollider(new BoxCollider(glm::vec3(1)))
         ->addRenderer(new CubeRenderer(1, *wood));
     go->instantiate(root);
+
+    // TODO: remove this
+    go->addComponent(new PrintPhysicsPosition());
 
     glm::vec2 xz = realPos(i, j);
     go->setLocalPosition(glm::vec3(xz[0], 0.5, xz[1]));
@@ -186,13 +191,11 @@ void Board::instantiateWall(int i, int j)
 void Board::instantiateStart(int i, int j)
 {
     GameObject *go = (new GameObject("START(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
-        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
         ->addRenderer(new SphereRenderer(0.5, *finish));
     go->instantiate(root);
 
     glm::vec2 xz = realPos(i, j);
-    startPostion = glm::vec3(xz[0], 3, xz[1]);
+    startPostion = glm::vec3(xz[0], 10, xz[1]);
     go->setLocalPosition(glm::vec3(xz[0], .5, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
@@ -201,16 +204,18 @@ void Board::instantiateStart(int i, int j)
         ds->setLight(l);
     go->addComponent(ds);
 
-    go->collider().value()->setTrigger(true);
 }
 
 void Board::instantiateFinish(int i, int j)
 {
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
+        ->addCollider(new BoxCollider(glm::vec3(1)))
         ->addRenderer(new SphereRenderer(0.5, *finish));
     go->instantiate(root);
+
+    // TODO: remove this
+    go->addComponent(new PrintPhysicsPosition());
 
     glm::vec2 xz = realPos(i, j);
     go->setLocalPosition(glm::vec3(xz[0], 1, xz[1]));
@@ -228,9 +233,12 @@ void Board::instantiateFloor(int i, int j)
 {
     GameObject *go = (new GameObject("FLOOR(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)))
+        ->addCollider(new BoxCollider(glm::vec3(1)))
         ->addRenderer(new PlaneRenderer(1, *wood));
     go->instantiate(root);
+
+    // TODO: remove this
+    go->addComponent(new PrintPhysicsPosition());
 
     DefaultShader *ds = new DefaultShader();
     ds->setColor(glm::vec4(0.94, 0.8, 0.71, 1));
@@ -247,9 +255,11 @@ void Board::instantiateHole(int i, int j)
 {
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(0), glm::vec3(1)));
-
+        ->addCollider(new BoxCollider(glm::vec3(1)));
     go->instantiate(root);
+
+    // TODO: remove this
+    go->addComponent(new PrintPhysicsPosition());
 
     glm::vec2 xz = realPos(i, j);
     go->setLocalPosition(glm::vec3(xz[0], -1, xz[1]));

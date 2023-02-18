@@ -10,14 +10,13 @@
 namespace FerdiuEngine
 {
 
-BoxCollider::BoxCollider(glm::vec3 center, glm::vec3 size) : Collider()
+BoxCollider::BoxCollider(glm::vec3 size) : Collider()
 {
 #ifdef DEBUG_PHYSICS
     Debug::indent();
     Debug::Log("[BoxCollider] start->constructor");
 #endif
 
-    setBounds(new Bounds(center, size));
     this->shape = Physics::common().createBoxShape(Math::convert(size));
 
 #ifdef DEBUG_PHYSICS
@@ -26,11 +25,9 @@ BoxCollider::BoxCollider(glm::vec3 center, glm::vec3 size) : Collider()
 #endif
 }
 
-bool BoxCollider::checkCollision(Collider *c)
+BoxCollider::~BoxCollider()
 {
-    // TODO: implement collision check
-    (void) c;
-    return false;
+    Physics::common().destroyBoxShape((rp3d::BoxShape*) this->shape);
 }
 
 }

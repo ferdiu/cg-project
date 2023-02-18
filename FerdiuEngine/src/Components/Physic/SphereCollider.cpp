@@ -1,6 +1,5 @@
 
 #include <glm/glm.hpp>
-#include <reactphysics3d/reactphysics3d.h>
 
 #include "../../../include/Components/Physic/Collider.hpp"
 #include "../../../include/Components/Physic/SphereCollider.hpp"
@@ -14,14 +13,13 @@
 namespace FerdiuEngine
 {
 
-SphereCollider::SphereCollider(glm::vec3 center, float radius) : Collider()
+SphereCollider::SphereCollider(float radius) : Collider()
 {
 #ifdef DEBUG_PHYSICS
     Debug::indent();
     Debug::Log("[SphereCollider] start->constructor");
 #endif
 
-    setBounds(new Bounds(center, glm::vec3(radius)));
     this->shape = Physics::common().createSphereShape(radius);
 
 #ifdef DEBUG_PHYSICS
@@ -30,12 +28,9 @@ SphereCollider::SphereCollider(glm::vec3 center, float radius) : Collider()
 #endif
 }
 
-bool SphereCollider::checkCollision(Collider *c)
+SphereCollider::~SphereCollider()
 {
-    // TODO: implement collision check
-    (void) c;
-    return false;
+    Physics::common().destroySphereShape((rp3d::SphereShape*) this->shape);
 }
-
 
 }

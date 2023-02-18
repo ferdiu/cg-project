@@ -6,6 +6,16 @@
 namespace FerdiuEngine
 {
 
+void PhysicsEventListener::onContact(rp3d::CollisionCallback::CallbackData const& data)
+{
+    Debug::Log("CONTACT!!");
+}
+void PhysicsEventListener::onTrigger (rp3d::OverlapCallback::CallbackData const& data)
+{
+    Debug::Log("TRIGGER!!");
+}
+
+
 void Physics::init()
 {
 #ifdef DEBUG_PHYSICS
@@ -56,7 +66,6 @@ void Physics::update()
     // While there is enough accumulated time to take
     // one or several physics steps
     do {
-
         // Update the Dynamics world with a constant time step
         world().update(PHYSICS_TIME_STEP);
 

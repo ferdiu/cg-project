@@ -1,5 +1,8 @@
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
 #include <reactphysics3d/reactphysics3d.h>
+#pragma GCC diagnostic pop
 
 #include "../../include/utils/Math.hpp"
 #include "../../include/Components/Transform.hpp"

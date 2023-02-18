@@ -17,6 +17,8 @@ LookAtCamera::LookAtCamera(Transform *target, Camera *c, glm::vec3 up)
     this->up = up;
 }
 
+LookAtCamera::~LookAtCamera() {}
+
 void LookAtCamera::awake()
 {
 #ifdef DEBUG

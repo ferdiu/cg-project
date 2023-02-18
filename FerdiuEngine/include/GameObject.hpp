@@ -86,6 +86,8 @@ public:
 
     FERDIU_ENGINE_EXPORT void fixedUpdate();
 
+    FERDIU_ENGINE_EXPORT void leave();
+
     // TODO: ugly (too exposed)
     FERDIU_ENGINE_EXPORT void setScene(Scene *s);
 

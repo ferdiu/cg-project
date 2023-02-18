@@ -47,6 +47,7 @@ class FERDIU_ENGINE_EXPORT Light : public Component
 {
 public:
     FERDIU_ENGINE_EXPORT Light(LightType type = LIGHT_DIRECTIONAL);
+    FERDIU_ENGINE_EXPORT ~Light() override;
 
     // ---------------- SETTERS AND GETTERS ------------------
     FERDIU_ENGINE_EXPORT void setAmbient(glm::vec3 ambient);

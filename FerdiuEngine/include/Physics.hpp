@@ -1,7 +1,10 @@
 
 #pragma once
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
 #include <reactphysics3d/reactphysics3d.h>
+#pragma GCC diagnostic pop
 
 #include "FerdiuEngine_export.h"
 
@@ -13,6 +16,10 @@ namespace FerdiuEngine
 // Your event listener class
 class FERDIU_ENGINE_EXPORT PhysicsEventListener : public rp3d::EventListener
 {
+public:
+    FERDIU_ENGINE_EXPORT void onContact(rp3d::CollisionCallback::CallbackData const& data) override;
+    FERDIU_ENGINE_EXPORT void onTrigger (rp3d::OverlapCallback::CallbackData const& data) override;
+
 };
 
 class FERDIU_ENGINE_EXPORT Physics

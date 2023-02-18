@@ -32,6 +32,7 @@ public:
     enum FERDIU_ENGINE_EXPORT Mode { PERSPECTIVE, ORTHOGRAPHIC };
 
     FERDIU_ENGINE_EXPORT Camera(float left, float right, float bottom, float top, float near, float far, Mode cameraMode = PERSPECTIVE);
+    FERDIU_ENGINE_EXPORT ~Camera() override;
 
     // camera modes
     FERDIU_ENGINE_EXPORT void setFrustum(float left, float right, float bottom, float top, float near, float far);

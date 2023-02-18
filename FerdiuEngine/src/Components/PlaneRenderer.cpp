@@ -63,6 +63,10 @@ PlaneRenderer::PlaneRenderer(float size, ::std::string texturePath, Material mat
 
     setTexture(texturePath);
 }
+PlaneRenderer::~PlaneRenderer()
+{
+    // TODO: DESTROY
+}
 
 // ------------------------------- protected ----------------------------------
 void PlaneRenderer::Init()

@@ -8,6 +8,8 @@
 class DefaultShader : public FerdiuEngine::Component
 {
 public:
+    ~DefaultShader() override;
+
     void awake() override;
     void draw() override;
 

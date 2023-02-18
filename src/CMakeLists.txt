@@ -5,4 +5,5 @@ list(APPEND SRCS
     ${SRC_DIR}/LookAtCamera.cpp
     ${SRC_DIR}/Inputs.cpp
     ${SRC_DIR}/Ball.cpp
+    ${SRC_DIR}/PrintPhysicsPosition.cpp
 )

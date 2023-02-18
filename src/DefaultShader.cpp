@@ -7,6 +7,11 @@
 
 using namespace FerdiuEngine;
 
+DefaultShader::~DefaultShader()
+{
+    // TODO: DESTROY
+}
+
 void DefaultShader::awake()
 {
     renderer = getGameObject()->renderer().has_value() ?
@@ -26,7 +31,7 @@ void DefaultShader::awake()
 #ifdef DEBUG
     if (nullptr == light)
         std::cerr << "warning: no light set in DefaultShader in object " <<
-        this->getOwner()->getName() << std::endl;
+            this->getOwner()->getName() << std::endl;
 #endif
     Component::awake();
 }
@@ -40,8 +45,6 @@ void DefaultShader::draw()
 
 void DefaultShader::updateShader()
 {
-    // TODO: space for optimization here:
-    //   not all uniforms need to be updated at every refresh
     Camera *camera = Camera::getCurrent();
 
     shader->setUniform("tex", 0);

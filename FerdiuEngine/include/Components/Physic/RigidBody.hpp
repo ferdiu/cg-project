@@ -2,7 +2,6 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <reactphysics3d/reactphysics3d.h>
 
 #include "../../Physics.hpp"
 #include "Collider.hpp"
@@ -27,6 +26,7 @@ public:
     } RigidBodyType;
 
     FERDIU_ENGINE_EXPORT RigidBody(RigidBodyType type = RB_DYNAMIC, float mass = 1);
+    FERDIU_ENGINE_EXPORT ~RigidBody() override;
 
     // Component
     FERDIU_ENGINE_EXPORT void awake() override;

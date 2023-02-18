@@ -46,6 +46,11 @@ Light::Light(LightType type)
     this->l.type = type;
 }
 
+Light::~Light()
+{
+    // TODO: DESTROY
+}
+
 // Ambient getter and setter
 void Light::setAmbient(glm::vec3 ambient)
 {

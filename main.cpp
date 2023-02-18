@@ -16,6 +16,7 @@
 #include "include/Board.hpp"
 #include "include/Ball.hpp"
 #include "include/Inputs.hpp"
+#include "include/PrintPhysicsPosition.hpp"
 
 using namespace FerdiuEngine;
 using namespace std;
@@ -35,7 +36,7 @@ static Board *b;
 
 // testing object
 static LookAtCamera *lac;
-GameObject *ball;
+static GameObject *ball;
 
 void mouseMove(int x, int y) { mousePassive(b, c, x, y); }
 
@@ -63,7 +64,7 @@ void setup()
     light->setAttenuation(.005, 0.05, 0.023);
     light->setCutOff(0, 0);
     light->setPosition(glm::vec3(0, 0, 0));
-    light->setDirection(glm::vec3(45, 45, 45));
+    light->setDirection(glm::vec3(45, 10, 45));
     lightGO->instantiate(root);
 
 
@@ -95,8 +96,7 @@ void setup()
         ->addComponent(ds) // add shader handler
         ->addComponent(new Ball(b));
     ball->instantiate(Scene::getCurrent()->root());
-    ball->setGlobalPosition(b->getStartPosition());
-
+    ball->addComponent(new PrintPhysicsPosition());
 }
 
 void instructions()

@@ -63,6 +63,10 @@ CubeRenderer::CubeRenderer(float size, ::std::string texturePath, Material mater
 
     setTexture(texturePath);
 }
+CubeRenderer::~CubeRenderer()
+{
+    // TODO: DESTROY
+}
 
 // ------------------------------- protected ----------------------------------
 void CubeRenderer::Init()

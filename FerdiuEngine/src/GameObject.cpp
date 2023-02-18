@@ -178,7 +178,7 @@ void GameObject::draw()
 
     // call draw on all components
     for (componentIter = components.begin(); componentIter != components.end(); ++componentIter)
-        if ((*componentIter)->isEnabled())
+        if ((*componentIter)->enabled())
             (*componentIter)->draw();
 
     // render this
@@ -249,17 +249,17 @@ void GameObject::awake()
 
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
-        if ((*compIter)->isEnabled() && !(*compIter)->awaken())
+        if ((*compIter)->enabled() && !(*compIter)->awaken())
             (*compIter)->awake();
 
     // TODO: ugly, remove this in the future
-    if (renderer().has_value() && renderer().value()->isEnabled() && !renderer().value()->awaken())
+    if (renderer().has_value() && renderer().value()->enabled() && !renderer().value()->awaken())
         renderer().value()->awake();
 
-    if (collider().has_value() && collider().value()->isEnabled() && !collider().value()->awaken())
+    if (collider().has_value() && collider().value()->enabled() && !collider().value()->awaken())
         collider().value()->awake();
 
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled() && !rigidbody().value()->awaken())
+    if (rigidbody().has_value() && rigidbody().value()->enabled() && !rigidbody().value()->awaken())
         rigidbody().value()->awake();
     //
 
@@ -286,17 +286,17 @@ void GameObject::start()
 
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
-        if ((*compIter)->isEnabled())
+        if ((*compIter)->enabled())
             (*compIter)->start();
 
     // TODO: ugly, remove this in the future
-    if (renderer().has_value() && renderer().value()->isEnabled())
+    if (renderer().has_value() && renderer().value()->enabled())
         renderer().value()->start();
 
-    if (collider().has_value() && collider().value()->isEnabled())
+    if (collider().has_value() && collider().value()->enabled())
         collider().value()->start();
 
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
         rigidbody().value()->start();
     //
 
@@ -306,42 +306,6 @@ void GameObject::start()
 #endif
 }
 
-void GameObject::fixedUpdate()
-{
-#ifdef DEBUG_VERBOSE
-    Debug::indent();
-    Debug::Log("[GameObject] start->fixedUpdate: " + name);
-#endif
-
-    std::list<GameObject*>::iterator childIter;
-    for (childIter = children.begin(); childIter != children.end(); ++childIter)
-        if ((*childIter)->isActive())
-            (*childIter)->fixedUpdate();
-
-    getTransform()->fixedUpdate();
-
-    std::list<Component*>::iterator compIter;
-    for (compIter = components.begin(); compIter != components.end(); ++compIter)
-        if ((*compIter)->isEnabled())
-            (*compIter)->fixedUpdate();
-
-    // TODO: ugly, remove this in the future
-    if (renderer().has_value() && renderer().value()->isEnabled())
-        renderer().value()->fixedUpdate();
-
-    if (collider().has_value() && collider().value()->isEnabled())
-        collider().value()->fixedUpdate();
-
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
-        rigidbody().value()->fixedUpdate();
-    //
-
-#ifdef DEBUG_VERBOSE
-    Debug::Log("[GameObject] finish->fixedUpdate: " + name);
-    Debug::unindent();
-#endif
-
-}
 void GameObject::physicsUpdatePre()
 {
 #ifdef DEBUG_VERBOSE
@@ -355,7 +319,7 @@ void GameObject::physicsUpdatePre()
             (*childIter)->physicsUpdatePre();
 
     // TODO: ugly, remove this in the future
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
         rigidbody().value()->physicsUpdatePre();
     //
 
@@ -377,7 +341,7 @@ void GameObject::physicsUpdatePost()
             (*childIter)->physicsUpdatePost();
 
     // TODO: ugly, remove this in the future
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
         rigidbody().value()->physicsUpdatePost();
     //
 
@@ -402,22 +366,95 @@ void GameObject::update()
 
     std::list<Component*>::iterator compIter;
     for (compIter = components.begin(); compIter != components.end(); ++compIter)
-        if ((*compIter)->isEnabled())
+        if ((*compIter)->enabled())
             (*compIter)->update();
 
     // TODO: ugly, remove this in the future
-    if (renderer().has_value() && renderer().value()->isEnabled())
+    if (renderer().has_value() && renderer().value()->enabled())
         renderer().value()->update();
 
-    if (collider().has_value() && collider().value()->isEnabled())
+    if (collider().has_value() && collider().value()->enabled())
         collider().value()->update();
 
-    if (rigidbody().has_value() && rigidbody().value()->isEnabled())
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
         rigidbody().value()->update();
     //
 
 #ifdef DEBUG_VERBOSE
     Debug::Log("[GameObject] finish->update: " + name);
+    Debug::unindent();
+#endif
+}
+
+void GameObject::fixedUpdate()
+{
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("[GameObject] start->fixedUpdate: " + name);
+#endif
+
+    std::list<GameObject*>::iterator childIter;
+    for (childIter = children.begin(); childIter != children.end(); ++childIter)
+        if ((*childIter)->isActive())
+            (*childIter)->fixedUpdate();
+
+    getTransform()->fixedUpdate();
+
+    std::list<Component*>::iterator compIter;
+    for (compIter = components.begin(); compIter != components.end(); ++compIter)
+        if ((*compIter)->enabled())
+            (*compIter)->fixedUpdate();
+
+    // TODO: ugly, remove this in the future
+    if (renderer().has_value() && renderer().value()->enabled())
+        renderer().value()->fixedUpdate();
+
+    if (collider().has_value() && collider().value()->enabled())
+        collider().value()->fixedUpdate();
+
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
+        rigidbody().value()->fixedUpdate();
+    //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("[GameObject] finish->fixedUpdate: " + name);
+    Debug::unindent();
+#endif
+
+}
+
+void GameObject::leave()
+{
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("[GameObject] start->leave: " + name);
+#endif
+
+    std::list<GameObject*>::iterator childIter;
+    for (childIter = children.begin(); childIter != children.end(); ++childIter)
+        if ((*childIter)->isActive())
+            (*childIter)->leave();
+
+    getTransform()->leave();
+
+    std::list<Component*>::iterator compIter;
+    for (compIter = components.begin(); compIter != components.end(); ++compIter)
+        if ((*compIter)->enabled())
+            (*compIter)->leave();
+
+    // TODO: ugly, remove this in the future
+    if (renderer().has_value() && renderer().value()->enabled())
+        renderer().value()->leave();
+
+    if (collider().has_value() && collider().value()->enabled())
+        collider().value()->leave();
+
+    if (rigidbody().has_value() && rigidbody().value()->enabled())
+        rigidbody().value()->leave();
+    //
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("[GameObject] finish->leave: " + name);
     Debug::unindent();
 #endif
 }

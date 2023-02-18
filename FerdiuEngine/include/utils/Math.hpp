@@ -2,9 +2,9 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <reactphysics3d/reactphysics3d.h>
 #include <glm/gtc/quaternion.hpp>
 
+#include "../Physics.hpp"
 #include "../Components/Transform.hpp"
 
 #include "../FerdiuEngine_export.h"

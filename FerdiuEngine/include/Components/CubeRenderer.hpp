@@ -33,6 +33,7 @@ public:
     FERDIU_ENGINE_EXPORT CubeRenderer(float size, Texture tex, Material material);
     FERDIU_ENGINE_EXPORT CubeRenderer(glm::vec3 center, float size, ::std::string texturePath, Material material);
     FERDIU_ENGINE_EXPORT CubeRenderer(float size, ::std::string texturePath, Material material);
+    FERDIU_ENGINE_EXPORT ~CubeRenderer() override;
 
 protected:
     void Init() override;

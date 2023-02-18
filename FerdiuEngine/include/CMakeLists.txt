@@ -8,10 +8,8 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/Components/Light.hpp
     ${INC_DIR}/Vertex.hpp
     ${INC_DIR}/Shader.hpp
-    ${INC_DIR}/Components/MeshRenderer.hpp
     ${INC_DIR}/Components/Component.hpp
     ${INC_DIR}/Components/Physic/SphereCollider.hpp
-    ${INC_DIR}/Components/Physic/Bounds.hpp
     ${INC_DIR}/Components/Physic/RigidBody.hpp
     ${INC_DIR}/Components/Physic/Collider.hpp
     ${INC_DIR}/Components/Physic/BoxCollider.hpp

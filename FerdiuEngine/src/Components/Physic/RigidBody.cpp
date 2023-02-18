@@ -1,7 +1,10 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
 #include <reactphysics3d/reactphysics3d.h>
+#pragma GCC diagnostic pop
 
 #include "../../../include/GameObject.hpp"
 #include "../../../include/Components/Component.hpp"
@@ -41,6 +44,10 @@ rp3d::BodyType convert(RigidBody::RigidBodyType bt)
 }
 
 RigidBody::RigidBody(RigidBody::RigidBodyType type, float mass) : type(type), mass(mass) {}
+RigidBody::~RigidBody()
+{
+    // TODO: DESTROY
+}
 
 void RigidBody::awake()
 {
@@ -86,7 +93,8 @@ void RigidBody::physicsUpdatePost()
     // // Update the previous transform
     // _prevTransform = currTransform;
 
-    syncTransfromToPhysics(rb->getTransform());
+    if (RigidBodyType::RB_STATIC != type)
+        syncTransfromToPhysics(rb->getTransform());
 }
 glm::vec3 RigidBody::getVelocity()
 {

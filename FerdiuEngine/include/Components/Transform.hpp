@@ -16,6 +16,7 @@ class FERDIU_ENGINE_EXPORT Transform : public Component
 public:
     // constructor
     FERDIU_ENGINE_EXPORT Transform(glm::vec3 pos = glm::vec3(0), glm::vec3 scale = glm::vec3(1), glm::vec3 rot = glm::vec3(0));
+    FERDIU_ENGINE_EXPORT ~Transform();
 
     // ------- GETTERS-SETTERS -------
     // position
@@ -36,8 +37,8 @@ public:
     FERDIU_ENGINE_EXPORT static void apply(Transform const& t, glm::mat4& mat);
     FERDIU_ENGINE_EXPORT void apply(glm::mat4& mat) const;
 
-    FERDIU_ENGINE_EXPORT void copy(Transform const& t);
-    FERDIU_ENGINE_EXPORT void copy(Transform *t);
+    FERDIU_ENGINE_EXPORT void copyFrom(Transform const& t);
+    FERDIU_ENGINE_EXPORT void copyFrom(Transform *t);
 
     FERDIU_ENGINE_EXPORT friend void RigidBody::syncTransfromToPhysics();
     FERDIU_ENGINE_EXPORT friend void RigidBody::syncTransfromToPhysics(rp3d::Transform t);
@@ -45,7 +46,6 @@ public:
 private:
     glm::vec3 position = glm::vec3(0);
     glm::vec3 scale = glm::vec3(1);
-    // TODO: should really use quaternion for this!
     glm::vec3 rotation = glm::vec3(0);
 };
 
