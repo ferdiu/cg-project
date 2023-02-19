@@ -6,6 +6,8 @@
 #include <reactphysics3d/reactphysics3d.h>
 #pragma GCC diagnostic pop
 
+#include "utils/Debug.hpp"
+
 #include "FerdiuEngine_export.h"
 
 #define PHYSICS_TIME_STEP 0.016666666666666666 // 1/60

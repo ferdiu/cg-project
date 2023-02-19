@@ -87,7 +87,7 @@ void setup()
     // instantiate
     SphereRenderer *sr = new SphereRenderer(.5, *material);
     DefaultShader *ds = new DefaultShader();
-    ds->setColor(glm::vec4(0.5, 0.5, 0.5, 1));
+    ds->setColor(glm::vec4(0.35, 0.35, 0.35, 1));
     ds->setLight(light);
 
     ball = (new GameObject("BALL"))

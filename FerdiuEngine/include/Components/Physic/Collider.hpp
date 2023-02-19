@@ -11,6 +11,8 @@
 namespace FerdiuEngine
 {
 
+class RigidBody;
+
 class FERDIU_ENGINE_EXPORT Collider : public Component
 {
 public:
@@ -22,14 +24,13 @@ public:
     FERDIU_ENGINE_EXPORT bool isTrigger();
     FERDIU_ENGINE_EXPORT void setTrigger(bool v);
 
+    FERDIU_ENGINE_EXPORT void bindToRigidBody(RigidBody *rb);
 
 protected:
     rp3d::Collider *collider;
     rp3d::CollisionShape *shape;
 
 private:
-    FERDIU_ENGINE_EXPORT void bindToRigidBody(rp3d::RigidBody *rb);
-
     bool trigger = false;
 
 };

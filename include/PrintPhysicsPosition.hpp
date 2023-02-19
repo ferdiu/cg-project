@@ -7,7 +7,7 @@ class PrintPhysicsPosition : public FerdiuEngine::Component
 {
 public:
     void awake() override;
-    void update() override;
+    void fixedUpdate() override;
 
 private:
     FerdiuEngine::RigidBody *rb;

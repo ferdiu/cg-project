@@ -73,6 +73,9 @@ private:
     Transform *getTransform_Normal();
     rp3d::Transform *getPhysicsTransform_RP3D();
     Transform *getPhysicsTransform_Normal();
+
+    friend void Collider::bindToRigidBody(RigidBody *rb);
+
 };
 
 }

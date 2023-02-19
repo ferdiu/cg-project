@@ -16,7 +16,6 @@
 namespace FerdiuEngine
 {
 
-
 RigidBody::RigidBodyType convert(rp3d::BodyType bt)
 {
     switch (bt)
@@ -76,22 +75,21 @@ void RigidBody::physicsUpdatePre()
 
 void RigidBody::physicsUpdatePost()
 {
+    if (RigidBodyType::RB_STATIC != type)
+    {
+        float factor = Physics::accumulator() / PHYSICS_TIME_STEP;
 
-    // float factor = Physics::accumulator() / PHYSICS_TIME_STEP;
-    //
-    // // Get the updated transform of the body
-    // rp3d::Transform currTransform = rb->getTransform();
-    //
-    // std::cout << "position (physicsUpdatePost): (" << currTransform.getPosition().x << ", " << currTransform.getPosition().y << ", " << currTransform.getPosition().z << ")" << std::endl;
-    // // Compute the interpolated transform of the rigid body
-    // rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(
-    //     _prevTransform, currTransform, factor);
-    // (void) interpolatedTransform;
-    //
-    // // Now you can render your body using the interpolated transform here
-    //
-    // // Update the previous transform
-    // _prevTransform = currTransform;
+        // Get the updated transform of the body
+        rp3d::Transform currTransform = rb->getTransform();
+
+        // Compute the interpolated transform of the rigid body
+        rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(
+            _prevTransform, currTransform, factor);
+        (void) interpolatedTransform;
+
+        // Update the previous transform
+        _prevTransform = currTransform;
+    }
 
     if (RigidBodyType::RB_STATIC != type)
         syncTransfromToPhysics(rb->getTransform());
@@ -106,7 +104,7 @@ void RigidBody::setVelocity(glm::vec3 v)
 }
 void RigidBody::addVelocity(glm::vec3 v)
 {
-    this->rb->applyWorldForceAtCenterOfMass(rb->getLinearVelocity() + Math::convert(v));
+    this->rb->applyWorldForceAtCenterOfMass(Math::convert(v));
 }
 
 float RigidBody::getGravityScale()
@@ -187,7 +185,7 @@ rp3d::Transform *RigidBody::getPhysicsTransform_RP3D()
 
 Transform *RigidBody::getPhysicsTransform_Normal()
 {
-    return getOwner()->getTransform();
+    return Math::convert_ptr(rb->getTransform(), glm::vec3(1));
 }
 
 void RigidBody::syncPhysicsToTransform()

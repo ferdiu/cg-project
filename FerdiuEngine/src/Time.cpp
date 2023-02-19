@@ -48,6 +48,12 @@ float Time::fixedDeltaTime()
     return Time::instance()._fixedDeltaTime;
 }
 
+// Get step size for fixed delta time
+float Time::fixedDeltaTimeStep()
+{
+    return FIXED_DELTA_TIME_MILLISEC / 1000.0;
+}
+
 // Get time passed from last rendered frame scaled by scale
 float Time::scaledDeltaTime()
 {

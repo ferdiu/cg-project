@@ -1,9 +1,9 @@
 
 #include <glm/glm.hpp>
 
+#include "../../../include/utils/Math.hpp"
 #include "../../../include/Components/Physic/Collider.hpp"
 #include "../../../include/Components/Physic/SphereCollider.hpp"
-#include "../../../include/utils/Math.hpp"
 #include "../../../include/Physics.hpp"
 #include "../../../include/GameObject.hpp"
 #include "../../../include/Components/Physic/RigidBody.hpp"

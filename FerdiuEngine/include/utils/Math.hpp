@@ -21,8 +21,10 @@ namespace FerdiuEngine
         FERDIU_ENGINE_EXPORT glm::vec2 convert(rp3d::Vector2 v);
         FERDIU_ENGINE_EXPORT glm::mat4 convert(Transform const& t, glm::mat4 mat = glm::mat4(1));
         FERDIU_ENGINE_EXPORT rp3d::Transform convert(Transform const& t);
-        FERDIU_ENGINE_EXPORT Transform convert(rp3d::Transform t, glm::vec3 scale);
-        FERDIU_ENGINE_EXPORT Transform convert(rp3d::Transform t, rp3d::Vector3 scale);
+        FERDIU_ENGINE_EXPORT Transform convert(rp3d::Transform t, glm::vec3 scale = glm::vec3(1));
+        FERDIU_ENGINE_EXPORT Transform convert(rp3d::Transform t, rp3d::Vector3 scale = rp3d::Vector3(1, 1, 1));
+        FERDIU_ENGINE_EXPORT Transform *convert_ptr(rp3d::Transform t, glm::vec3 scale = glm::vec3(1));
+        FERDIU_ENGINE_EXPORT Transform *convert_ptr(rp3d::Transform t, rp3d::Vector3 scale = rp3d::Vector3(1, 1, 1));
 
         FERDIU_ENGINE_EXPORT glm::fquat eulerToQuaternion(glm::vec3 rot);
         FERDIU_ENGINE_EXPORT rp3d::Quaternion eulerToQuaternion(rp3d::Vector3 rot);

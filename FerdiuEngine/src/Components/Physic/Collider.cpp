@@ -44,7 +44,7 @@ void Collider::start()
 
     RigidBody *rb = o->rigidbody().value();
 
-    bindToRigidBody(rb->getPhysicsRigidBody());
+    bindToRigidBody(rb);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[Collider] finish->start");
@@ -62,21 +62,16 @@ void Collider::setTrigger(bool v)
     collider->setIsTrigger(v);
 }
 
-void Collider::bindToRigidBody(rp3d::RigidBody *rb)
+void Collider::bindToRigidBody(RigidBody *rb)
 {
 #ifdef DEBUG_PHYSICS
     Debug::indent();
     Debug::Log("[Collider] start->bindToRigidBody");
 #endif
 
-    Transform *t = this->getOwner()->getTransform();
-    glm::vec3 pos = this->getOwner()->getGlobalPosition();
-    this->collider = rb->addCollider(
-        shape,
-        rp3d::Transform(
-            Math::convert(pos),
-            Math::eulerToQuaternion(Math::convert(t->getRotation()))));
+    this->collider = rb->rb->addCollider(this->shape, rp3d::Transform::identity());
     collider->setIsTrigger(trigger);
+    rb->rb->updateMassPropertiesFromColliders();
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[Collider] finish->bindToRigidBody");

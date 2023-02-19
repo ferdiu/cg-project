@@ -26,20 +26,21 @@ void Ball::awake()
     rb = getOwner()->rigidbody().value();
     rb->getPhysicsRigidBody()->enableGravity(true);
     rb->getPhysicsRigidBody()->setIsAllowedToSleep(false);
+    rb->getPhysicsRigidBody()->setLinearLockAxisFactor(rp3d::Vector3(1, 0, 1));
     reset();
 }
 
-void Ball::update()
+void Ball::fixedUpdate()
 {
     vec2 tmp = b->getTilt() * velocityScale;
     rb->addVelocity(vec3(-tmp.x, 0, -tmp.y));
 
-    if (getOwner()->getGlobalPosition().y < b->getRoot()->getGlobalPosition().y - 15)
+    if (getOwner()->getGlobalPosition().y < b->getRoot()->getGlobalPosition().y - 5)
         reset();
 }
 
 void Ball::reset()
 {
     rb->setVelocity(glm::vec3(0, 0, 0));
-    rb->getOwner()->setGlobalPosition(b->getStartPositionGlobal());
+    rb->getOwner()->setGlobalPosition(b->getStartPositionGlobal() + glm::vec3(0, 0, 0));
 }

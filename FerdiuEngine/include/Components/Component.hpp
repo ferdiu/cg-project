@@ -39,9 +39,9 @@ public:
 
     FERDIU_ENGINE_EXPORT virtual void physicsUpdatePre() {};
     FERDIU_ENGINE_EXPORT virtual void physicsUpdatePost() {};
-    FERDIU_ENGINE_EXPORT virtual void update() {};
-
     FERDIU_ENGINE_EXPORT virtual void fixedUpdate() {};
+
+    FERDIU_ENGINE_EXPORT virtual void update() {};
 
     FERDIU_ENGINE_EXPORT virtual void leave() { _left = true; _awaken = false; };
 

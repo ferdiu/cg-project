@@ -128,11 +128,6 @@ void Engine::update()
     Camera *c = Camera::getCurrent();
     Scene *s = Scene::getCurrent();
 
-    // physics
-    s->physicsUpdatePre();
-    Physics::update();
-    s->physicsUpdatePost();
-
     if (nullptr != userUpdate)
         userUpdate();
 
@@ -172,6 +167,11 @@ void Engine::fixedUpdate()
 #endif
 
     Scene *s = Scene::getCurrent();
+
+    // physics
+    s->physicsUpdatePre();
+    Physics::update();
+    s->physicsUpdatePost();
 
     // fixed update
     s->fixedUpdate();

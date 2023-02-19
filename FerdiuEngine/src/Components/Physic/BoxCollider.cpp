@@ -17,7 +17,7 @@ BoxCollider::BoxCollider(glm::vec3 size) : Collider()
     Debug::Log("[BoxCollider] start->constructor");
 #endif
 
-    this->shape = Physics::common().createBoxShape(Math::convert(size));
+    this->shape = Physics::common().createBoxShape(Math::convert(size) * 0.5);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[BoxCollider] finish->constructor");

@@ -64,13 +64,37 @@ namespace FerdiuEngine
         {
             return convert(t, (glm::vec3) convert(scale));
         }
+        Transform *convert_ptr(rp3d::Transform t, glm::vec3 scale)
+        {
+            return new Transform(
+                convert(t.getPosition()),
+                scale,
+                quaternionToEuler(convert(t.getOrientation())));
+        }
+        Transform *convert_ptr(rp3d::Transform t, rp3d::Vector3 scale)
+        {
+            return convert_ptr(t, (glm::vec3) convert(scale));
+        }
 
         glm::fquat eulerToQuaternion(glm::vec3 rot)
         {
-            glm::fquat qx = glm::angleAxis(rot.x, glm::vec3(1, 0, 0));
-            glm::fquat qy = glm::angleAxis(rot.y, glm::vec3(0, 1, 0));
-            glm::fquat qz = glm::angleAxis(rot.z, glm::vec3(0, 0, 1));
-            return qz * qy * qx;
+            rot = glm::radians(rot);
+            // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+            // Abbreviations for the various angular functions
+            float cr = cos(rot.x * 0.5);
+            float sr = sin(rot.x * 0.5);
+            float cp = cos(rot.y * 0.5);
+            float sp = sin(rot.y * 0.5);
+            float cy = cos(rot.z * 0.5);
+            float sy = sin(rot.z * 0.5);
+
+            glm::fquat q;
+            q.w = cr * cp * cy + sr * sp * sy;
+            q.x = sr * cp * cy - cr * sp * sy;
+            q.y = cr * sp * cy + sr * cp * sy;
+            q.z = cr * cp * sy - sr * sp * cy;
+
+            return q;
         }
         rp3d::Quaternion eulerToQuaternion(rp3d::Vector3 rot)
         {
@@ -97,7 +121,7 @@ namespace FerdiuEngine
             float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
             angles.z = std::atan2(siny_cosp, cosy_cosp);
 
-            return angles;
+            return glm::degrees(angles);
         }
         rp3d::Vector3 quaternionToEuler(rp3d::Quaternion q)
         {
@@ -106,7 +130,6 @@ namespace FerdiuEngine
 
         glm::mat4 rotationMatrix(glm::vec3 rot, glm::mat4 mat)
         {
-
             glm::mat4 matRX = glm::rotate(mat, glm::radians(rot[0]), glm::vec3(1, 0, 0));
             glm::mat4 matRY = glm::rotate(mat, glm::radians(rot[1]), glm::vec3(0, 1, 0));
             glm::mat4 matRZ = glm::rotate(mat, glm::radians(rot[2]), glm::vec3(0, 0, 1));

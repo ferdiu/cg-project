@@ -26,6 +26,8 @@ public:
     FERDIU_ENGINE_EXPORT static float deltaTime();
     // Get time passed from last glutTimerFunc call (see startFixedDeltaTime)
     FERDIU_ENGINE_EXPORT static float fixedDeltaTime();
+    // Get step size for fixed delta time
+    FERDIU_ENGINE_EXPORT static float fixedDeltaTimeStep();
 
     // Get time passed from last rendered frame scaled by scale
     FERDIU_ENGINE_EXPORT static float scaledDeltaTime();

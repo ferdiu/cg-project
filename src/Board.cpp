@@ -195,7 +195,7 @@ void Board::instantiateStart(int i, int j)
     go->instantiate(root);
 
     glm::vec2 xz = realPos(i, j);
-    startPostion = glm::vec3(xz[0], 10, xz[1]);
+    startPostion = glm::vec3(xz[0], .5, xz[1]);
     go->setLocalPosition(glm::vec3(xz[0], .5, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
@@ -248,12 +248,12 @@ void Board::instantiateFloor(int i, int j)
     go->addComponent(ds);
 
     glm::vec2 xz = realPos(i, j);
-    go->setLocalPosition(glm::vec3(xz[0], 0, xz[1]));
+    go->setLocalPosition(glm::vec3(xz[0], -.5, xz[1]));
 }
 
 void Board::instantiateHole(int i, int j)
 {
-    GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
+    GameObject *go = (new GameObject("HOLE(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
         ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(1)));
     go->instantiate(root);
