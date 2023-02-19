@@ -123,7 +123,6 @@ Important classes for rendering are:
 - `Camera` which handles the generation of the _ProjectionMatrix_ and _ViewMatrix_;
 - `Shader` which handles the loading and compilation of the shaders;
 - `Material` which provides a general way to handle `Shader`s inside `GameObject`s;
-- `Material` which provides a general way to handle `Shader`s inside `GameObject`s;
 - `Vertex` (actually a struct, not a class) which holds the vertex informations;
 - `GLMatricesStack` and `GLMatrices` which are used to reimplement the legacy _matrix stack_ of OpenGL;
 - `Light` that creates the light (currently just one light at a time is supported by the default vertex shader);
