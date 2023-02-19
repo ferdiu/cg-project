@@ -53,13 +53,13 @@ void Physics::init()
     s.worldName = "PhysicsWorld";
     s.isSleepingEnabled = false;
 
-// #ifdef DEBUG_PHYSICS
+#ifdef DEBUG_PHYSICS
     Debug::indent();
     Debug::Log("[Physics] start->PhysicsWorld::WorldSettings");
     std::cout << s.to_string();
     Debug::Log("[Physics] finish->PhysicsWorld::WorldSettings");
     Debug::unindent();
-// #endif
+#endif
 
     physicsCommon = new rp3d::PhysicsCommon();
     _world = physicsCommon->createPhysicsWorld(s);

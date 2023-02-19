@@ -4,7 +4,6 @@
 #include "Components/Component.hpp"
 #include <FerdiuEngine.hpp>
 
-// TODO explaing this class
 class DefaultShader : public FerdiuEngine::Component
 {
 public:

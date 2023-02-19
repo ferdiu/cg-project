@@ -58,7 +58,7 @@ void setup()
 
     // light
     lightGO = (new GameObject("Light"))->addComponent((light = new Light(LIGHT_DIRECTIONAL)));
-    light->setAmbient(glm::vec3(0.5, 0.5, 0.5));
+    light->setAmbient(glm::vec3(.75, .75, .75));
     light->setDiffuse(glm::vec3(0.4, 0.4, 0.4));
     light->setSpecular(glm::vec3(.75, .75, .75));
     light->setAttenuation(.005, 0.05, 0.023);
@@ -78,8 +78,8 @@ void setup()
 
     // INIT BALL
     material = new Material(new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl"));
-    material->setAmbient(glm::vec4(.25, .25, .25, 1));
-    material->setDiffuse(glm::vec4(.25, .25, .25, 1));
+    material->setAmbient(glm::vec4(.5, .5, .5, 1));
+    material->setDiffuse(glm::vec4(.5, .5, .5, 1));
     material->setSpecular(glm::vec4(1, 1, 1, 1));
     material->setEmission(glm::vec4(.75, .75, .75, 1));
     material->setShininess(32);
@@ -101,13 +101,13 @@ void setup()
 
 void instructions()
 {
-    cout << "##############################################" << endl;
-    cout << "# Click and drag to tilt the board           #" << endl;
-    cout << "# Bring the ball from the start (red sphere) #" << endl;
-    cout << "# to the finish (green sphere) to win        #" << endl;
-    cout << "# ESC - quit game                            #" << endl;
-    cout << "# F - toggle full screen                     #" << endl;
-    cout << "##############################################" << endl;
+    cout << "###############################################" << endl;
+    cout << "# - Click and drag to tilt the board          #" << endl;
+    cout << "# - Bring the ball from the start (red plane) #" << endl;
+    cout << "#       to the finish (green plane) to win    #" << endl;
+    cout << "# - ESC: quit game                            #" << endl;
+    cout << "# - F: toggle full screen                     #" << endl;
+    cout << "###############################################" << endl;
 }
 
 int main(int argc, char **argv) {

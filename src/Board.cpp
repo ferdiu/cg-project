@@ -97,6 +97,18 @@ Board::Board(string mapFilePath) : map(mapFilePath)
     this->root = new GameObject("BOARD");
     this->width = map.width();
     this->height = map.height();
+
+    wood->setAmbient(glm::vec4(.75, .75, .75, 1));
+    wood->setDiffuse(glm::vec4(.5, .5, .5, 1));
+    wood->setSpecular(glm::vec4(0, 0, 0, 1));
+    wood->setEmission(glm::vec4(0, 0, 0, 1));
+    wood->setShininess(0);
+
+    finish->setAmbient(glm::vec4(0, 0, 0, 1));
+    finish->setDiffuse(glm::vec4(0, 0, 0, 1));
+    finish->setSpecular(glm::vec4(1, 1, 1, 1));
+    finish->setEmission(glm::vec4(0, 0, 0, 1));
+    finish->setShininess(1);
 }
 Board::Board(string mapFilePath, Light *l) : Board(mapFilePath)
 {
@@ -175,7 +187,6 @@ void Board::instantiateWall(int i, int j)
         ->addRenderer(new CubeRenderer(1, *wood));
     go->instantiate(root);
 
-    // TODO: remove this
     go->addComponent(new PrintPhysicsPosition());
 
     glm::vec2 xz = realPos(i, j);
@@ -191,42 +202,34 @@ void Board::instantiateWall(int i, int j)
 void Board::instantiateStart(int i, int j)
 {
     GameObject *go = (new GameObject("START(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
-        ->addRenderer(new SphereRenderer(0.5, *finish));
+        ->addRenderer(new PlaneRenderer(1, *finish));
     go->instantiate(root);
 
     glm::vec2 xz = realPos(i, j);
     startPostion = glm::vec3(xz[0], .5, xz[1]);
-    go->setLocalPosition(glm::vec3(xz[0], .5, xz[1]));
+    go->setLocalPosition(glm::vec3(xz[0], .05, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
-    ds->setColor(glm::vec4(1, 0, 0, .5));
+    ds->setColor(glm::vec4(1, 0, 0, 1));
     if (nullptr != l)
         ds->setLight(l);
     go->addComponent(ds);
-
 }
 
 void Board::instantiateFinish(int i, int j)
 {
     GameObject *go = (new GameObject("FINISH(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
-        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
-        ->addCollider(new BoxCollider(glm::vec3(1)))
-        ->addRenderer(new SphereRenderer(0.5, *finish));
+        ->addRenderer(new PlaneRenderer(1, *finish));
     go->instantiate(root);
 
-    // TODO: remove this
-    go->addComponent(new PrintPhysicsPosition());
-
     glm::vec2 xz = realPos(i, j);
-    go->setLocalPosition(glm::vec3(xz[0], 1, xz[1]));
+    go->setLocalPosition(glm::vec3(xz[0], .05, xz[1]));
 
     DefaultShader *ds = new DefaultShader();
-    ds->setColor(glm::vec4(0, 1, 0, .5));
+    ds->setColor(glm::vec4(0, 1, 0, 1));
     if (nullptr != l)
         ds->setLight(l);
     go->addComponent(ds);
-
-    go->collider().value()->setTrigger(true);
 }
 
 void Board::instantiateFloor(int i, int j)
@@ -237,14 +240,12 @@ void Board::instantiateFloor(int i, int j)
         ->addRenderer(new PlaneRenderer(1, *wood));
     go->instantiate(root);
 
-    // TODO: remove this
     go->addComponent(new PrintPhysicsPosition());
 
     DefaultShader *ds = new DefaultShader();
     ds->setColor(glm::vec4(0.94, 0.8, 0.71, 1));
     if (nullptr != l)
         ds->setLight(l);
-    // TODO: set default parameters
     go->addComponent(ds);
 
     glm::vec2 xz = realPos(i, j);
@@ -258,7 +259,6 @@ void Board::instantiateHole(int i, int j)
         ->addCollider(new BoxCollider(glm::vec3(1)));
     go->instantiate(root);
 
-    // TODO: remove this
     go->addComponent(new PrintPhysicsPosition());
 
     glm::vec2 xz = realPos(i, j);

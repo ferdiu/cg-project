@@ -7,7 +7,14 @@ project(cg-project)
 
 ########## MAIN ###############
 # compiler flags and build mode
-set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type")
+set(default_build_type "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+endif()
 set(CMAKE_CXX_FLAGS "-std=c++17 -lfreetype -lglut -lGLU -lGL -lGLEW -lm -pedantic -Wall -Wextra -Werror -Wno-error=type-limits")
 set(CMAKE_CXX_FLAGS_DEBUG "-fdiagnostics-show-option -ggdb3 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=2")
