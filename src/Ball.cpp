@@ -15,7 +15,7 @@ using namespace FerdiuEngine;
 Ball::Ball(Board *b) : b(b) {}
 Ball::~Ball() {}
 
-void Ball::awake()
+void Ball::start()
 {
     if (!getOwner()->rigidbody().has_value())
     {
@@ -24,7 +24,7 @@ void Ball::awake()
     }
 
     rb = getOwner()->rigidbody().value();
-    // rb->getPhysicsRigidBody()->enableGravity(true);
+    // rb->getPhysicsRigidBody()->setGravity(btVector3(0, -9.81, 0));
     // rb->getPhysicsRigidBody()->setIsAllowedToSleep(false);
     // rb->getPhysicsRigidBody()->setLinearLockAxisFactor(btVector3(1, 0, 1));
     // reset();
@@ -33,7 +33,7 @@ void Ball::awake()
 void Ball::fixedUpdate()
 {
     vec2 tmp = b->getTilt() * velocityScale;
-    rb->addVelocity(vec3(-tmp.x, 0, -tmp.y));
+    rb->applyForce(vec3(-tmp.x, -9.81 * velocityScale * 0.5, -tmp.y));
 
     if (getOwner()->getGlobalPosition().y < b->getRoot()->getGlobalPosition().y - 5)
         reset();

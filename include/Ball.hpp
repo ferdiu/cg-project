@@ -11,13 +11,13 @@ public:
     Ball(Board *b);
     ~Ball() override;
 
-    void awake() override;
+    void start() override;
     void fixedUpdate() override;
 
     void reset();
 
 private:
-    float velocityScale = 1;
+    float velocityScale = 50;
     Board *b;
     FerdiuEngine::RigidBody *rb;
 };

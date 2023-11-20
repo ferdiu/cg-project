@@ -1,7 +1,10 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 #include "../../include/utils/Debug.hpp"
+#include "../../include/utils/Colors.hpp"
 
 namespace FerdiuEngine
 {
@@ -68,13 +71,29 @@ namespace Debug
 #endif
     }
 
+    void Info(std::string message)
+    {
+#ifdef DEBUG
+#ifndef DEBUG_NO_INDENT
+        fdoublespace(_indent);
+#endif
+        std::cout <<
+            T_BOLD << "Info" << T_BG_RESET <<
+            ": " << message << std::endl;
+#else
+        (void) message;
+#endif
+    }
+
     void Warn(std::string message)
     {
 #ifdef DEBUG
 #ifndef DEBUG_NO_INDENT
         fdoublespace(_indent);
 #endif
-        std::cout << "Warn: " << message << std::endl;
+        std::cout <<
+            T_BOLD << T_YELLOW << "Warn" << T_BG_RESET <<
+            ": " << message << std::endl;
 #else
         (void) message;
 #endif
@@ -86,7 +105,9 @@ namespace Debug
 #ifndef DEBUG_NO_INDENT
         fdoublespace(_indent);
 #endif
-        std::cout << "Error: " << message << std::endl;
+        std::cout <<
+            T_BOLD << T_RED << "Error" << T_BG_RESET <<
+            ": " << message << std::endl;
 #else
         (void) message;
 #endif

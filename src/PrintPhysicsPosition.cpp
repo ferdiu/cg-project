@@ -1,8 +1,6 @@
 
 #include "../include/PrintPhysicsPosition.hpp"
 
-#include <btBulletDynamicsCommon.h>
-
 using namespace FerdiuEngine;
 using namespace std;
 
@@ -15,13 +13,10 @@ void PrintPhysicsPosition::awake()
 
 void PrintPhysicsPosition::fixedUpdate()
 {
-    // glm::vec3 p = rb->getPhysicsTransform()->getPosition();
-    // glm::vec3 r = rb->getPhysicsTransform()->getRotation();
-    // if (p.x >= 16 && p.x <= 18 && p.z >= -11 && p.z <= -9)
-    // {
-    //     cout << name << " (pos): (" << p.x << ", " << p.y << ", " << p.z << ")" << endl;
-    //     cout << name << " (rot): (" << r.x << ", " << r.y << ", " << r.z << ")" << endl;
-    // }
+    glm::vec3 p = rb->getPhysicsTransform()->getPosition();
+    glm::vec3 v = rb->getVelocity();
+    glm::vec3 f = Math::convert(rb->getPhysicsRigidBody()->getTotalForce());
+    cout << name << " (pos): (" << p.x << ", " << p.y << ", " << p.z << ")" <<
+        " (vel): (" << v.x << ", " << v.y << ", " << v.z << ")" << endl;
+    cout << name << " (for): (" << f.x << ", " << f.y << ", " << f.z << ")" << endl;
 }
-
-

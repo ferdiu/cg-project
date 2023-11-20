@@ -91,8 +91,8 @@ void setup()
     ds->setLight(light);
 
     ball = (new GameObject("BALL"))
-        ->addCollider(new SphereCollider(1))
-        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_DYNAMIC))
+        ->addCollider(new SphereCollider(.5))
+        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_DYNAMIC, 1))
         ->addRenderer(sr) // add renderer
         ->addComponent(ds) // add shader handler
         ->addComponent(new Ball(b));

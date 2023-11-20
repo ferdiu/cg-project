@@ -22,6 +22,7 @@ set(PUBLIC_HEADERS
     ${INC_DIR}/utils/BitMapFile.hpp
     ${INC_DIR}/utils/GLMatrices.hpp
     ${INC_DIR}/utils/GLMatricesStack.hpp
+    ${INC_DIR}/utils/Colors.hpp
     ${INC_DIR}/utils/Debug.hpp
     ${INC_DIR}/utils/Math.hpp
     ${INC_DIR}/Physics.hpp

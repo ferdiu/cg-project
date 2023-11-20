@@ -219,10 +219,14 @@ void RigidBody::bindToCollider(Collider *c)
 
     btDefaultMotionState* ms = new btDefaultMotionState(*tr);
 
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, c->shape(), btVector3(0, 0, 0));
+    btVector3 localInertia(0, 0, 0);
+    if (mass != 0)
+        c->shape()->calculateLocalInertia(mass, localInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, c->shape(), localInertia);
     rb = new btRigidBody(rbInfo);
 
-    rb->setMassProps(type == RigidBodyType::RB_DYNAMIC ? mass : 0, btVector3(0, 0, 0));
+    rb->setMassProps(type == RigidBodyType::RB_DYNAMIC ? mass : 0, localInertia);
 
     // TODO rb->setType(convert(this->type));
     // TODO: maybe something to set here in the collisionShape based on the RigidBodyType???
