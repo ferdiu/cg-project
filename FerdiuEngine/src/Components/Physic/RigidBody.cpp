@@ -1,10 +1,6 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wtype-limits"
-#include <reactphysics3d/reactphysics3d.h>
-#pragma GCC diagnostic pop
 
 #include "../../../include/GameObject.hpp"
 #include "../../../include/Components/Component.hpp"
@@ -16,83 +12,40 @@
 namespace FerdiuEngine
 {
 
-RigidBody::RigidBodyType convert(rp3d::BodyType bt)
-{
-    switch (bt)
-    {
-        case rp3d::BodyType::DYNAMIC:
-            return RigidBody::RigidBodyType::RB_DYNAMIC;
-        case rp3d::BodyType::KINEMATIC:
-            return RigidBody::RigidBodyType::RB_KINEMATIC;
-        default:
-            return RigidBody::RigidBodyType::RB_STATIC;
-    }
-}
-
-rp3d::BodyType convert(RigidBody::RigidBodyType bt)
-{
-    switch (bt)
-    {
-        case RigidBody::RigidBodyType::RB_DYNAMIC:
-            return rp3d::BodyType::DYNAMIC;
-        case RigidBody::RigidBodyType::RB_KINEMATIC:
-            return rp3d::BodyType::KINEMATIC;
-        default:
-            return rp3d::BodyType::STATIC;
-    }
-}
-
 RigidBody::RigidBody(RigidBody::RigidBodyType type, float mass) : type(type), mass(mass) {}
 RigidBody::~RigidBody()
 {
     // TODO: DESTROY
 }
 
-void RigidBody::awake()
+void RigidBody::awake() {}
+
+void RigidBody::start()
 {
 #ifdef DEBUG_PHYSICS
     Debug::indent();
-    Debug::Log("[RigidBody] start->awake");
+    Debug::Log("[RigidBody] start->start");
 #endif
 
     initRigidBody();
-    Component::awake();
 
 #ifdef DEBUG_PHYSICS
-    Debug::Log("[RigidBody] finish->awake");
+    Debug::Log("[RigidBody] finish->start");
     Debug::unindent();
 #endif
 }
-
-void RigidBody::start() {}
 
 void RigidBody::physicsUpdatePre()
 {
     syncPhysicsToTransform();
 
-    _prevTransform = rb->getTransform();
+    _prevTransform = ((btCollisionObject*) rb)->getWorldTransform();
 }
 
 void RigidBody::physicsUpdatePost()
 {
     if (RigidBodyType::RB_STATIC != type)
-    {
-        float factor = Physics::accumulator() / PHYSICS_TIME_STEP;
-
-        // Get the updated transform of the body
-        rp3d::Transform currTransform = rb->getTransform();
-
-        // Compute the interpolated transform of the rigid body
-        rp3d::Transform interpolatedTransform = rp3d::Transform::interpolateTransforms(
-            _prevTransform, currTransform, factor);
-        (void) interpolatedTransform;
-
-        // Update the previous transform
-        _prevTransform = currTransform;
-    }
-
-    if (RigidBodyType::RB_STATIC != type)
-        syncTransfromToPhysics(rb->getTransform());
+        syncTransfromToPhysics(((btCollisionObject*) rb)->getWorldTransform());
 }
 glm::vec3 RigidBody::getVelocity()
 {
@@ -104,7 +57,7 @@ void RigidBody::setVelocity(glm::vec3 v)
 }
 void RigidBody::addVelocity(glm::vec3 v)
 {
-    this->rb->applyWorldForceAtCenterOfMass(Math::convert(v));
+    this->rb->setLinearVelocity(Math::convert(v) + this->rb->getLinearVelocity());
 }
 
 float RigidBody::getGravityScale()
@@ -131,13 +84,15 @@ void RigidBody::initRigidBody()
         return;
     }
 
-    tr = new rp3d::Transform(
-        Math::convert(o->getGlobalPosition()),
-        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())));
+    if (!(o->collider().has_value()))
+    {
+        Debug::Error("This RigidBody has no Collider!!!");
+        return;
+    }
 
-    this->rb = Physics::world().createRigidBody(*tr);
-    this->rb->setMass(mass);
-    this->rb->setType(convert(this->type));
+    Collider *c = o->collider().value();
+
+    bindToCollider(c);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[RigidBody] finish->initRigidBody");
@@ -147,10 +102,10 @@ void RigidBody::initRigidBody()
 
 void RigidBody::applyForce(glm::vec3 force)
 {
-    this->rb->applyWorldForceAtCenterOfMass(Math::convert(force));
+    this->rb->applyCentralForce(Math::convert(force));
 }
 
-rp3d::RigidBody *RigidBody::getPhysicsRigidBody()
+btRigidBody *RigidBody::getPhysicsRigidBody()
 {
     return this->rb;
 }
@@ -160,17 +115,38 @@ Transform *RigidBody::getTransform()
     return getTransform_Normal();
 }
 
+RigidBody::RigidBodyType RigidBody::getType()
+{
+    // TODO: this should be set from the physics engine
+    return type;
+}
+
+bool RigidBody::isDynamic()
+{
+    return getType() == RigidBodyType::RB_DYNAMIC;
+}
+
+bool RigidBody::isKinematic()
+{
+    return getType() == RigidBodyType::RB_KINEMATIC;
+}
+
+bool RigidBody::isStatic()
+{
+    return getType() == RigidBodyType::RB_STATIC;
+}
+
 Transform *RigidBody::getPhysicsTransform()
 {
     return getPhysicsTransform_Normal();
 }
 
-rp3d::Transform *RigidBody::getTransform_RP3D()
+btTransform *RigidBody::getTransform_RP3D()
 {
     GameObject *o = getOwner();
-    return new rp3d::Transform(
-        Math::convert(o->getGlobalPosition()),
-        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())));
+    return new btTransform(
+        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())),
+        Math::convert(o->getGlobalPosition()));
 }
 
 Transform *RigidBody::getTransform_Normal()
@@ -178,23 +154,33 @@ Transform *RigidBody::getTransform_Normal()
     return getOwner()->getTransform();
 }
 
-rp3d::Transform *RigidBody::getPhysicsTransform_RP3D()
+btTransform *RigidBody::getPhysicsTransform_RP3D()
 {
-    return new rp3d::Transform(rb->getTransform());
+    btTransform t = ((btCollisionObject*) rb)->getWorldTransform();
+    return new btTransform(t.getRotation(), t.getOrigin());
 }
 
 Transform *RigidBody::getPhysicsTransform_Normal()
 {
-    return Math::convert_ptr(rb->getTransform(), glm::vec3(1));
+    return Math::convert_ptr(((btCollisionObject*) rb)->getWorldTransform(), btVector3(1, 1, 1));
 }
 
 void RigidBody::syncPhysicsToTransform()
 {
-    rp3d::Transform *t = getTransform_RP3D();
+    // https://stackoverflow.com/questions/12251199/re-positioning-a-rigid-body-in-bullet-physics
+    btTransform *t = new btTransform();
     GameObject *o = getOwner();
-    t->setPosition(Math::convert(o->getGlobalPosition()));
-    t->setOrientation(Math::convert(Math::eulerToQuaternion(o->getTransform()->getRotation())));
-    rb->setTransform(*t);
+    t->setOrigin(Math::convert(o->getGlobalPosition()));
+    t->setRotation(Math::convert(Math::eulerToQuaternion(o->getTransform()->getRotation())));
+    ((btCollisionObject*) rb)->setWorldTransform(*t);
+}
+
+void RigidBody::syncPhysicsToTransform(btTransform *t)
+{
+    GameObject *o = getOwner();
+    t->setOrigin(Math::convert(o->getGlobalPosition()));
+    t->setRotation(Math::convert(Math::eulerToQuaternion(o->getTransform()->getRotation())));
+    ((btCollisionObject*) rb)->setWorldTransform(*t);
 }
 
 void RigidBody::syncTransfromToPhysics()
@@ -205,11 +191,49 @@ void RigidBody::syncTransfromToPhysics()
     nt->setRotation(pt->getRotation());
 }
 
-void RigidBody::syncTransfromToPhysics(rp3d::Transform t)
+void RigidBody::syncTransfromToPhysics(btTransform t)
 {
     Transform *nt = getTransform();
-    nt->position = Math::convert(t.getPosition());
-    nt->rotation = Math::convert(Math::quaternionToEuler(t.getOrientation()));
+    nt->position = Math::convert(t.getOrigin());
+    nt->rotation = Math::convert(Math::quaternionToEuler(t.getRotation()));
+}
+
+void RigidBody::bindToCollider(Collider *c)
+{
+#ifdef DEBUG_PHYSICS
+    Debug::indent();
+    Debug::Log("[RigidBody] start->bindToCollider");
+#endif
+
+    GameObject *o = getOwner();
+
+    if (nullptr == o)
+    {
+        Debug::Error("bindToCollider() called on a RigidBody with no Owner!");
+        return;
+    }
+
+    tr = new btTransform(
+        Math::convert(Math::eulerToQuaternion(o->getLocalRotation())),
+        Math::convert(o->getGlobalPosition()));
+
+    btDefaultMotionState* ms = new btDefaultMotionState(*tr);
+
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, c->shape(), btVector3(0, 0, 0));
+    rb = new btRigidBody(rbInfo);
+
+    rb->setMassProps(type == RigidBodyType::RB_DYNAMIC ? mass : 0, btVector3(0, 0, 0));
+
+    // TODO rb->setType(convert(this->type));
+    // TODO: maybe something to set here in the collisionShape based on the RigidBodyType???
+    // SEE: https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=2943
+
+    Physics::world().addRigidBody(this->rb);
+
+#ifdef DEBUG_PHYSICS
+    Debug::Log("[RigidBody] finish->bindToCollider");
+    Debug::unindent();
+#endif
 }
 
 }

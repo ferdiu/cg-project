@@ -108,8 +108,18 @@ bool GameObject::hasComponent(Component *c)
 }
 GameObject *GameObject::addComponent(Component *c)
 {
+#ifdef DEBUG_VERBOSE
+    Debug::indent();
+    Debug::Log("[GameObject] start->addComponent: " + name);
+#endif
+
     components.push_back(c);
     c->setOwner(this);
+
+#ifdef DEBUG_VERBOSE
+    Debug::Log("[GameObject] finish->addComponent: " + name);
+    Debug::unindent();
+#endif
 
     return this;
 }

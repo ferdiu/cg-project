@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "../Component.hpp"
+#include "RigidBody.hpp"
 #include "../../Physics.hpp"
 
 #include "../../FerdiuEngine_export.h"
@@ -11,28 +12,26 @@
 namespace FerdiuEngine
 {
 
-class RigidBody;
+// class RigidBody;
 
 class FERDIU_ENGINE_EXPORT Collider : public Component
 {
 public:
     FERDIU_ENGINE_EXPORT Collider();
-    FERDIU_ENGINE_EXPORT virtual ~Collider() {};
-
-    FERDIU_ENGINE_EXPORT void start() override;
+    FERDIU_ENGINE_EXPORT virtual ~Collider();
 
     FERDIU_ENGINE_EXPORT bool isTrigger();
     FERDIU_ENGINE_EXPORT void setTrigger(bool v);
 
-    FERDIU_ENGINE_EXPORT void bindToRigidBody(RigidBody *rb);
+    FERDIU_ENGINE_EXPORT btCollisionShape* shape();
 
 protected:
-    rp3d::Collider *collider;
-    rp3d::CollisionShape *shape;
+    btCollisionShape *_shape;
 
 private:
     bool trigger = false;
 
+    friend void RigidBody::bindToCollider(Collider *c);
 };
 
 }

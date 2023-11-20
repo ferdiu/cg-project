@@ -4,7 +4,6 @@
 #include <glm/glm.hpp>
 
 #include "../../Physics.hpp"
-#include "Collider.hpp"
 #include "../Component.hpp"
 
 #include "../../FerdiuEngine_export.h"
@@ -14,6 +13,7 @@ namespace FerdiuEngine
 
 class Transform;
 class Engine;
+class Collider;
 
 class FERDIU_ENGINE_EXPORT RigidBody : public Component
 {
@@ -47,35 +47,40 @@ public:
 
     FERDIU_ENGINE_EXPORT void applyForce(glm::vec3 v);
 
-    FERDIU_ENGINE_EXPORT rp3d::RigidBody *getPhysicsRigidBody();
+    FERDIU_ENGINE_EXPORT btRigidBody *getPhysicsRigidBody();
 
     FERDIU_ENGINE_EXPORT Transform *getPhysicsTransform();
     FERDIU_ENGINE_EXPORT Transform *getTransform();
 
+    FERDIU_ENGINE_EXPORT RigidBodyType getType();
+    FERDIU_ENGINE_EXPORT bool isDynamic();
+    FERDIU_ENGINE_EXPORT bool isKinematic();
+    FERDIU_ENGINE_EXPORT bool isStatic();
+
     FERDIU_ENGINE_EXPORT void syncTransfromToPhysics();
-    FERDIU_ENGINE_EXPORT void syncTransfromToPhysics(rp3d::Transform t);
+    FERDIU_ENGINE_EXPORT void syncTransfromToPhysics(btTransform t);
     FERDIU_ENGINE_EXPORT void syncPhysicsToTransform();
+    FERDIU_ENGINE_EXPORT void syncPhysicsToTransform(btTransform *t);
+
+    FERDIU_ENGINE_EXPORT void bindToCollider(Collider *c);
 
 private:
-    rp3d::Transform *tr;
-    rp3d::RigidBody *rb;
+    btTransform *tr;
+    btRigidBody *rb;
 
     RigidBodyType type;
 
     float gravityScale = 1;
     float mass = 1.0;
 
-    rp3d::Transform _prevTransform;
+    btTransform _prevTransform;
 
     void initRigidBody();
 
-    rp3d::Transform *getTransform_RP3D();
+    btTransform *getTransform_RP3D();
     Transform *getTransform_Normal();
-    rp3d::Transform *getPhysicsTransform_RP3D();
+    btTransform *getPhysicsTransform_RP3D();
     Transform *getPhysicsTransform_Normal();
-
-    friend void Collider::bindToRigidBody(RigidBody *rb);
-
 };
 
 }

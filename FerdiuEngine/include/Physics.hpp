@@ -3,7 +3,7 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wtype-limits"
-#include <reactphysics3d/reactphysics3d.h>
+#include <btBulletDynamicsCommon.h>
 #pragma GCC diagnostic pop
 
 #include "utils/Debug.hpp"
@@ -15,34 +15,18 @@
 namespace FerdiuEngine
 {
 
-// Your event listener class
-class FERDIU_ENGINE_EXPORT PhysicsEventListener : public rp3d::EventListener
-{
-public:
-    FERDIU_ENGINE_EXPORT void onContact(rp3d::CollisionCallback::CallbackData const& data) override;
-    FERDIU_ENGINE_EXPORT void onTrigger (rp3d::OverlapCallback::CallbackData const& data) override;
-
-};
-
 class FERDIU_ENGINE_EXPORT Physics
 {
 public:
     FERDIU_ENGINE_EXPORT static void init();
 
-    FERDIU_ENGINE_EXPORT static rp3d::PhysicsCommon& common();
-
-    FERDIU_ENGINE_EXPORT static rp3d::PhysicsWorld& world();
-
-    FERDIU_ENGINE_EXPORT static float accumulator();
+    FERDIU_ENGINE_EXPORT static btDiscreteDynamicsWorld& world();
 
 private:
     static bool _initialized;
 
-    static rp3d::PhysicsCommon *physicsCommon;
-    static rp3d::PhysicsWorld *_world;
-    static PhysicsEventListener *listener;
+    static btDiscreteDynamicsWorld *_world;
 
-    static float _accumulator;
     static void update(); friend class Engine;
 };
 

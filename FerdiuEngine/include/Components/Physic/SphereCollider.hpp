@@ -14,7 +14,6 @@ class FERDIU_ENGINE_EXPORT SphereCollider : public Collider
 {
 public:
     FERDIU_ENGINE_EXPORT SphereCollider(float radius);
-    FERDIU_ENGINE_EXPORT ~SphereCollider();
 };
 
 }

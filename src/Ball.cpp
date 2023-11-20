@@ -24,10 +24,10 @@ void Ball::awake()
     }
 
     rb = getOwner()->rigidbody().value();
-    rb->getPhysicsRigidBody()->enableGravity(true);
-    rb->getPhysicsRigidBody()->setIsAllowedToSleep(false);
-    rb->getPhysicsRigidBody()->setLinearLockAxisFactor(rp3d::Vector3(1, 0, 1));
-    reset();
+    // rb->getPhysicsRigidBody()->enableGravity(true);
+    // rb->getPhysicsRigidBody()->setIsAllowedToSleep(false);
+    // rb->getPhysicsRigidBody()->setLinearLockAxisFactor(btVector3(1, 0, 1));
+    // reset();
 }
 
 void Ball::fixedUpdate()

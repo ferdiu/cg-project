@@ -14,7 +14,6 @@ class FERDIU_ENGINE_EXPORT BoxCollider : public Collider
 {
 public:
     FERDIU_ENGINE_EXPORT BoxCollider(glm::vec3 size);
-    FERDIU_ENGINE_EXPORT ~BoxCollider() override;
 };
 
 }

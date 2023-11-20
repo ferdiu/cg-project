@@ -20,17 +20,12 @@ SphereCollider::SphereCollider(float radius) : Collider()
     Debug::Log("[SphereCollider] start->constructor");
 #endif
 
-    this->shape = Physics::common().createSphereShape(radius);
+    this->_shape = new btSphereShape(radius);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[SphereCollider] finish->constructor");
     Debug::unindent();
 #endif
-}
-
-SphereCollider::~SphereCollider()
-{
-    Physics::common().destroySphereShape((rp3d::SphereShape*) this->shape);
 }
 
 }

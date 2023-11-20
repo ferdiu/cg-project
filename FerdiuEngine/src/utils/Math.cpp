@@ -1,9 +1,3 @@
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wtype-limits"
-#include <reactphysics3d/reactphysics3d.h>
-#pragma GCC diagnostic pop
-
 #include "../../include/utils/Math.hpp"
 #include "../../include/Components/Transform.hpp"
 
@@ -13,30 +7,30 @@ namespace FerdiuEngine
 {
     namespace Math
     {
-        rp3d::Quaternion convert(glm::fquat q)
+        btQuaternion convert(glm::fquat q)
         {
-            return rp3d::Quaternion(q.x, q.y, q.z, q.w);
+            return btQuaternion(q.x, q.y, q.z, q.w);
         }
-        rp3d::Vector3 convert(glm::vec3 v)
+        btVector3 convert(glm::vec3 v)
         {
-            return rp3d::Vector3(v.x, v.y, v.z);
+            return btVector3(v.x, v.y, v.z);
         }
-        rp3d::Vector2 convert(glm::vec2 v)
+        /* TODO: btVector2 convert(glm::vec2 v)
         {
-            return rp3d::Vector2(v.x, v.y);
-        }
-        glm::fquat convert(rp3d::Quaternion q)
+            return btVector2(v.x, v.y);
+        } */
+        glm::fquat convert(btQuaternion q)
         {
-            return glm::fquat(q.x, q.y, q.z, q.w);
+            return glm::fquat(q.x(), q.y(), q.z(), q.w());
         }
-        glm::vec3 convert(rp3d::Vector3 v)
+        glm::vec3 convert(btVector3 v)
         {
-            return glm::vec3(v.x, v.y, v.z);
+            return glm::vec3(v.x(), v.y(), v.z());
         }
-        glm::vec2 convert(rp3d::Vector2 v)
+        /* TODO: glm::vec2 convert(btVector2 v)
         {
             return glm::vec2(v.x, v.y);
-        }
+        } */
         glm::mat4 convert(Transform const& t, glm::mat4 mat)
         {
             // https://gamedev.stackexchange.com/questions/138358/what-is-the-transformation-order-when-using-the-transform-class
@@ -46,32 +40,32 @@ namespace FerdiuEngine
                 *scaleMatrix(t.getScale(), mat)
                 *rotationMatrix(t.getRotation(), mat);
         }
-        rp3d::Transform convert(Transform const& t)
+        btTransform convert(Transform const& t)
         {
-            return rp3d::Transform(
-                convert(t.getPosition()),
-                convert(eulerToQuaternion(t.getRotation()))
+            return btTransform(
+                convert(eulerToQuaternion(t.getRotation())),
+                convert(t.getPosition())
             );
         }
-        Transform convert(rp3d::Transform t, glm::vec3 scale)
+        Transform convert(btTransform t, glm::vec3 scale)
         {
             return Transform(
-                convert(t.getPosition()),
+                convert(t.getOrigin()),
                 scale,
-                quaternionToEuler(convert(t.getOrientation())));
+                quaternionToEuler(convert(t.getRotation())));
         }
-        Transform convert(rp3d::Transform t, rp3d::Vector3 scale)
+        Transform convert(btTransform t, btVector3 scale)
         {
             return convert(t, (glm::vec3) convert(scale));
         }
-        Transform *convert_ptr(rp3d::Transform t, glm::vec3 scale)
+        Transform *convert_ptr(btTransform t, glm::vec3 scale)
         {
             return new Transform(
-                convert(t.getPosition()),
+                convert(t.getOrigin()),
                 scale,
-                quaternionToEuler(convert(t.getOrientation())));
+                quaternionToEuler(convert(t.getRotation())));
         }
-        Transform *convert_ptr(rp3d::Transform t, rp3d::Vector3 scale)
+        Transform *convert_ptr(btTransform t, btVector3 scale)
         {
             return convert_ptr(t, (glm::vec3) convert(scale));
         }
@@ -96,7 +90,7 @@ namespace FerdiuEngine
 
             return q;
         }
-        rp3d::Quaternion eulerToQuaternion(rp3d::Vector3 rot)
+        btQuaternion eulerToQuaternion(btVector3 rot)
         {
             return convert(eulerToQuaternion(convert(rot)));
         }
@@ -123,7 +117,7 @@ namespace FerdiuEngine
 
             return glm::degrees(angles);
         }
-        rp3d::Vector3 quaternionToEuler(rp3d::Quaternion q)
+        btVector3 quaternionToEuler(btQuaternion q)
         {
             return convert(quaternionToEuler((convert(q))));
         }

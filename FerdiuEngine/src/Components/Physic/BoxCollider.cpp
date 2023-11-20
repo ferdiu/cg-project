@@ -17,17 +17,12 @@ BoxCollider::BoxCollider(glm::vec3 size) : Collider()
     Debug::Log("[BoxCollider] start->constructor");
 #endif
 
-    this->shape = Physics::common().createBoxShape(Math::convert(size) * 0.5);
+    this->_shape = new btBoxShape(Math::convert(size) * 0.5);
 
 #ifdef DEBUG_PHYSICS
     Debug::Log("[BoxCollider] finish->constructor");
     Debug::unindent();
 #endif
-}
-
-BoxCollider::~BoxCollider()
-{
-    Physics::common().destroyBoxShape((rp3d::BoxShape*) this->shape);
 }
 
 }

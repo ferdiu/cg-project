@@ -17,7 +17,7 @@ public:
     void reset();
 
 private:
-    float velocityScale = 10;
+    float velocityScale = 1;
     Board *b;
     FerdiuEngine::RigidBody *rb;
 };

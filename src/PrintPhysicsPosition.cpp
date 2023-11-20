@@ -1,7 +1,7 @@
 
 #include "../include/PrintPhysicsPosition.hpp"
 
-#include <reactphysics3d/reactphysics3d.h>
+#include <btBulletDynamicsCommon.h>
 
 using namespace FerdiuEngine;
 using namespace std;

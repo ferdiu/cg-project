@@ -182,8 +182,8 @@ glm::vec2 Board::realPos(int i, int j)
 void Board::instantiateWall(int i, int j)
 {
     GameObject *go = (new GameObject("WALL(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
-        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(1)))
+        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addRenderer(new CubeRenderer(1, *wood));
     go->instantiate(root);
 
@@ -235,8 +235,8 @@ void Board::instantiateFinish(int i, int j)
 void Board::instantiateFloor(int i, int j)
 {
     GameObject *go = (new GameObject("FLOOR(" + std::to_string(i) + "x" + std::to_string(j) + ")"))
-        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addCollider(new BoxCollider(glm::vec3(1)))
+        ->addRigidbody(new RigidBody(RigidBody::RigidBodyType::RB_STATIC))
         ->addRenderer(new PlaneRenderer(1, *wood));
     go->instantiate(root);
 

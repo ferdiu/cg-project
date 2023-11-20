@@ -48,111 +48,6 @@ include(${INC_DIR}/CMakeLists.txt)
 
 # NOTE: ugly!!!
 set(PHYSICS_HEADS
-    # "reactphysics3d/include/reactphysics3d/reactphysics3d.h"
-    # "reactphysics3d/include/reactphysics3d/configuration.h"
-    # "reactphysics3d/include/reactphysics3d/decimal.h"
-    # "reactphysics3d/include/reactphysics3d/body/CollisionBody.h"
-    # "reactphysics3d/include/reactphysics3d/body/RigidBody.h"
-    # "reactphysics3d/include/reactphysics3d/collision/ContactPointInfo.h"
-    # "reactphysics3d/include/reactphysics3d/collision/ContactManifoldInfo.h"
-    # "reactphysics3d/include/reactphysics3d/collision/ContactPair.h"
-    # "reactphysics3d/include/reactphysics3d/collision/broadphase/DynamicAABBTree.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/CollisionDispatch.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/VoronoiSimplex.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/GJKAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/SAT/SATAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/NarrowPhaseAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/SphereVsSphereAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/CapsuleVsCapsuleAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/SphereVsCapsuleAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/SphereVsConvexPolyhedronAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/CapsuleVsConvexPolyhedronAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/ConvexPolyhedronVsConvexPolyhedronAlgorithm.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/NarrowPhaseInput.h"
-    # "reactphysics3d/include/reactphysics3d/collision/narrowphase/NarrowPhaseInfoBatch.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/AABB.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/ConvexShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/ConvexPolyhedronShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/ConcaveShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/BoxShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/CapsuleShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/CollisionShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/ConvexMeshShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/SphereShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/TriangleShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/ConcaveMeshShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/shapes/HeightFieldShape.h"
-    # "reactphysics3d/include/reactphysics3d/collision/RaycastInfo.h"
-    # "reactphysics3d/include/reactphysics3d/collision/Collider.h"
-    # "reactphysics3d/include/reactphysics3d/collision/TriangleVertexArray.h"
-    # "reactphysics3d/include/reactphysics3d/collision/PolygonVertexArray.h"
-    # "reactphysics3d/include/reactphysics3d/collision/TriangleMesh.h"
-    # "reactphysics3d/include/reactphysics3d/collision/PolyhedronMesh.h"
-    # "reactphysics3d/include/reactphysics3d/collision/HalfEdgeStructure.h"
-    # "reactphysics3d/include/reactphysics3d/collision/ContactManifold.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/BallAndSocketJoint.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/ContactPoint.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/FixedJoint.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/HingeJoint.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/Joint.h"
-    # "reactphysics3d/include/reactphysics3d/constraint/SliderJoint.h"
-    # "reactphysics3d/include/reactphysics3d/engine/Entity.h"
-    # "reactphysics3d/include/reactphysics3d/engine/EntityManager.h"
-    # "reactphysics3d/include/reactphysics3d/engine/PhysicsCommon.h"
-    # "reactphysics3d/include/reactphysics3d/systems/ConstraintSolverSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/ContactSolverSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/DynamicsSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/CollisionDetectionSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/SolveBallAndSocketJointSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/SolveFixedJointSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/SolveHingeJointSystem.h"
-    # "reactphysics3d/include/reactphysics3d/systems/SolveSliderJointSystem.h"
-    # "reactphysics3d/include/reactphysics3d/engine/PhysicsWorld.h"
-    # "reactphysics3d/include/reactphysics3d/engine/EventListener.h"
-    # "reactphysics3d/include/reactphysics3d/engine/Island.h"
-    # "reactphysics3d/include/reactphysics3d/engine/Islands.h"
-    # "reactphysics3d/include/reactphysics3d/engine/Material.h"
-    # "reactphysics3d/include/reactphysics3d/engine/OverlappingPairs.h"
-    # "reactphysics3d/include/reactphysics3d/systems/BroadPhaseSystem.h"
-    # "reactphysics3d/include/reactphysics3d/components/Components.h"
-    # "reactphysics3d/include/reactphysics3d/components/CollisionBodyComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/RigidBodyComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/TransformComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/ColliderComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/JointComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/BallAndSocketJointComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/FixedJointComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/HingeJointComponents.h"
-    # "reactphysics3d/include/reactphysics3d/components/SliderJointComponents.h"
-    # "reactphysics3d/include/reactphysics3d/collision/CollisionCallback.h"
-    # "reactphysics3d/include/reactphysics3d/collision/OverlapCallback.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/mathematics.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/mathematics_common.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/mathematics_functions.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Matrix2x2.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Matrix3x3.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Quaternion.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Transform.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Vector2.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Vector3.h"
-    # "reactphysics3d/include/reactphysics3d/mathematics/Ray.h"
-    # "reactphysics3d/include/reactphysics3d/memory/MemoryAllocator.h"
-    # "reactphysics3d/include/reactphysics3d/memory/PoolAllocator.h"
-    # "reactphysics3d/include/reactphysics3d/memory/SingleFrameAllocator.h"
-    # "reactphysics3d/include/reactphysics3d/memory/HeapAllocator.h"
-    # "reactphysics3d/include/reactphysics3d/memory/DefaultAllocator.h"
-    # "reactphysics3d/include/reactphysics3d/memory/MemoryManager.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Stack.h"
-    # "reactphysics3d/include/reactphysics3d/containers/LinkedList.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Array.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Map.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Set.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Pair.h"
-    # "reactphysics3d/include/reactphysics3d/containers/Deque.h"
-    # "reactphysics3d/include/reactphysics3d/utils/Profiler.h"
-    # "reactphysics3d/include/reactphysics3d/utils/Logger.h"
-    # "reactphysics3d/include/reactphysics3d/utils/DefaultLogger.h"
-    # "reactphysics3d/include/reactphysics3d/utils/DebugRenderer.h"
 )
 
 # setting target
@@ -172,17 +67,42 @@ set_target_properties(ferdiuengine PROPERTIES PUBLIC_HEADER ${MAIN_API_HEADER})
 ###############################
 
 
-######## ReactPhysics3D #######
-# add all headers of reactphysics3d
-add_subdirectory(reactphysics3d)
-include_directories(reactphysics3d/include)
+########### BULLET3 ###########
+# specify the OpenGL version to use (who needs legacy?)
+set(OpenGL_GL_PREFERENCE "GLVND")
 
-# link ReactPhysics3D to ferdiuengine
-target_link_libraries(ferdiuengine reactphysics3d)
+# add all headers of bullet3
+add_subdirectory(bullet3)
+include_directories(bullet3/src)
 
-set_target_properties(reactphysics3d PROPERTIES CXX_VISIBILITY_PRESET default)
-# ignore warnings from reactphysics3d
-target_compile_options(reactphysics3d PRIVATE -std=c++17 -w -fPIC)
+# link bullet3 to ferdiuengine
+target_link_libraries(ferdiuengine
+    Bullet3Common
+    Bullet3Collision
+    BulletInverseDynamics
+    Bullet3Dynamics
+    BulletSoftBody
+    BulletDynamics
+    Bullet3OpenCL_clew
+    Bullet2FileLoader
+    BulletCollision
+    Bullet3Geometry
+    LinearMath
+)
+
+set_target_properties(Bullet3Common PROPERTIES CXX_VISIBILITY_PRESET default)
+# ignore warnings from bullet3
+target_compile_options(Bullet3Common PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(Bullet3Collision PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(BulletInverseDynamics PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(Bullet3Dynamics PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(BulletSoftBody PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(BulletDynamics PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(Bullet3OpenCL_clew PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(Bullet2FileLoader PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(BulletCollision PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(Bullet3Geometry PRIVATE -std=c++17 -w -fPIC)
+target_compile_options(LinearMath PRIVATE -std=c++17 -w -fPIC)
 ###############################
 
 
